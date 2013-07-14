@@ -397,7 +397,7 @@
 %     \Arg{tl_n} \Arg{start_n} \Arg{stop_n}
 %   \}
 %   \Arg{false code}
-% \end{verbatim}
+% \end{syntax}
 % For each triplet, this function builds the sub-token list of <tl_i>
 % corresponding to the tokens ranging from position <start_i> to
 % position <stop_i> of <tl_i>.  The results obtained for each triplet
@@ -405,7 +405,7 @@
 % concatenation is left in the input stream, and the <false code> is
 % removed.  Two cases can lead to running the <false code> (and dropping
 % the first argument altogether).  The first case is when the number of
-% brace groups in \xtl_concat:nF is not a multiple of 3.  The second
+% brace groups in \cs{xtl_concat:nF} is not a multiple of 3.  The second
 % case is when the concatenation gives rise to an unbalanced token list:
 % then the result is not a valid token list.  Note that each part is
 % allowed to be unbalanced: only the full result must be balanced.
@@ -468,9 +468,9 @@
 % characters near the end of the list.  In fact, a list of tokens always
 % has the form
 % \begin{quote}\ttfamily
-%   \meta{b_1} \} \cdots \meta{b_n} \}
+%   \meta{b_1} \} \ldots{} \meta{b_n} \}
 %   \meta{c}
-%   \{ \meta{e_1} \cdots \{ \meta{e_p}
+%   \{ \meta{e_1} \ldots{} \{ \meta{e_p}
 % \end{quote}
 % where the \meta{b_i}, \meta{c}, and \meta{e_i} are all balanced token
 % lists.  This can be seen by listing the tokens, and keeping track of a
@@ -482,9 +482,9 @@
 % stored as
 % \begin{quote}\ttfamily
 %   \cs{s_@@}
-%   \{ \Arg{b_1} \cdots \Arg{b_n} \}
+%   \{ \Arg{b_1} \ldots{} \Arg{b_n} \}
 %   \Arg{c}
-%   \{ \Arg{e_p} \cdots \Arg{e_1} \}
+%   \{ \Arg{e_p} \ldots{} \Arg{e_1} \}
 %   \cs{s__stop}
 % \end{quote}
 % Note that the \meta{e_i} are in a reversed order, as this makes the
@@ -499,7 +499,11 @@
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{macro}{\xtl_set:Nn, \xtl_gset:Nn, \xtl_const:Nn}
+% \begin{macro}
+%   {
+%     \xtl_set:Nn, \xtl_gset:Nn, \xtl_const:Nn,
+%     \xtl_set:Nx, \xtl_gset:Nx, \xtl_const:Nx
+%   }
 %   Storing a balanced token list into an extended token list variable
 %   simply means adding \cs{s_@@}, \cs{s__stop}, and two empty brace
 %   groups.
@@ -507,16 +511,6 @@
 \cs_new_protected_nopar:Npn \xtl_set:Nn   { \@@_set:NNn \tl_set:Nn   }
 \cs_new_protected_nopar:Npn \xtl_gset:Nn  { \@@_set:NNn \tl_gset:Nn  }
 \cs_new_protected_nopar:Npn \xtl_const:Nn { \@@_set:NNn \tl_const:Nn }
-\cs_new_protected:Npn \@@_set:NNn   #1#2#3
-  { #1 #2 { \s_@@ { } {#3} { } \s__stop } }
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{\xtl_set:Nx, \xtl_gset:Nx, \xtl_const:Nx}
-%   Storing a balanced token list into an extended token list variable
-%   simply means adding \cs{s_@@}, \cs{s__stop}, and two empty brace
-%   groups.
-%    \begin{macrocode}
 \cs_new_protected_nopar:Npn \xtl_set:Nx   { \@@_set:NNn \tl_set:Nx   }
 \cs_new_protected_nopar:Npn \xtl_gset:Nx  { \@@_set:NNn \tl_gset:Nx  }
 \cs_new_protected_nopar:Npn \xtl_const:Nx { \@@_set:NNn \tl_const:Nx }
@@ -592,25 +586,22 @@
 % \subsection{Adding data to extended token list variables}
 %
 % \begin{macro}{\xtl_put_left:Nn, \xtl_gput_left:Nn}
-% \begin{macro}[aux]{\@@_put_left:wNNn}
+% \begin{macro}[aux, rEXP]{\@@_put_left:wn}
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_put_left:Nn #1
-  { \exp_after:wN \@@_put_left:wNNn #1 \tl_set:Nx #1 }
-\cs_new_protected:Npn \xtl_put_left:Nn #1
-  { \exp_after:wN \@@_put_left:wNNn #1 \tl_gset:Nx #1 }
-\cs_new_protected:Npn \@@_put_left:wNNn \s_@@ #1#2#3 \s__stop #4#5#6
+\cs_new_protected:Npn \xtl_put_left:Nn #1#2
+  { \tl_set:Nx #1 { \exp_after:wN \@@_put_left:wn #1 {#2} } }
+\cs_new_protected:Npn \xtl_gput_left:Nn #1#2
+  { \tl_gset:Nx #1 { \exp_after:wN \@@_put_left:wn #1 {#2} } }
+\cs_new:Npn \@@_put_left:wn \s_@@ #1#2#3 \s__stop #4
   {
     \tl_if_empty:nTF {#1}
-      { #4 #5 { \exp_not:n { \s_@@ { } { #6 #2 } {#3} \s__stop } } }
+      { \exp_not:n { \s_@@ { } { #4 #2 } {#3} \s__stop } }
       {
-        #4 #5
-          {
-            \s_@@
-            { \exp_not:o { \@@_brace:nn {#6} #1 } }
-            { \exp_not:n {#2} }
-            { \exp_not:n {#3} }
-            \s__stop
-          }
+        \s_@@
+        { \exp_not:o { \@@_brace:nn {#4} #1 } }
+        { \exp_not:n {#2} }
+        { \exp_not:n {#3} }
+        \s__stop
       }
   }
 %    \end{macrocode}
@@ -618,25 +609,22 @@
 % \end{macro}
 %
 % \begin{macro}{\xtl_put_right:Nn, \xtl_gput_right:Nn}
-% \begin{macro}[aux]{\@@_put_right:wNNn}
+% \begin{macro}[aux, rEXP]{\@@_put_right:wn}
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_put_right:Nn #1
-  { \exp_after:wN \@@_put_right:wNNn #1 \tl_set:Nx #1 }
-\cs_new_protected:Npn \xtl_put_right:Nn #1
-  { \exp_after:wN \@@_put_right:wNNn #1 \tl_gset:Nx #1 }
-\cs_new_protected:Npn \@@_put_right:wNNn \s_@@ #1#2#3 \s__stop #4#5#6
+\cs_new_protected:Npn \xtl_put_right:Nn #1#2
+  { \tl_set:Nx #1 { \exp_after:wN \@@_put_right:wn #1 {#2} } }
+\cs_new_protected:Npn \xtl_gput_right:Nn #1#2
+  { \tl_gset:Nx #1 { \exp_after:wN \@@_put_right:wn #1 {#2} } }
+\cs_new:Npn \@@_put_right:wn \s_@@ #1#2#3 \s__stop #4
   {
     \tl_if_empty:nTF {#3}
-      { #4 #5 { \exp_not:n { \s_@@ {#1} { #2 #6 } { } \s__stop } } }
+      { \exp_not:n { \s_@@ {#1} { #2 #4 } { } \s__stop } }
       {
-        #4 #5
-          {
-            \s_@@
-            { \exp_not:n {#1} }
-            { \exp_not:n {#2} }
-            { \exp_not:o { \@@_brace_swap:nn {#6} #3 } }
-            \s__stop
-          }
+        \s_@@
+        { \exp_not:n {#1} }
+        { \exp_not:n {#2} }
+        { \exp_not:o { \@@_brace_swap:nn {#4} #3 } }
+        \s__stop
       }
   }
 %    \end{macrocode}
@@ -658,9 +646,9 @@
 %   Concatenating two lists of tokens of the form
 %   \begin{quote}\ttfamily
 %     \cs{s_@@}
-%     \{ \Arg{b_1} \cdots \Arg{b_n} \}
+%     \{ \Arg{b_1} \ldots{} \Arg{b_n} \}
 %     \Arg{c}
-%     \{ \Arg{e_p} \cdots \Arg{e_1} \}
+%     \{ \Arg{e_p} \ldots{} \Arg{e_1} \}
 %     \cs{s__stop}
 %   \end{quote}
 %   is not an easy task.  The \meta{e} parts of the first join with the
@@ -766,7 +754,7 @@
       { \exp_not:N \@@_to_str_endi:nnn {#1} }
       {
         \exp_not:N \@@_to_str_loopi:nnw
-          { #1 #2 \iow_char:N \} } #3 \q_mark
+          { #1 #2 \iow_char:N \} } #3 \exp_not:N \q_mark
       }
   }
 \cs_new:Npn \@@_to_str_endi:nnn #1#2#3
@@ -783,7 +771,7 @@
       { \exp_not:N \tl_to_str:n {#1} }
       {
         \exp_not:N \@@_to_str_loopii:nnw
-          { #2 \iow_char:N \{ #1 } #3 \q_stop
+          { #2 \iow_char:N \{ #1 } #3 \exp_not:N \q_stop
       }
   }
 %    \end{macrocode}
@@ -1240,7 +1228,7 @@
   }
 \cs_new:Npn \@@_pop_left_text_auxi:n #1
   {
-    \@@_pop_left_text_auxii:wn #2
+    \@@_pop_left_text_auxii:wn #1
       \q_nil \q_mark { } \q_mark \q_stop
   }
 \cs_new:Npn \@@_pop_left_text_auxii:wnw #1 #

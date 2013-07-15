@@ -131,7 +131,7 @@
 %   current content of \meta{xtl~var}.
 % \end{function}
 %
-% \section{Extended token list conditionals}
+% \subsection{Extended token list conditionals}
 %
 % \begin{function}[EXP, pTF]{\xtl_if_blank:N}
 %   \begin{syntax}
@@ -187,8 +187,15 @@
 %   \begin{syntax}
 %     \cs{xtl_head:N} \meta{xtl~var}
 %   \end{syntax}
-%   Leaves in the input stream the first token in the \meta{xtl~var},
-%   discarding the rest of the \meta{xtl~var}.
+%   Leaves in the input stream the first token in the \meta{xtl~var}.
+% \end{function}
+%
+% \begin{function}[EXP]{\xtl_head_do:NN}
+%   \begin{syntax}
+%     \cs{xtl_head_do:NN} \meta{xtl~var} \meta{cs}
+%   \end{syntax}
+%   Leaves in the input stream the \meta{control sequence} followed by
+%   the first token in \meta{xtl~var}.
 % \end{function}
 %
 % \begin{function}{\xtl_get_left:NN}
@@ -274,9 +281,9 @@
 %     \cs{xtl_left_tl:N} \meta{xtl~var}
 %   \end{syntax}
 %   Leaves in the input stream all tokens in \meta{xtl~var} until the
-%   first extra begin-group or extra end-group character.  This is the
-%   longest balanced token list starting from the left of
-%   \meta{xtl~var}.
+%   first extra begin-group or extra end-group character, within
+%   \cs{exp_not:n}.  This is the longest balanced token list starting
+%   from the left of \meta{xtl~var}.
 % \end{function}
 %
 % \begin{function}{\xtl_pop_left_tl:N}
@@ -424,7 +431,7 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\RequirePackage{expl3}[2012/12/21]
+\RequirePackage{expl3}[2013/07/01]
 \ProvidesExplPackage
   {xtl} {2013/07/14} {0.0a} {Manipulate unbalanced lists of tokens}
 %    \end{macrocode}
@@ -434,6 +441,19 @@
 %    \end{macrocode}
 %
 % \subsection{Helpers}
+%
+%    \begin{macrocode}
+\cs_generate_variant:Nn \use:nn { no }
+%    \end{macrocode}
+%
+% \begin{macro}[EXP, int]{\@@_exp_not_n:N}
+%   Used in one case where we need to prevent expansion of a token
+%   within an |x|-expanding definition.  Using \cs{exp_not:N} there
+%   would fail when the argument is a macro parameter character.
+%    \begin{macrocode}
+\cs_new:Npn \@@_exp_not_n:N #1 { \exp_not:n {#1} }
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}[EXP, int]{\@@_brace:nn, \@@_brace_swap:nn}
 %   Those functions are used to add some tokens, |#1|, to an item |#2|
@@ -972,37 +992,14 @@
 %
 % \subsection{First token of an extended token list}
 %
-% \begin{macro}[EXP]{\xtl_head:N}
-% \begin{macro}{\xtl_get_left:NN}
-% \begin{macro}[EXP, aux]{\@@_head:wnnnnn, \@@_head_aux:nwnnnn}
-%   The function \cs{xtl_head:N} leaves the first token in the input
-%   stream, even if it is a begin-group or end-group character.  Both
-%   \cs{xtl_head:N} and \cs{xtl_get_left:NN} pass the extended token
-%   list to \cs{@@_head:wnnnn}, followed by the action to perform in
-%   various cases.  This function performs |#4|~if the \texttt{xtl} is
-%   empty, |#5|~if it starts with a begin-group character, |#6|~if it
-%   starts with an end-group character, |#7|~if it starts with a space,
-%   and in other cases (when the first token is |N|-type), it performs
-%   |#8|~followed by the first token.
+% \begin{macro}[EXP, int]{\@@_head:wnnnnn}
+% \begin{macro}[EXP, aux]{\@@_head_aux:nwnnnn}
+%   This function performs |#4|~if the \texttt{xtl} is empty, |#5|~if it
+%   starts with a begin-group character, |#6|~if it starts with an
+%   end-group character, |#7|~if it starts with a space, and in other
+%   cases (when the first token is |N|-type), it performs |#8|~followed
+%   by the first token.
 %    \begin{macrocode}
-\cs_new:Npn \xtl_head:N #1
-  {
-    \exp_after:wN \@@_head:wnnnnn #1
-      { }
-      { \exp_after:wN { \if_false: } \fi: }
-      { \if_false: { \fi: } }
-      { ~ }
-      { }
-  }
-\cs_new_protected:Npn \xtl_get_left:NN #1#2
-  {
-    \exp_after:wN \@@_head:wnnnnn #1
-      { \xtl_set:Nn #2 { \q_no_value } }
-      { \xtl_set_eq:NN #2 \c_group_begin_xtl }
-      { \xtl_set_eq:NN #2 \c_group_end_xtl }
-      { \xtl_set:Nn #2 { ~ } }
-      { \xtl_set:Nx #2 }
-  }
 \cs_new:Npn \@@_head:wnnnnn \s_@@ #1#2#3 \s__stop #4#5#6#7#8
   {
     \tl_if_empty:nTF {#1}
@@ -1020,9 +1017,58 @@
         \tl_if_empty:nTF {#1} {#4}
           {
             \tl_if_head_is_space:nTF {#1} {#5}
-              { \exp_args:Nnf \use:nn {#6} { \tl_head:n {#1} } }
+              { \use:no {#6} { \use_i_delimit_by_q_stop:nw #1 \q_stop } }
           }
       }
+  }
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}[EXP]{\xtl_head:N}
+%   If |#1| is empty, do nothing.  If it starts with a begin-group
+%   character or an end-group character leave the appropriate brace
+%   (thanks to \cs{if_false:} tricks).  If it starts with a space, leave
+%   that, and finally if it starts with a normal token, leave it, within
+%   \cs{exp_not:n}.
+%    \begin{macrocode}
+\cs_new:Npn \xtl_head:N #1
+  {
+    \exp_after:wN \@@_head:wnnnnn #1
+      { }
+      { \exp_after:wN { \if_false: } \fi: }
+      { \if_false: { \fi: } }
+      { ~ }
+      { \@@_exp_not_n:N }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}[EXP]{\xtl_head_do:NN}
+%   Similar to \cs{xtl_head:N}, but inserting |#2| before the resulting token.
+%    \begin{macrocode}
+\cs_new:Npn \xtl_head_do:NN #1#2
+  {
+    \exp_after:wN \@@_head:wnnnnn #1
+      { #2 }
+      { \exp_after:wN #2 \exp_after:wN { \if_false: } \fi: }
+      { \if_false: { \fi: #2 } }
+      { #2 ~ }
+      { #2 }
+  }
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\xtl_get_left:NN}
+%    \begin{macrocode}
+\cs_new_protected:Npn \xtl_get_left:NN #1#2
+  {
+    \exp_after:wN \@@_head:wnnnnn #1
+      { \xtl_set:Nn #2 { \q_no_value } }
+      { \xtl_set_eq:NN #2 \c_group_begin_xtl }
+      { \xtl_set_eq:NN #2 \c_group_end_xtl }
+      { \xtl_set:Nn #2 { ~ } }
+      { \xtl_set:Nn #2 }
   }
 %    \end{macrocode}
 % \end{macro}
@@ -1171,7 +1217,7 @@
 % extended token list variable.
 %
 % \begin{macro}[EXP]{\xtl_left_text:NF}
-% \begin{macro}[EXP,aux]
+% \begin{macro}[aux, EXP]
 %   {
 %     \@@_left_text:wF,
 %     \@@_left_text_auxi:nwF,
@@ -1198,7 +1244,7 @@
 % \end{macro}
 %
 % \begin{macro}{\xtl_pop_left_text:N, \xtl_gpop_left_text:N}
-% \begin{macro}[EXP, aux]
+% \begin{macro}[aux, rEXP]
 %   {
 %     \@@_pop_left_text:w,
 %     \@@_pop_left_text_auxi:n,
@@ -1228,7 +1274,7 @@
   }
 \cs_new:Npn \@@_pop_left_text_auxi:n #1
   {
-    \@@_pop_left_text_auxii:wn #1
+    \@@_pop_left_text_auxii:wnw #1
       \q_nil \q_mark { } \q_mark \q_stop
   }
 \cs_new:Npn \@@_pop_left_text_auxii:wnw #1 #

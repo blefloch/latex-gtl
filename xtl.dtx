@@ -632,7 +632,7 @@
 % \end{macro}
 %
 % \begin{macro}{\xtl_concat:NNN, \xtl_gconcat:NNN}
-% \begin{macro}[EXP, aux]
+% \begin{macro}[rEXP, aux]
 %   {
 %     \@@_concat:ww,
 %     \@@_concat_aux:nnnnnn,
@@ -669,7 +669,7 @@
           { \@@_concat_auxi:nnnnnn }
       }
       {
-        \tl_if_blank:nTF {#5}
+        \tl_if_blank:nTF {#4}
           { \@@_concat_auxii:nnnnnn }
           { \@@_concat_auxiv:nnnn }
       }
@@ -683,8 +683,8 @@
     \s_@@
     {
       \exp_not:n {#1}
-      \exp_last_unbraced:NNo \@@_concat_auxiii:w
-        \prg_do_nothing: { \@@_brace:nn {#2} #4 } \q_stop
+      \exp_not:f
+        { \@@_concat_auxiii:w \@@_brace:nn {#2} #4 ~ \q_stop }
     }
     { \exp_not:n {#5} }
     { \exp_not:n {#6} }
@@ -696,11 +696,11 @@
     { \exp_not:n {#2} }
     {
       \exp_not:n {#6}
-      \exp_last_unbraced:NNo \@@_concat_auxiii:w
-        \prg_do_nothing: { \@@_brace_swap:nn {#5} #3 } \q_stop
+      \exp_not:f
+        { \@@_concat_auxiii:w \@@_brace_swap:nn {#5} #3 ~ \q_stop }
     }
   }
-\cs_new:Npn \@@_concat_auxiii:w #1 ~ #2 \q_stop { \exp_not:o {#1} }
+\cs_new:Npn \@@_concat_auxiii:w #1 ~ #2 \q_stop {#1}
 \cs_new:Npn \@@_concat_auxiv:nnnn #1#2#3#4
   {
     \tl_if_single:nTF {#3}
@@ -983,7 +983,7 @@
 %   empty, |#5|~if it starts with a begin-group character, |#6|~if it
 %   starts with an end-group character, |#7|~if it starts with a space,
 %   and in other cases (when the first token is |N|-type), it performs
-%   |#7|~followed by the first token.
+%   |#8|~followed by the first token.
 %    \begin{macrocode}
 \cs_new:Npn \xtl_head:N #1
   {
@@ -1009,7 +1009,7 @@
       {
         \tl_if_empty:nTF {#2}
           { \tl_if_empty:nTF {#3} {#4} {#5} }
-          { \@@_head_aux:nwnnnn {#2} \q_stop {#5} {#6} {#7}a {#8} }
+          { \@@_head_aux:nwnnnn {#2} \q_stop {#5} {#6} {#7} {#8} }
       }
       { \@@_head_aux:nwnnnn #1 \q_stop {#5} {#6} {#7} {#8} }
   }
@@ -1020,7 +1020,7 @@
         \tl_if_empty:nTF {#1} {#4}
           {
             \tl_if_head_is_space:nTF {#1} {#5}
-              { \exp_last_unbraced:Nf #6 { \tl_head:n {#1} } }
+              { \exp_args:Nnf \use:nn {#6} { \tl_head:n {#1} } }
           }
       }
   }

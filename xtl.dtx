@@ -748,7 +748,8 @@
 %
 % \subsection{Showing extended token lists}
 %
-% \begin{macro}[EXP]{\xtl_to_str:N}
+% ^^A todo: document \xtl_to_str:n
+% \begin{macro}[EXP]{\xtl_to_str:N, \xtl_to_str:n}
 % \begin{macro}[EXP, aux]
 %   {
 %     \@@_to_str:w,
@@ -760,6 +761,7 @@
 %   }
 %    \begin{macrocode}
 \cs_new:Npn \xtl_to_str:N #1 { \exp_after:wN \@@_to_str:w #1 }
+\cs_new:Npn \xtl_to_str:n #1 { \@@_to_str:w #1 }
 \cs_new:Npn \@@_to_str:w \s_@@ #1#2#3 \s__stop
   { \@@_to_str_loopi:nnw { } #1 \q_nil \q_mark {#2} {#3} }
 \cs_new:Npx \@@_to_str_loopi:nnw #1#2
@@ -994,6 +996,7 @@
 %
 % \begin{macro}[EXP, int]{\@@_head:wnnnnn}
 % \begin{macro}[EXP, aux]{\@@_head_aux:nwnnnn}
+% \begin{macro}[EXP, aux]{\@@_head_auxii:N, \@@_head_auxiii:Nnn}
 %   This function performs |#4|~if the \texttt{xtl} is empty, |#5|~if it
 %   starts with a begin-group character, |#6|~if it starts with an
 %   end-group character, |#7|~if it starts with a space, and in other
@@ -1017,11 +1020,19 @@
         \tl_if_empty:nTF {#1} {#4}
           {
             \tl_if_head_is_space:nTF {#1} {#5}
-              { \use:no {#6} { \use_i_delimit_by_q_stop:nw #1 \q_stop } }
+              { \if_false: { \fi: \@@_head_auxii:N #1 } {#6} }
           }
       }
   }
+\cs_new:Npn \@@_head_auxii:N #1
+  {
+    \exp_after:wN \@@_head_auxiii:Nnn
+    \exp_after:wN #1
+    \exp_after:wN { \if_false: } \fi:
+  }
+\cs_new:Npn \@@_head_auxiii:Nnn #1#2#3 { #3 #1 }
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %

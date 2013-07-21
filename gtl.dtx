@@ -1,5 +1,5 @@
 % \iffalse
-%% File: xtl.dtx Copyright (C) 2013 Bruno Le Floch
+%% File: gtl.dtx Copyright (C) 2013 Bruno Le Floch
 %%
 %% It may be distributed and/or modified under the conditions of the
 %% LaTeX Project Public License (LPPL), either version 1.3c of this
@@ -14,14 +14,14 @@
 %\fi
 %\iffalse
 \documentclass[full]{l3doc}
-\usepackage{xtl}
+\usepackage{gtl}
 \begin{document}
-  \DocInput{xtl.dtx}
+  \DocInput{gtl.dtx}
 \end{document}
 %</driver>
 % \fi
 %
-% \title{The \textsf{xtl} package: \\
+% \title{The \textsf{gtl} package: \\
 %   manipulate unbalanced lists of tokens\thanks{This
 %     file has version number 0.0a, last revised 2013/07/14.}}
 % \author{Bruno Le Floch}
@@ -32,329 +32,329 @@
 %
 % \begin{documentation}
 %
-% \section{\pkg{xtl} documentation}
+% \section{\pkg{gtl} documentation}
 %
 % The \texttt{expl3} programming language provides various tools to
 % manipulate lists of tokens (package \pkg{l3tl}).  However, those token
 % lists must have balanced braces, or more precisely balanced
-% begin-group and end-group characters.  The \pkg{xtl} package
+% begin-group and end-group characters.  The \pkg{gtl} package
 % manipulates instead lists of tokens which may be unbalanced, with more
 % begin-group or more end-group characters.
 %
 % \subsection{Creating and initialising extended token lists}
 %
-% \begin{function}{\xtl_new:N}
+% \begin{function}{\gtl_new:N}
 %   \begin{syntax}
-%     \cs{xtl_new:N} \meta{xtl~var}
+%     \cs{gtl_new:N} \meta{gtl~var}
 %   \end{syntax}
-%   Creates a new \meta{xtl~var} or raises an error if the name is
-%   already taken.  The declaration is global.  The \meta{xtl~var} will
+%   Creates a new \meta{gtl~var} or raises an error if the name is
+%   already taken.  The declaration is global.  The \meta{gtl~var} will
 %   initially be empty.
 % \end{function}
 %
-% \begin{function}{\xtl_const:Nn, \xtl_const:Nx}
+% \begin{function}{\gtl_const:Nn, \gtl_const:Nx}
 %   \begin{syntax}
-%     \cs{xtl_const:Nn} \meta{xtl~var} \Arg{token list}
+%     \cs{gtl_const:Nn} \meta{gtl~var} \Arg{token list}
 %   \end{syntax}
-%   Creates a new constant \meta{xtl~var} or raises an error if the name
-%   is already taken.  The value of the \meta{xtl~var} will be set
+%   Creates a new constant \meta{gtl~var} or raises an error if the name
+%   is already taken.  The value of the \meta{gtl~var} will be set
 %   globally to the balanced \meta{token list}.
 % \end{function}
 %
-% \begin{function}{\xtl_clear:N, \xtl_gclear:N}
+% \begin{function}{\gtl_clear:N, \gtl_gclear:N}
 %   \begin{syntax}
-%     \cs{xtl_clear:N} \meta{xtl~var}
+%     \cs{gtl_clear:N} \meta{gtl~var}
 %   \end{syntax}
-%   Empties the \meta{xtl~var}, locally or globally.
+%   Empties the \meta{gtl~var}, locally or globally.
 % \end{function}
 %
-% \begin{function}{\xtl_clear_new:N, \xtl_gclear_new:N}
+% \begin{function}{\gtl_clear_new:N, \gtl_gclear_new:N}
 %   \begin{syntax}
-%     \cs{xtl_clear_new:N} \meta{xtl~var}
+%     \cs{gtl_clear_new:N} \meta{gtl~var}
 %   \end{syntax}
-%   Ensures that the \meta{xtl~var} exists globally by applying
-%   \cs{xtl_new:N} if necessary, then applies \cs{xtl_(g)clear:N} to
-%   leave the \meta{xtl~var} empty.
+%   Ensures that the \meta{gtl~var} exists globally by applying
+%   \cs{gtl_new:N} if necessary, then applies \cs{gtl_(g)clear:N} to
+%   leave the \meta{gtl~var} empty.
 % \end{function}
 %
-% \begin{function}{\xtl_set_eq:NN, \xtl_gset_eq:NN}
+% \begin{function}{\gtl_set_eq:NN, \gtl_gset_eq:NN}
 %   \begin{syntax}
-%     \cs{xtl_set_eq:NN} \meta{xtl~var_1} \meta{xtl~var_2}
+%     \cs{gtl_set_eq:NN} \meta{gtl~var_1} \meta{gtl~var_2}
 %   \end{syntax}
-%   Sets the content of \meta{xtl~var_1} equal to that of
-%   \meta{xtl~var_2}.
+%   Sets the content of \meta{gtl~var_1} equal to that of
+%   \meta{gtl~var_2}.
 % \end{function}
 %
-% \begin{function}{\xtl_concat:NNN, \xtl_gconcat:NNN}
+% \begin{function}{\gtl_concat:NNN, \gtl_gconcat:NNN}
 %   \begin{syntax}
-%     \cs{xtl_concat:NNN} \meta{xtl~var_1} \meta{xtl~var_2} \meta{xtl~var_3}
+%     \cs{gtl_concat:NNN} \meta{gtl~var_1} \meta{gtl~var_2} \meta{gtl~var_3}
 %   \end{syntax}
-%   Concatenates the content of \meta{xtl~var_2} and \meta{xtl~var_3}
-%   together and saves the result in \meta{xtl~var_1}. The
-%   \meta{xtl~var_2} will be placed at the left side of the new extended
+%   Concatenates the content of \meta{gtl~var_2} and \meta{gtl~var_3}
+%   together and saves the result in \meta{gtl~var_1}. The
+%   \meta{gtl~var_2} will be placed at the left side of the new extended
 %   token list.
 % \end{function}
 %
-% \begin{function}[EXP, pTF]{\xtl_if_exist:N}
+% \begin{function}[EXP, pTF]{\gtl_if_exist:N}
 %   \begin{syntax}
-%     \cs{xtl_if_exist_p:N} \meta{xtl~var}
-%     \cs{xtl_if_exist:NTF} \meta{xtl~var} \Arg{true code} \Arg{false code}
+%     \cs{gtl_if_exist_p:N} \meta{gtl~var}
+%     \cs{gtl_if_exist:NTF} \meta{gtl~var} \Arg{true code} \Arg{false code}
 %   \end{syntax}
-%   Tests whether the \meta{xtl~var} is currently defined.  This does
-%   not check that the \meta{xtl~var} really is an extended token list
+%   Tests whether the \meta{gtl~var} is currently defined.  This does
+%   not check that the \meta{gtl~var} really is an extended token list
 %   variable.
 % \end{function}
 %
 % \subsection{Adding data to token list variables}
 %
-% \begin{function}{\xtl_set:Nn, \xtl_set:Nx, \xtl_gset:Nn, \xtl_gset:Nx}
+% \begin{function}{\gtl_set:Nn, \gtl_set:Nx, \gtl_gset:Nn, \gtl_gset:Nx}
 %   \begin{syntax}
-%     \cs{xtl_set:Nn} \meta{xtl~var} \Arg{token list}
+%     \cs{gtl_set:Nn} \meta{gtl~var} \Arg{token list}
 %   \end{syntax}
-%   Sets \meta{xtl~var} to contain the balanced \meta{token list},
+%   Sets \meta{gtl~var} to contain the balanced \meta{token list},
 %   removing any previous content from the variable.
 % \end{function}
 %
-% \begin{function}{\xtl_put_left:Nn, \xtl_gput_left:Nn}
+% \begin{function}{\gtl_put_left:Nn, \gtl_gput_left:Nn}
 %   \begin{syntax}
-%     \cs{xtl_put_left:Nn} \meta{xtl~var} \Arg{token list}
+%     \cs{gtl_put_left:Nn} \meta{gtl~var} \Arg{token list}
 %   \end{syntax}
 %   Appends the balanced \meta{token list} to the left side of the
-%   current content of \meta{xtl~var}.
+%   current content of \meta{gtl~var}.
 % \end{function}
 %
-% \begin{function}{\xtl_put_right:Nn, \xtl_gput_right:Nn}
+% \begin{function}{\gtl_put_right:Nn, \gtl_gput_right:Nn}
 %   \begin{syntax}
-%     \cs{xtl_put_right:Nn} \meta{xtl~var} \Arg{token list}
+%     \cs{gtl_put_right:Nn} \meta{gtl~var} \Arg{token list}
 %   \end{syntax}
 %   Appends the balanced \meta{token list} to the right side of the
-%   current content of \meta{xtl~var}.
+%   current content of \meta{gtl~var}.
 % \end{function}
 %
 % \subsection{Extended token list conditionals}
 %
-% \begin{function}[EXP, pTF]{\xtl_if_blank:N}
+% \begin{function}[EXP, pTF]{\gtl_if_blank:N}
 %   \begin{syntax}
-%     \cs{xtl_if_blank_p:N} \Arg{xtl~var}
-%     \cs{xtl_if_blank:NTF} \Arg{xtl~var} \Arg{true code} \Arg{false code}
+%     \cs{gtl_if_blank_p:N} \Arg{gtl~var}
+%     \cs{gtl_if_blank:NTF} \Arg{gtl~var} \Arg{true code} \Arg{false code}
 %   \end{syntax}
-%   Tests if the \meta{xtl~var} consists only of blank spaces.  The test
-%   is \texttt{true} if \meta{xtl~var} consists of zero or more explicit
+%   Tests if the \meta{gtl~var} consists only of blank spaces.  The test
+%   is \texttt{true} if \meta{gtl~var} consists of zero or more explicit
 %   space characters (explicit tokens with character code~$32$ and
 %   category code~$10$), and is \texttt{false} otherwise.
 % \end{function}
 %
-% \begin{function}[EXP,pTF]{\xtl_if_empty:N}
+% \begin{function}[EXP,pTF]{\gtl_if_empty:N}
 %   \begin{syntax}
-%     \cs{xtl_if_empty_p:N} \meta{xtl~var}
-%     \cs{xtl_if_empty:NTF} \meta{xtl~var} \Arg{true code} \Arg{false code}
+%     \cs{gtl_if_empty_p:N} \meta{gtl~var}
+%     \cs{gtl_if_empty:NTF} \meta{gtl~var} \Arg{true code} \Arg{false code}
 %   \end{syntax}
-%   Tests if the \meta{xtl~var} is entirely empty (\emph{i.e.}~contains
+%   Tests if the \meta{gtl~var} is entirely empty (\emph{i.e.}~contains
 %   no tokens at all).
 % \end{function}
 %
-% \begin{function}[EXP,pTF]{\xtl_if_eq:NN}
+% \begin{function}[EXP,pTF]{\gtl_if_eq:NN}
 %   \begin{syntax}
-%     \cs{xtl_if_eq_p:NN} \Arg{xtl~var_1} \Arg{xtl~var_2}
-%     \cs{xtl_if_eq:NNTF} \Arg{xtl~var_1} \Arg{xtl~var_2} \Arg{true code} \Arg{false code}
+%     \cs{gtl_if_eq_p:NN} \Arg{gtl~var_1} \Arg{gtl~var_2}
+%     \cs{gtl_if_eq:NNTF} \Arg{gtl~var_1} \Arg{gtl~var_2} \Arg{true code} \Arg{false code}
 %   \end{syntax}
-%   Tests if \meta{xtl~var_1} and \meta{xtl~var_2} have the same
+%   Tests if \meta{gtl~var_1} and \meta{gtl~var_2} have the same
 %   content.  The test is \texttt{true} if the two contain the same list
 %   of tokens (identical in both character code and category code).
 % \end{function}
 %
-% \begin{function}[EXP,pTF]{\xtl_if_single_token:N}
+% \begin{function}[EXP,pTF]{\gtl_if_single_token:N}
 %   \begin{syntax}
-%     \cs{xtl_if_single_token_p:N} \meta{xtl~var}
-%     \cs{xtl_if_single_token:NTF} \meta{xtl~var} \Arg{true code} \Arg{false code}
+%     \cs{gtl_if_single_token_p:N} \meta{gtl~var}
+%     \cs{gtl_if_single_token:NTF} \meta{gtl~var} \Arg{true code} \Arg{false code}
 %   \end{syntax}
-%   Tests if the content of the \meta{xtl~var} consists of a single
+%   Tests if the content of the \meta{gtl~var} consists of a single
 %   token.  Such a token list has token count $1$ according to
-%   \cs{xtl_count_tokens:N}.
+%   \cs{gtl_count_tokens:N}.
 % \end{function}
 %
-% \begin{function}[EXP,pTF]{\xtl_if_tl:N}
+% \begin{function}[EXP,pTF]{\gtl_if_tl:N}
 %   \begin{syntax}
-%     \cs{xtl_if_tl_p:N} \meta{xtl~var}
-%     \cs{xtl_if_tl:NTF} \meta{xtl~var} \Arg{true code} \Arg{false code}
+%     \cs{gtl_if_tl_p:N} \meta{gtl~var}
+%     \cs{gtl_if_tl:NTF} \meta{gtl~var} \Arg{true code} \Arg{false code}
 %   \end{syntax}
-%   Tests if the \meta{xtl~var} is balanced.
+%   Tests if the \meta{gtl~var} is balanced.
 % \end{function}
 %
 % \subsection{The first token from an extended token list}
 %
-% \begin{function}[EXP]{\xtl_head:N}
+% \begin{function}[EXP]{\gtl_head:N}
 %   \begin{syntax}
-%     \cs{xtl_head:N} \meta{xtl~var}
+%     \cs{gtl_head:N} \meta{gtl~var}
 %   \end{syntax}
-%   Leaves in the input stream the first token in the \meta{xtl~var}.
-%   If the \meta{xtl~var} is empty, nothing is left in the input stream.
+%   Leaves in the input stream the first token in the \meta{gtl~var}.
+%   If the \meta{gtl~var} is empty, nothing is left in the input stream.
 % \end{function}
 %
-% \begin{function}[EXP]{\xtl_head_do:NN}
+% \begin{function}[EXP]{\gtl_head_do:NN}
 %   \begin{syntax}
-%     \cs{xtl_head_do:NN} \meta{xtl~var} \meta{cs}
+%     \cs{gtl_head_do:NN} \meta{gtl~var} \meta{cs}
 %   \end{syntax}
 %   Leaves in the input stream the \meta{control sequence} followed by
-%   the first token in \meta{xtl~var}.  If the \meta{xtl~var} is empty,
+%   the first token in \meta{gtl~var}.  If the \meta{gtl~var} is empty,
 %   the \meta{cs} is followed by \cs{q_no_value}.
 % \end{function}
 %
-% \begin{function}{\xtl_get_left:NN}
+% \begin{function}{\gtl_get_left:NN}
 %   \begin{syntax}
-%     \cs{xtl_get_left:NN} \meta{xtl~var_1} \meta{xtl~var_2}
+%     \cs{gtl_get_left:NN} \meta{gtl~var_1} \meta{gtl~var_2}
 %   \end{syntax}
-%   Stores the first token from \meta{xtl~var_1} in \meta{xtl~var_2} as
+%   Stores the first token from \meta{gtl~var_1} in \meta{gtl~var_2} as
 %   an single-token extended token list, without removing it from
-%   \meta{xtl~var_1}.
+%   \meta{gtl~var_1}.
 % \end{function}
 %
-% \begin{function}{\xtl_pop_left:N, \xtl_gpop_left:N}
+% \begin{function}{\gtl_pop_left:N, \gtl_gpop_left:N}
 %   \begin{syntax}
-%     \cs{xtl_pop_left:N} \meta{xtl~var}
+%     \cs{gtl_pop_left:N} \meta{gtl~var}
 %   \end{syntax}
-%   Remove the first token from \meta{xtl~var_1}.
+%   Remove the first token from \meta{gtl~var_1}.
 % \end{function}
 %
-% \begin{function}{\xtl_pop_left:NN, \xtl_gpop_left:NN}
+% \begin{function}{\gtl_pop_left:NN, \gtl_gpop_left:NN}
 %   \begin{syntax}
-%     \cs{xtl_pop_left:NN} \meta{xtl~var_1} \meta{xtl~var_2}
+%     \cs{gtl_pop_left:NN} \meta{gtl~var_1} \meta{gtl~var_2}
 %   \end{syntax}
-%   Stores the first token from \meta{xtl~var_1} in \meta{xtl~var_2} as
+%   Stores the first token from \meta{gtl~var_1} in \meta{gtl~var_2} as
 %   an single-token extended token list, and remove it from
-%   \meta{xtl~var_1}.
+%   \meta{gtl~var_1}.
 % \end{function}
 %
-% \begin{function}[EXP,pTF]{\xtl_if_head_eq_catcode:NN}
+% \begin{function}[EXP,pTF]{\gtl_if_head_eq_catcode:NN}
 %   \begin{syntax}
-%     \cs{xtl_if_head_eq_catcode_p:NN} \Arg{xtl~var} \meta{test token}
-%     \cs{xtl_if_head_eq_catcode:NNTF} \Arg{xtl~var} \meta{test token}
+%     \cs{gtl_if_head_eq_catcode_p:NN} \Arg{gtl~var} \meta{test token}
+%     \cs{gtl_if_head_eq_catcode:NNTF} \Arg{gtl~var} \meta{test token}
 %     ~~\Arg{true code} \Arg{false code}
 %   \end{syntax}
-%   Tests if the first token in \meta{xtl~var} has the same category
-%   code as the \meta{test token}.  In the case where \meta{xtl~var} is
+%   Tests if the first token in \meta{gtl~var} has the same category
+%   code as the \meta{test token}.  In the case where \meta{gtl~var} is
 %   empty, the test will always be \texttt{false}.
 % \end{function}
 %
-% \begin{function}[EXP,pTF]{\xtl_if_head_eq_charcode:NN}
+% \begin{function}[EXP,pTF]{\gtl_if_head_eq_charcode:NN}
 %   \begin{syntax}
-%     \cs{xtl_if_head_eq_charcode_p:NN} \Arg{xtl~var} \meta{test token}
-%     \cs{xtl_if_head_eq_charcode:NNTF} \Arg{xtl~var} \meta{test token}
+%     \cs{gtl_if_head_eq_charcode_p:NN} \Arg{gtl~var} \meta{test token}
+%     \cs{gtl_if_head_eq_charcode:NNTF} \Arg{gtl~var} \meta{test token}
 %     ~~\Arg{true code} \Arg{false code}
 %   \end{syntax}
-%   Tests if the first token in \meta{xtl~var} has the same character
-%   code as the \meta{test token}.  In the case where \meta{xtl~var} is
+%   Tests if the first token in \meta{gtl~var} has the same character
+%   code as the \meta{test token}.  In the case where \meta{gtl~var} is
 %   empty, the test will always be \texttt{false}.
 % \end{function}
 %
-% \begin{function}[EXP,pTF]{\xtl_if_head_eq_meaning:NN}
+% \begin{function}[EXP,pTF]{\gtl_if_head_eq_meaning:NN}
 %   \begin{syntax}
-%     \cs{xtl_if_head_eq_meaning_p:NN} \Arg{xtl~var} \meta{test token}
-%     \cs{xtl_if_head_eq_meaning:NNTF} \Arg{xtl~var} \meta{test token}
+%     \cs{gtl_if_head_eq_meaning_p:NN} \Arg{gtl~var} \meta{test token}
+%     \cs{gtl_if_head_eq_meaning:NNTF} \Arg{gtl~var} \meta{test token}
 %     ~~\Arg{true code} \Arg{false code}
 %   \end{syntax}
-%   Tests if the first token in \meta{xtl~var} has the same meaning as
-%   the \meta{test token}.  In the case where \meta{xtl~var} is empty,
+%   Tests if the first token in \meta{gtl~var} has the same meaning as
+%   the \meta{test token}.  In the case where \meta{gtl~var} is empty,
 %   the test will always be \texttt{false}.
 % \end{function}
 %
 % \begin{function}[EXP,pTF]
 %   {
-%     \xtl_if_head_is_group_begin:N,
-%     \xtl_if_head_is_group_end:N,
-%     \xtl_if_head_is_N_type:N,
-%     \xtl_if_head_is_space:N,
+%     \gtl_if_head_is_group_begin:N,
+%     \gtl_if_head_is_group_end:N,
+%     \gtl_if_head_is_N_type:N,
+%     \gtl_if_head_is_space:N,
 %   }
 %   \begin{syntax}
-%     \cs{xtl_if_head_is_group_begin_p:N} \Arg{xtl~var}
-%     \cs{xtl_if_head_is_group_begin:NTF} \Arg{xtl~var}
+%     \cs{gtl_if_head_is_group_begin_p:N} \Arg{gtl~var}
+%     \cs{gtl_if_head_is_group_begin:NTF} \Arg{gtl~var}
 %     ~~\Arg{true code} \Arg{false code}
 %   \end{syntax}
-%   Tests whether the first token in \meta{xtl~var} is an explicit
+%   Tests whether the first token in \meta{gtl~var} is an explicit
 %   begin-group character, an explicit end-group character, an |N|-type
-%   token, or a space.  In the case where \meta{xtl~var} is empty, the
+%   token, or a space.  In the case where \meta{gtl~var} is empty, the
 %   test will always be \texttt{false}.
 % \end{function}
 %
 % \subsection{The first few tokens from an extended token list}
 %
-% \begin{function}[EXP]{\xtl_left_tl:N}
+% \begin{function}[EXP]{\gtl_left_tl:N}
 %   \begin{syntax}
-%     \cs{xtl_left_tl:N} \meta{xtl~var}
+%     \cs{gtl_left_tl:N} \meta{gtl~var}
 %   \end{syntax}
-%   Leaves in the input stream all tokens in \meta{xtl~var} until the
+%   Leaves in the input stream all tokens in \meta{gtl~var} until the
 %   first extra begin-group or extra end-group character, within
 %   \cs{exp_not:n}.  This is the longest balanced token list starting
-%   from the left of \meta{xtl~var}.
+%   from the left of \meta{gtl~var}.
 % \end{function}
 %
-% \begin{function}{\xtl_pop_left_tl:N, \xtl_gpop_left_tl:N}
+% \begin{function}{\gtl_pop_left_tl:N, \gtl_gpop_left_tl:N}
 %   \begin{syntax}
-%     \cs{xtl_pop_left_tl:N} \meta{xtl~var}
+%     \cs{gtl_pop_left_tl:N} \meta{gtl~var}
 %   \end{syntax}
-%   Remove from the \meta{xtl~var} all tokens before the first extra
+%   Remove from the \meta{gtl~var} all tokens before the first extra
 %   begin-group or extra end-group character.  The tokens that are
 %   removed form the longest balanced token list starting from the left
-%   of \meta{xtl~var}.
+%   of \meta{gtl~var}.
 % \end{function}
 %
-% \begin{function}[EXP]{\xtl_left_text:NF}
+% \begin{function}[EXP]{\gtl_left_text:NF}
 %   \begin{syntax}
-%     \cs{xtl_left_text:NF} \meta{xtl~var} \Arg{false code}
+%     \cs{gtl_left_text:NF} \meta{gtl~var} \Arg{false code}
 %   \end{syntax}
-%   Starting from the first token in \meta{xtl~var}, this function finds
+%   Starting from the first token in \meta{gtl~var}, this function finds
 %   a pattern of the form \meta{tokens_1} \Arg{tokens_2}, where the
 %   \meta{tokens_1} contain no begin-group nor end-group characters,
 %   then leaves \meta{tokens_1} \Arg{tokens_2} in the input stream,
 %   within \cs{exp_not:n}.  If no such pattern exists (this happens if
-%   the result of \cs{xtl_left_tl:N} contains no brace group), the
+%   the result of \cs{gtl_left_tl:N} contains no brace group), the
 %   \meta{false code} is run instead.
 % \end{function}
 %
-% \begin{function}{\xtl_pop_left_text:N, \xtl_gpop_left_text:N}
+% \begin{function}{\gtl_pop_left_text:N, \gtl_gpop_left_text:N}
 %   \begin{syntax}
-%     \cs{xtl_pop_left_text:N} \meta{xtl~var}
+%     \cs{gtl_pop_left_text:N} \meta{gtl~var}
 %   \end{syntax}
-%   Starting from the first token in \meta{xtl~var}, this function finds
+%   Starting from the first token in \meta{gtl~var}, this function finds
 %   a pattern of the form \meta{tokens_1} \Arg{tokens_2}, where the
 %   \meta{tokens_1} contain no begin-group nor end-group characters,
-%   then removes \meta{tokens_1} \Arg{tokens_2} from \meta{xtl~var}.  If
+%   then removes \meta{tokens_1} \Arg{tokens_2} from \meta{gtl~var}.  If
 %   no such pattern exists (this happens if the result of
-%   \cs{xtl_left_tl:N} contains no brace group), the \meta{xtl~var} is
+%   \cs{gtl_left_tl:N} contains no brace group), the \meta{gtl~var} is
 %   not modified instead.
 % \end{function}
 %
 % \subsection{Working with the contents of extended token lists}
 %
-% \begin{function}[EXP]{\xtl_count_tokens:N}
+% \begin{function}[EXP]{\gtl_count_tokens:N}
 %   \begin{syntax}
-%     \cs{xtl_count_tokens:N} \meta{xtl~var}
+%     \cs{gtl_count_tokens:N} \meta{gtl~var}
 %   \end{syntax}
-%   Counts the number of tokens in the \meta{xtl~var} and leaves this
+%   Counts the number of tokens in the \meta{gtl~var} and leaves this
 %   information in the input stream.
 % \end{function}
 %
-% \begin{function}[EXP]{\xtl_extra_begin:N, \xtl_extra_end:N}
+% \begin{function}[EXP]{\gtl_extra_begin:N, \gtl_extra_end:N}
 %   \begin{syntax}
-%     \cs{xtl_extra_begin:N} \meta{xtl~var}
+%     \cs{gtl_extra_begin:N} \meta{gtl~var}
 %   \end{syntax}
 %   Counts the number of explicit extra begin-group (or end-group)
-%   characters in the \meta{xtl~var} and leaves this information in the
+%   characters in the \meta{gtl~var} and leaves this information in the
 %   input stream.
 % \end{function}
 %
-% \begin{function}{\xtl_show:N}
+% \begin{function}{\gtl_show:N}
 %   \begin{syntax}
-%     \cs{xtl_show:N} \meta{xtl~var}
+%     \cs{gtl_show:N} \meta{gtl~var}
 %   \end{syntax}
-%   Displays the content of the \meta{xtl~var} on the terminal.
+%   Displays the content of the \meta{gtl~var} on the terminal.
 % \end{function}
 %
-% \begin{function}[EXP]{\xtl_to_str:N}
+% \begin{function}[EXP]{\gtl_to_str:N}
 %   \begin{syntax}
-%     \cs{xtl_to_str:N} \meta{xtl~var}
+%     \cs{gtl_to_str:N} \meta{gtl~var}
 %   \end{syntax}
-%   Converts the content of the \meta{xtl~var} into a series of
+%   Converts the content of the \meta{gtl~var} into a series of
 %   characters with category code $12$ (other) with the exception of
 %   spaces, which retain category code $10$ (space).  This string is
 %   then left in the input stream.
@@ -362,16 +362,16 @@
 %
 % \subsection{Constant extended token lists}
 %
-% \begin{variable}{\c_empty_xtl}
+% \begin{variable}{\c_empty_gtl}
 %   Constant that is always empty.
 % \end{variable}
 %
-% \begin{variable}{\c_group_begin_xtl}
+% \begin{variable}{\c_group_begin_gtl}
 %   An explicit begin-group character contained in an extended token
 %   list.
 % \end{variable}
 %
-% \begin{variable}{\c_group_end_xtl}
+% \begin{variable}{\c_group_end_gtl}
 %   An explicit end-group character contained in an extended token list.
 % \end{variable}
 %
@@ -398,7 +398,7 @@
 %
 % We could add (with lots of work) the expandable function
 % \begin{syntax}
-% \cs{xtl_concat:nF}
+% \cs{gtl_concat:nF}
 %   \{
 %     \Arg{tl_1} \Arg{start_1} \Arg{stop_1}
 %     \Arg{tl_2} \Arg{start_2} \Arg{stop_2}
@@ -414,7 +414,7 @@
 % concatenation is left in the input stream, and the <false code> is
 % removed.  Two cases can lead to running the <false code> (and dropping
 % the first argument altogether).  The first case is when the number of
-% brace groups in \cs{xtl_concat:nF} is not a multiple of 3.  The second
+% brace groups in \cs{gtl_concat:nF} is not a multiple of 3.  The second
 % case is when the concatenation gives rise to an unbalanced token list:
 % then the result is not a valid token list.  Note that each part is
 % allowed to be unbalanced: only the full result must be balanced.
@@ -423,7 +423,7 @@
 %
 % \begin{implementation}
 %
-% \section{\pkg{xtl} implementation}
+% \section{\pkg{gtl} implementation}
 %
 % Some support packages are loaded first, then we declare the package's
 % name, date, version, and purpose.
@@ -435,11 +435,11 @@
 %    \begin{macrocode}
 \RequirePackage{expl3}[2013/07/01]
 \ProvidesExplPackage
-  {xtl} {2013/07/14} {0.0a} {Manipulate unbalanced lists of tokens}
+  {gtl} {2013/07/14} {0.0a} {Manipulate unbalanced lists of tokens}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-%<@@=xtl>
+%<@@=gtl>
 %    \end{macrocode}
 %
 % \subsection{Helpers}
@@ -523,96 +523,96 @@
 %
 % \begin{macro}
 %   {
-%     \xtl_set:Nn, \xtl_gset:Nn, \xtl_const:Nn,
-%     \xtl_set:Nx, \xtl_gset:Nx, \xtl_const:Nx
+%     \gtl_set:Nn, \gtl_gset:Nn, \gtl_const:Nn,
+%     \gtl_set:Nx, \gtl_gset:Nx, \gtl_const:Nx
 %   }
 %   Storing a balanced token list into an extended token list variable
 %   simply means adding \cs{s_@@}, \cs{s__stop}, and two empty brace
 %   groups.
 %    \begin{macrocode}
-\cs_new_protected_nopar:Npn \xtl_set:Nn   { \@@_set:NNn \tl_set:Nn   }
-\cs_new_protected_nopar:Npn \xtl_gset:Nn  { \@@_set:NNn \tl_gset:Nn  }
-\cs_new_protected_nopar:Npn \xtl_const:Nn { \@@_set:NNn \tl_const:Nn }
-\cs_new_protected_nopar:Npn \xtl_set:Nx   { \@@_set:NNn \tl_set:Nx   }
-\cs_new_protected_nopar:Npn \xtl_gset:Nx  { \@@_set:NNn \tl_gset:Nx  }
-\cs_new_protected_nopar:Npn \xtl_const:Nx { \@@_set:NNn \tl_const:Nx }
+\cs_new_protected_nopar:Npn \gtl_set:Nn   { \@@_set:NNn \tl_set:Nn   }
+\cs_new_protected_nopar:Npn \gtl_gset:Nn  { \@@_set:NNn \tl_gset:Nn  }
+\cs_new_protected_nopar:Npn \gtl_const:Nn { \@@_set:NNn \tl_const:Nn }
+\cs_new_protected_nopar:Npn \gtl_set:Nx   { \@@_set:NNn \tl_set:Nx   }
+\cs_new_protected_nopar:Npn \gtl_gset:Nx  { \@@_set:NNn \tl_gset:Nx  }
+\cs_new_protected_nopar:Npn \gtl_const:Nx { \@@_set:NNn \tl_const:Nx }
 \cs_new_protected:Npn \@@_set:NNn   #1#2#3
   { #1 #2 { \s_@@ { } {#3} { } \s__stop } }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{variable}{\c_empty_xtl}
+% \begin{variable}{\c_empty_gtl}
 %   An empty extended token list, obtained thanks to the
-%   \cs{xtl_const:Nn} function just defined.
+%   \cs{gtl_const:Nn} function just defined.
 %    \begin{macrocode}
-\xtl_const:Nn \c_empty_xtl { }
+\gtl_const:Nn \c_empty_gtl { }
 %    \end{macrocode}
 % \end{variable}
 %
-% \begin{variable}{\c_group_begin_xtl, \c_group_end_xtl}
+% \begin{variable}{\c_group_begin_gtl, \c_group_end_gtl}
 %   An extended token list with exactly one begin-group/end-group
 %   character.
 %    \begin{macrocode}
-\tl_const:Nn \c_group_end_xtl   { \s_@@ { { } } { } {     } \s__stop }
-\tl_const:Nn \c_group_begin_xtl { \s_@@ {     } { } { { } } \s__stop }
+\tl_const:Nn \c_group_end_gtl   { \s_@@ { { } } { } {     } \s__stop }
+\tl_const:Nn \c_group_begin_gtl { \s_@@ {     } { } { { } } \s__stop }
 %    \end{macrocode}
 % \end{variable}
 %
 % \subsection{Creating extended token list variables}
 %
-% \begin{macro}{\xtl_new:N}
+% \begin{macro}{\gtl_new:N}
 %   A new extended token list is created empty.
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_new:N #1
-  { \cs_new_eq:NN #1 \c_empty_xtl }
+\cs_new_protected:Npn \gtl_new:N #1
+  { \cs_new_eq:NN #1 \c_empty_gtl }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\xtl_set_eq:NN, \xtl_gset_eq:NN}
+% \begin{macro}{\gtl_set_eq:NN, \gtl_gset_eq:NN}
 %   All the data about an extended token list is stored as a single
 %   token list, so copying is easy.
 %    \begin{macrocode}
-\cs_new_eq:NN \xtl_set_eq:NN  \tl_set_eq:NN
-\cs_new_eq:NN \xtl_gset_eq:NN \tl_gset_eq:NN
+\cs_new_eq:NN \gtl_set_eq:NN  \tl_set_eq:NN
+\cs_new_eq:NN \gtl_gset_eq:NN \tl_gset_eq:NN
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\xtl_clear:N, \xtl_gclear:N}
+% \begin{macro}{\gtl_clear:N, \gtl_gclear:N}
 %   Clearing an extended token list by setting it to the empty one.
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_clear:N  #1
-  { \xtl_set_eq:NN  #1 \c_empty_xtl }
-\cs_new_protected:Npn \xtl_gclear:N #1
-  { \xtl_gset_eq:NN #1 \c_empty_xtl }
+\cs_new_protected:Npn \gtl_clear:N  #1
+  { \gtl_set_eq:NN  #1 \c_empty_gtl }
+\cs_new_protected:Npn \gtl_gclear:N #1
+  { \gtl_gset_eq:NN #1 \c_empty_gtl }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\xtl_clear_new:N, \xtl_gclear_new:N}
+% \begin{macro}{\gtl_clear_new:N, \gtl_gclear_new:N}
 %   If the variable exists, clear it.  Otherwise declare it.
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_clear_new:N #1
-  { \xtl_if_exist:NTF #1 { \xtl_clear:N #1 } { \xtl_new:N #1 } }
-\cs_new_protected:Npn \xtl_gclear_new:N #1
-  { \xtl_if_exist:NTF #1 { \xtl_gclear:N #1 } { \xtl_new:N #1 } }
+\cs_new_protected:Npn \gtl_clear_new:N #1
+  { \gtl_if_exist:NTF #1 { \gtl_clear:N #1 } { \gtl_new:N #1 } }
+\cs_new_protected:Npn \gtl_gclear_new:N #1
+  { \gtl_if_exist:NTF #1 { \gtl_gclear:N #1 } { \gtl_new:N #1 } }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[EXP, pTF]{\xtl_if_exist:N}
+% \begin{macro}[EXP, pTF]{\gtl_if_exist:N}
 %   Again a copy of token list functions.
 %    \begin{macrocode}
-\prg_new_eq_conditional:NNn \xtl_if_exist:N \tl_if_exist:N
+\prg_new_eq_conditional:NNn \gtl_if_exist:N \tl_if_exist:N
   { p , T , F , TF }
 %    \end{macrocode}
 % \end{macro}
 %
 % \subsection{Adding data to extended token list variables}
 %
-% \begin{macro}{\xtl_put_left:Nn, \xtl_gput_left:Nn}
+% \begin{macro}{\gtl_put_left:Nn, \gtl_gput_left:Nn}
 % \begin{macro}[aux, rEXP]{\@@_put_left:wn}
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_put_left:Nn #1#2
+\cs_new_protected:Npn \gtl_put_left:Nn #1#2
   { \tl_set:Nx #1 { \exp_after:wN \@@_put_left:wn #1 {#2} } }
-\cs_new_protected:Npn \xtl_gput_left:Nn #1#2
+\cs_new_protected:Npn \gtl_gput_left:Nn #1#2
   { \tl_gset:Nx #1 { \exp_after:wN \@@_put_left:wn #1 {#2} } }
 \cs_new:Npn \@@_put_left:wn \s_@@ #1#2#3 \s__stop #4
   {
@@ -630,12 +630,12 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\xtl_put_right:Nn, \xtl_gput_right:Nn}
+% \begin{macro}{\gtl_put_right:Nn, \gtl_gput_right:Nn}
 % \begin{macro}[aux, rEXP]{\@@_put_right:wn}
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_put_right:Nn #1#2
+\cs_new_protected:Npn \gtl_put_right:Nn #1#2
   { \tl_set:Nx #1 { \exp_after:wN \@@_put_right:wn #1 {#2} } }
-\cs_new_protected:Npn \xtl_gput_right:Nn #1#2
+\cs_new_protected:Npn \gtl_gput_right:Nn #1#2
   { \tl_gset:Nx #1 { \exp_after:wN \@@_put_right:wn #1 {#2} } }
 \cs_new:Npn \@@_put_right:wn \s_@@ #1#2#3 \s__stop #4
   {
@@ -653,7 +653,7 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\xtl_concat:NNN, \xtl_gconcat:NNN}
+% \begin{macro}{\gtl_concat:NNN, \gtl_gconcat:NNN}
 % \begin{macro}[rEXP, aux]
 %   {
 %     \@@_concat:ww,
@@ -678,9 +678,9 @@
 %   follow-up depends on whether there were more \meta{e} parts or more
 %   \meta{b} parts.
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_concat:NNN #1#2#3
+\cs_new_protected:Npn \gtl_concat:NNN #1#2#3
   { \tl_set:Nx  #1 { \exp_last_two_unbraced:Noo \@@_concat:ww #2 #3 } }
-\cs_new_protected:Npn \xtl_gconcat:NNN #1#2#3
+\cs_new_protected:Npn \gtl_gconcat:NNN #1#2#3
   { \tl_gset:Nx #1 { \exp_last_two_unbraced:Noo \@@_concat:ww #2 #3 } }
 \cs_new:Npn \@@_concat:ww \s_@@ #1#2#3 \s__stop \s_@@ #4#5#6 \s__stop
   {
@@ -750,8 +750,8 @@
 %
 % \subsection{Showing extended token lists}
 %
-% ^^A todo: document \xtl_to_str:n
-% \begin{macro}[EXP]{\xtl_to_str:N, \xtl_to_str:n}
+% ^^A todo: document \gtl_to_str:n
+% \begin{macro}[EXP]{\gtl_to_str:N, \gtl_to_str:n}
 % \begin{macro}[EXP, aux]
 %   {
 %     \@@_to_str:w,
@@ -762,8 +762,8 @@
 %     \@@_to_str_endii:nnw
 %   }
 %    \begin{macrocode}
-\cs_new:Npn \xtl_to_str:N #1 { \exp_after:wN \@@_to_str:w #1 }
-\cs_new:Npn \xtl_to_str:n #1 { \@@_to_str:w #1 }
+\cs_new:Npn \gtl_to_str:N #1 { \exp_after:wN \@@_to_str:w #1 }
+\cs_new:Npn \gtl_to_str:n #1 { \@@_to_str:w #1 }
 \cs_new:Npn \@@_to_str:w \s_@@ #1#2#3 \s__stop
   { \@@_to_str_loopi:nnw { } #1 \q_nil \q_mark {#2} {#3} }
 \cs_new:Npx \@@_to_str_loopi:nnw #1#2
@@ -802,39 +802,39 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\xtl_show:N}
+% \begin{macro}{\gtl_show:N}
 %   Display the variable name, then its string representation.
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_show:N #1
-  { \exp_args:Nx \tl_show:n { \token_to_str:N #1 = \xtl_to_str:N #1 } }
+\cs_new_protected:Npn \gtl_show:N #1
+  { \exp_args:Nx \tl_show:n { \token_to_str:N #1 = \gtl_to_str:N #1 } }
 %    \end{macrocode}
 % \end{macro}
 %
 % \subsection{Extended token list conditionals}
 %
-% \begin{macro}[EXP, pTF]{\xtl_if_eq:NN}
+% \begin{macro}[EXP, pTF]{\gtl_if_eq:NN}
 %   Two extended token lists are equal if their contents agree.
 %    \begin{macrocode}
-\prg_new_conditional:Npnn \xtl_if_eq:NN #1#2 { p , T , F , TF }
+\prg_new_conditional:Npnn \gtl_if_eq:NN #1#2 { p , T , F , TF }
   { \tl_if_eq:NNTF #1 #2 { \prg_return_true: } { \prg_return_false: } }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[EXP, pTF]{\xtl_if_empty:N}
+% \begin{macro}[EXP, pTF]{\gtl_if_empty:N}
 %   An extended token list is empty if it is equal to the empty one.
 %    \begin{macrocode}
-\prg_new_conditional:Npnn \xtl_if_empty:N #1 { p , T , F , TF }
+\prg_new_conditional:Npnn \gtl_if_empty:N #1 { p , T , F , TF }
   {
-    \tl_if_eq:NNTF #1 \c_empty_xtl
+    \tl_if_eq:NNTF #1 \c_empty_gtl
       { \prg_return_true: } { \prg_return_false: }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[EXP, pTF]{\xtl_if_tl:N}
+% \begin{macro}[EXP, pTF]{\gtl_if_tl:N}
 % \begin{macro}[EXP,aux]{\@@_if_tl_return:w}
 %    \begin{macrocode}
-\prg_new_conditional:Npnn \xtl_if_tl:N #1 { p , T , F , TF }
+\prg_new_conditional:Npnn \gtl_if_tl:N #1 { p , T , F , TF }
   { \exp_after:wN \@@_if_tl_return:w #1 }
 \cs_new:Npn \@@_if_tl_return:w \s_@@ #1#2#3 \s__stop
   {
@@ -845,10 +845,10 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}[EXP, pTF]{\xtl_if_single_token:N}
+% \begin{macro}[EXP, pTF]{\gtl_if_single_token:N}
 % \begin{macro}[EXP,aux]{\@@_if_single_token_return:w}
 %    \begin{macrocode}
-\prg_new_conditional:Npnn \xtl_if_single_token:N #1 { p , T , F , TF }
+\prg_new_conditional:Npnn \gtl_if_single_token:N #1 { p , T , F , TF }
   { \exp_after:wN \@@_if_single_token_return:w #1 }
 \cs_new:Npn \@@_if_single_token_return:w \s_@@ #1#2#3 \s__stop
   {
@@ -868,10 +868,10 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}[EXP,pTF]{\xtl_if_blank:N}
+% \begin{macro}[EXP,pTF]{\gtl_if_blank:N}
 % \begin{macro}[EXP,aux]{\@@_if_blank_return:w}
 %    \begin{macrocode}
-\prg_new_conditional:Npnn \xtl_if_blank:N #1 { p , T , F , TF }
+\prg_new_conditional:Npnn \gtl_if_blank:N #1 { p , T , F , TF }
   { \exp_after:wN \@@_if_blank_return:w #1 }
 \cs_new:Npn \@@_if_blank_return:w \s_@@ #1#2#3 \s__stop
   {
@@ -885,13 +885,13 @@
 %
 % \begin{macro}[EXP,pTF]
 %   {
-%     \xtl_if_head_is_group_begin:N,
-%     \xtl_if_head_is_group_end:N,
-%     \xtl_if_head_is_space:N,
-%     \xtl_if_head_is_N_type:N,
+%     \gtl_if_head_is_group_begin:N,
+%     \gtl_if_head_is_group_end:N,
+%     \gtl_if_head_is_space:N,
+%     \gtl_if_head_is_N_type:N,
 %   }
 %    \begin{macrocode}
-\prg_new_conditional:Npnn \xtl_if_head_is_group_begin:N #1
+\prg_new_conditional:Npnn \gtl_if_head_is_group_begin:N #1
   { p , T , F , TF }
   {
     \exp_after:wN \@@_head:wnnnnn #1
@@ -901,7 +901,7 @@
       { \prg_return_false: }
       { \prg_return_false: \use_none:n }
   }
-\prg_new_conditional:Npnn \xtl_if_head_is_group_end:N #1
+\prg_new_conditional:Npnn \gtl_if_head_is_group_end:N #1
   { p , T , F , TF }
   {
     \exp_after:wN \@@_head:wnnnnn #1
@@ -911,7 +911,7 @@
       { \prg_return_false: }
       { \prg_return_false: \use_none:n }
   }
-\prg_new_conditional:Npnn \xtl_if_head_is_space:N #1
+\prg_new_conditional:Npnn \gtl_if_head_is_space:N #1
   { p , T , F , TF }
   {
     \exp_after:wN \@@_head:wnnnnn #1
@@ -921,7 +921,7 @@
       { \prg_return_true: }
       { \prg_return_false: \use_none:n }
   }
-\prg_new_conditional:Npnn \xtl_if_head_is_N_type:N #1
+\prg_new_conditional:Npnn \gtl_if_head_is_N_type:N #1
   { p , T , F , TF }
   {
     \exp_after:wN \@@_head:wnnnnn #1
@@ -934,8 +934,8 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[EXP, pTF]{\xtl_if_head_eq_catcode:NN}
-% \begin{macro}[EXP, pTF]{\xtl_if_head_eq_charcode:NN}
+% \begin{macro}[EXP, pTF]{\gtl_if_head_eq_catcode:NN}
+% \begin{macro}[EXP, pTF]{\gtl_if_head_eq_charcode:NN}
 % \begin{macro}[EXP, aux]{\@@_if_head_eq_code_return:NNN}
 %   In the empty case, |?| can match with |#2|, but then
 %   \cs{use_none:nn} gets rid of \cs{prg_return_true:} and \cs{else:},
@@ -945,10 +945,10 @@
 %   test, in case |#2|~itself is a primitive \TeX{} conditional, which
 %   would mess up conditional nesting.
 %    \begin{macrocode}
-\prg_new_conditional:Npnn \xtl_if_head_eq_catcode:NN #1#2
+\prg_new_conditional:Npnn \gtl_if_head_eq_catcode:NN #1#2
   { p , T , F , TF }
   { \@@_if_head_eq_code_return:NNN \if_catcode:w #1#2 }
-\prg_new_conditional:Npnn \xtl_if_head_eq_charcode:NN #1#2
+\prg_new_conditional:Npnn \gtl_if_head_eq_charcode:NN #1#2
   { p , T , F , TF }
   { \@@_if_head_eq_code_return:NNN \if_charcode:w #1#2 }
 \cs_new:Npn \@@_if_head_eq_code_return:NNN #1#2#3
@@ -971,10 +971,10 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}[EXP, pTF]{\xtl_if_head_eq_meaning:NN}
+% \begin{macro}[EXP, pTF]{\gtl_if_head_eq_meaning:NN}
 % \begin{macro}[EXP, aux]{\@@_if_head_eq_meaning_return:NN}
 %    \begin{macrocode}
-\prg_new_conditional:Npnn \xtl_if_head_eq_meaning:NN #1#2
+\prg_new_conditional:Npnn \gtl_if_head_eq_meaning:NN #1#2
   { p , T , F , TF }
   { \@@_if_head_eq_meaning_return:NN #1#2 }
 \cs_new:Npn \@@_if_head_eq_meaning_return:NN #1#2
@@ -999,7 +999,7 @@
 % \begin{macro}[EXP, int]{\@@_head:wnnnnn}
 % \begin{macro}[EXP, aux]{\@@_head_aux:nwnnnn}
 % \begin{macro}[EXP, aux]{\@@_head_auxii:N, \@@_head_auxiii:Nnn}
-%   This function performs |#4|~if the \texttt{xtl} is empty, |#5|~if it
+%   This function performs |#4|~if the \texttt{gtl} is empty, |#5|~if it
 %   starts with a begin-group character, |#6|~if it starts with an
 %   end-group character, |#7|~if it starts with a space, and in other
 %   cases (when the first token is |N|-type), it performs |#8|~followed
@@ -1038,14 +1038,14 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}[EXP]{\xtl_head:N}
+% \begin{macro}[EXP]{\gtl_head:N}
 %   If |#1| is empty, do nothing.  If it starts with a begin-group
 %   character or an end-group character leave the appropriate brace
 %   (thanks to \cs{if_false:} tricks).  If it starts with a space, leave
 %   that, and finally if it starts with a normal token, leave it, within
 %   \cs{exp_not:n}.
 %    \begin{macrocode}
-\cs_new:Npn \xtl_head:N #1
+\cs_new:Npn \gtl_head:N #1
   {
     \exp_after:wN \@@_head:wnnnnn #1
       { }
@@ -1057,10 +1057,10 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[EXP]{\xtl_head_do:NN}
-%   Similar to \cs{xtl_head:N}, but inserting |#2| before the resulting token.
+% \begin{macro}[EXP]{\gtl_head_do:NN}
+%   Similar to \cs{gtl_head:N}, but inserting |#2| before the resulting token.
 %    \begin{macrocode}
-\cs_new:Npn \xtl_head_do:NN #1#2
+\cs_new:Npn \gtl_head_do:NN #1#2
   {
     \exp_after:wN \@@_head:wnnnnn #1
       { #2 \q_no_value }
@@ -1072,21 +1072,21 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\xtl_get_left:NN}
+% \begin{macro}{\gtl_get_left:NN}
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_get_left:NN #1#2
+\cs_new_protected:Npn \gtl_get_left:NN #1#2
   {
     \exp_after:wN \@@_head:wnnnnn #1
-      { \xtl_set:Nn #2 { \q_no_value } }
-      { \xtl_set_eq:NN #2 \c_group_begin_xtl }
-      { \xtl_set_eq:NN #2 \c_group_end_xtl }
-      { \xtl_set:Nn #2 { ~ } }
-      { \xtl_set:Nn #2 }
+      { \gtl_set:Nn #2 { \q_no_value } }
+      { \gtl_set_eq:NN #2 \c_group_begin_gtl }
+      { \gtl_set_eq:NN #2 \c_group_end_gtl }
+      { \gtl_set:Nn #2 { ~ } }
+      { \gtl_set:Nn #2 }
   }
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\xtl_pop_left:N, \xtl_gpop_left:N}
+% \begin{macro}{\gtl_pop_left:N, \gtl_gpop_left:N}
 % \begin{macro}[aux, rEXP]
 %   {
 %     \@@_pop_left:w,
@@ -1098,9 +1098,9 @@
 %     \@@_pop_left_auxvi:n
 %   }
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_pop_left:N #1
+\cs_new_protected:Npn \gtl_pop_left:N #1
   { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left:w #1 } }
-\cs_new_protected:Npn \xtl_gpop_left:N #1
+\cs_new_protected:Npn \gtl_gpop_left:N #1
   { \tl_gset:Nx #1 { \exp_after:wN \@@_pop_left:w #1 } }
 \cs_new:Npn \@@_pop_left:w \s_@@ #1#2#3 \s__stop
   {
@@ -1167,29 +1167,29 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\xtl_pop_left:NN, \xtl_gpop_left:NN}
+% \begin{macro}{\gtl_pop_left:NN, \gtl_gpop_left:NN}
 %   Getting the first token and removing it from the extended token list
 %   is done in two steps.
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_pop_left:NN #1#2
+\cs_new_protected:Npn \gtl_pop_left:NN #1#2
   {
-    \xtl_get_left:NN #1 #2
-    \xtl_pop_left:N #1
+    \gtl_get_left:NN #1 #2
+    \gtl_pop_left:N #1
   }
-\cs_new_protected:Npn \xtl_gpop_left:NN #1#2
+\cs_new_protected:Npn \gtl_gpop_left:NN #1#2
   {
-    \xtl_get_left:NN #1 #2
-    \xtl_gpop_left:N #1
+    \gtl_get_left:NN #1 #2
+    \gtl_gpop_left:N #1
   }
 %    \end{macrocode}
 % \end{macro}
 %
 % \subsection{Longest token list starting an extended token list}
 %
-% \begin{macro}[EXP]{\xtl_left_tl:N}
+% \begin{macro}[EXP]{\gtl_left_tl:N}
 % \begin{macro}[EXP,aux]{\@@_left_tl:w}
 %    \begin{macrocode}
-\cs_new:Npn \xtl_left_tl:N #1
+\cs_new:Npn \gtl_left_tl:N #1
   { \exp_after:wN \@@_left_tl:w #1 }
 \cs_new:Npn \@@_left_tl:w \s_@@ #1#2#3 \s__stop
   { \tl_if_empty:nTF {#1} { \exp_not:n {#2} } { \tl_head:n {#1} } }
@@ -1197,11 +1197,11 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\xtl_pop_left_tl:N, \xtl_gpop_left_tl:N}
+% \begin{macro}{\gtl_pop_left_tl:N, \gtl_gpop_left_tl:N}
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_pop_left_tl:N #1
+\cs_new_protected:Npn \gtl_pop_left_tl:N #1
   { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left_tl:w #1 } }
-\cs_new_protected:Npn \xtl_gpop_left_tl:N #1
+\cs_new_protected:Npn \gtl_gpop_left_tl:N #1
   { \tl_gset:Nx #1 { \exp_after:wN \@@_pop_left_tl:w #1 } }
 \cs_new:Npn \@@_pop_left_tl:w \s_@@ #1#2#3 \s__stop
   {
@@ -1227,7 +1227,7 @@
 % variable, and the |pop| functions also remove those tokens from the
 % extended token list variable.
 %
-% \begin{macro}[EXP]{\xtl_left_text:NF}
+% \begin{macro}[EXP]{\gtl_left_text:NF}
 % \begin{macro}[aux, EXP]
 %   {
 %     \@@_left_text:wF,
@@ -1236,7 +1236,7 @@
 %     \@@_left_text_auxiii:nnwF,
 %   }
 %    \begin{macrocode}
-\cs_new:Npn \xtl_left_text:NF #1
+\cs_new:Npn \gtl_left_text:NF #1
   { \exp_after:wN \@@_left_text:wF #1 }
 \cs_new:Npn \@@_left_text:wF \s_@@ #1#2#3 \s__stop
   {
@@ -1254,7 +1254,7 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\xtl_pop_left_text:N, \xtl_gpop_left_text:N}
+% \begin{macro}{\gtl_pop_left_text:N, \gtl_gpop_left_text:N}
 % \begin{macro}[aux, rEXP]
 %   {
 %     \@@_pop_left_text:w,
@@ -1264,9 +1264,9 @@
 %     \@@_pop_left_text_auxiv:nw,
 %   }
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_pop_left_text:N #1
+\cs_new_protected:Npn \gtl_pop_left_text:N #1
   { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left_text:w #1 } }
-\cs_new_protected:Npn \xtl_gpop_left_text:N #1
+\cs_new_protected:Npn \gtl_gpop_left_text:N #1
   { \tl_gset:Nx #1 { \exp_after:wN \@@_pop_left_text:w #1 } }
 \cs_new:Npn \@@_pop_left_text:w \s_@@ #1#2#3 \s__stop
   {
@@ -1305,17 +1305,17 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\xtl_pop_left_text:NN, \xtl_gpop_left_text:NN}
+% \begin{macro}{\gtl_pop_left_text:NN, \gtl_gpop_left_text:NN}
 %    \begin{macrocode}
-\cs_new_protected:Npn \xtl_pop_left_text:NN #1#2
+\cs_new_protected:Npn \gtl_pop_left_text:NN #1#2
   {
-    \xtl_get_left_text:NN #1#2
-    \xtl_pop_left_text:N #1
+    \gtl_get_left_text:NN #1#2
+    \gtl_pop_left_text:N #1
   }
-\cs_new_protected:Npn \xtl_gpop_left_text:NN #1#2
+\cs_new_protected:Npn \gtl_gpop_left_text:NN #1#2
   {
-    \xtl_get_left_text:NN #1#2
-    \xtl_gpop_left_text:N #1
+    \gtl_get_left_text:NN #1#2
+    \gtl_gpop_left_text:N #1
   }
 %    \end{macrocode}
 % \end{macro}
@@ -1344,18 +1344,18 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}[EXP]{\xtl_extra_begin:N, \xtl_extra_end:N}
+% \begin{macro}[EXP]{\gtl_extra_begin:N, \gtl_extra_end:N}
 % \begin{macro}[EXP, aux]{\@@_extra_begin:w, \@@_extra_end:w}
 %   Count the number of extra end-group or of extra begin-group
 %   characters in an extended token list.  This is the number of items
 %   in the first or third brace groups.  We cannot use \cs{tl_count:n},
-%   as \pkg{xtl} is meant to be robust against inclusion of quarks.
+%   as \pkg{gtl} is meant to be robust against inclusion of quarks.
 %    \begin{macrocode}
-\cs_new:Npn \xtl_extra_end:N #1
+\cs_new:Npn \gtl_extra_end:N #1
   { \exp_after:wN \@@_extra_end:w #1 }
 \cs_new:Npn \@@_extra_end:w \s_@@ #1#2#3 \s__stop
   { \@@_tl_count:n {#1} }
-\cs_new:Npn \xtl_extra_begin:N #1
+\cs_new:Npn \gtl_extra_begin:N #1
   { \exp_after:wN \@@_extra_begin:w #1 }
 \cs_new:Npn \@@_extra_begin:w \s_@@ #1#2#3 \s__stop
   { \@@_tl_count:n {#3} }
@@ -1363,7 +1363,7 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}[EXP]{\xtl_count_tokens:N}
+% \begin{macro}[EXP]{\gtl_count_tokens:N}
 % \begin{macro}[aux, rEXP]
 %   {
 %     \@@_count_tokens:w,
@@ -1372,7 +1372,7 @@
 %     \@@_count_auxiii:n
 %   }
 %    \begin{macrocode}
-\cs_new:Npn \xtl_count_tokens:N #1
+\cs_new:Npn \gtl_count_tokens:N #1
   { \exp_after:wN \@@_count_tokens:w #1 }
 \cs_new:Npn \@@_count_tokens:w \s_@@ #1#2#3 \s__stop
   {

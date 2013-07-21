@@ -1,0 +1,25 @@
+\RequirePackage{gtl}
+\ExplSyntaxOn
+\iow_new:N \g_output_iow
+\iow_open:Nn \g_output_iow { \c_job_name_tl .output }
+\gtl_new:N \l_tmpa_gtl
+\gtl_new:N \l_tmpb_gtl
+\gtl_set:Nn \l_tmpa_gtl { \abc { \def } \gh }
+\gtl_concat:NNN \l_tmpa_gtl \c_group_begin_gtl \l_tmpa_gtl
+\iow_now:Nx \g_output_iow { \gtl_to_str:N \l_tmpa_gtl }
+\iow_now:Nx \g_output_iow { \gtl_count_tokens:N \l_tmpa_gtl }
+\iow_now:Nx \g_output_iow { | \gtl_left_text:NF \l_tmpa_gtl { } | }
+{
+  \gtl_pop_left:NN \l_tmpa_gtl \l_tmpb_gtl
+  \iow_now:Nx \g_output_iow { \gtl_to_str:N \l_tmpb_gtl }
+}
+\gtl_put_left:Nn \l_tmpa_gtl { { { \a \b } \c } }
+\gtl_pop_left:N \l_tmpa_gtl
+\gtl_pop_left:N \l_tmpa_gtl
+\iow_now:Nx \g_output_iow { \gtl_to_str:N \l_tmpa_gtl }
+\iow_now:Nx \g_output_iow { \gtl_count_tokens:N \l_tmpa_gtl }
+\gtl_concat:NNN \l_tmpa_gtl \l_tmpa_gtl \l_tmpa_gtl
+\iow_now:Nx \g_output_iow { \gtl_to_str:N \l_tmpa_gtl }
+\iow_now:Nx \g_output_iow { \gtl_count_tokens:N \l_tmpa_gtl }
+\iow_close:N \g_output_iow
+\tex_end:D

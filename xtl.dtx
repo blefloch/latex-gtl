@@ -188,6 +188,7 @@
 %     \cs{xtl_head:N} \meta{xtl~var}
 %   \end{syntax}
 %   Leaves in the input stream the first token in the \meta{xtl~var}.
+%   If the \meta{xtl~var} is empty, nothing is left in the input stream.
 % \end{function}
 %
 % \begin{function}[EXP]{\xtl_head_do:NN}
@@ -195,7 +196,8 @@
 %     \cs{xtl_head_do:NN} \meta{xtl~var} \meta{cs}
 %   \end{syntax}
 %   Leaves in the input stream the \meta{control sequence} followed by
-%   the first token in \meta{xtl~var}.
+%   the first token in \meta{xtl~var}.  If the \meta{xtl~var} is empty,
+%   the \meta{cs} is followed by \cs{q_no_value}.
 % \end{function}
 %
 % \begin{function}{\xtl_get_left:NN}
@@ -286,7 +288,7 @@
 %   from the left of \meta{xtl~var}.
 % \end{function}
 %
-% \begin{function}{\xtl_pop_left_tl:N}
+% \begin{function}{\xtl_pop_left_tl:N, \xtl_gpop_left_tl:N}
 %   \begin{syntax}
 %     \cs{xtl_pop_left_tl:N} \meta{xtl~var}
 %   \end{syntax}
@@ -1061,7 +1063,7 @@
 \cs_new:Npn \xtl_head_do:NN #1#2
   {
     \exp_after:wN \@@_head:wnnnnn #1
-      { #2 }
+      { #2 \q_no_value }
       { \exp_after:wN #2 \exp_after:wN { \if_false: } \fi: }
       { \if_false: { \fi: #2 } }
       { #2 ~ }
@@ -1207,7 +1209,7 @@
     \tl_if_empty:nTF {#1}
       { { } { } }
       {
-        { \tl_tail:n {#1} }
+        { { } \tl_tail:n {#1} }
         { \exp_not:n {#2} }
       }
     { \exp_not:n {#3} }

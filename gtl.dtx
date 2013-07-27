@@ -1334,7 +1334,7 @@
   { \int_eval:n { \c_zero \@@_tl_count_loop:n #1 \q_nil \q_stop } }
 \cs_new:Npn \@@_tl_count_loop:n #1
   {
-    \quark_nil:nTF {#1}
+    \quark_if_nil:nTF {#1}
       { \@@_tl_count_test:w }
       { + \c_one \@@_tl_count_loop:n }
   }

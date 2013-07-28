@@ -1301,21 +1301,6 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\gtl_pop_left_text:NN, \gtl_gpop_left_text:NN}
-%    \begin{macrocode}
-\cs_new_protected:Npn \gtl_pop_left_text:NN #1#2
-  {
-    \gtl_get_left_text:NN #1#2
-    \gtl_pop_left_text:N #1
-  }
-\cs_new_protected:Npn \gtl_gpop_left_text:NN #1#2
-  {
-    \gtl_get_left_text:NN #1#2
-    \gtl_gpop_left_text:N #1
-  }
-%    \end{macrocode}
-% \end{macro}
-%
 % \subsection{Counting tokens}
 %
 % \begin{macro}[EXP, int]{\@@_tl_count:n}

@@ -1107,11 +1107,7 @@
     \tl_if_empty:nTF {#1}
       {
         \tl_if_empty:nTF {#2}
-          {
-            \tl_if_empty:nTF {#3}
-              { \s_@@ { } { } { } \s__stop }
-              { \@@_pop_left_auxi:n {#3} }
-          }
+          { \@@_pop_left_auxi:n {#3} }
           { \@@_pop_left_auxiv:nn {#2} {#3} }
       }
       { \@@_pop_left_auxv:nnn {#1} {#2} {#3} }
@@ -1132,7 +1128,7 @@
 \cs_new:Npn \@@_pop_left_auxiii:nnnw #1#2#3#4 \q_stop
   {
     \tl_if_empty:nTF {#4}
-      { \exp_not:n { {#2} {#1} } }
+      { \exp_not:n { #2 {#1} } }
       { \@@_pop_left_auxii:nnnw { #1 #2 } { {#3} } }
   }
 \cs_new:Npn \@@_pop_left_auxiv:nn #1#2

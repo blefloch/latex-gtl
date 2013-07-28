@@ -298,6 +298,27 @@
 %   of \meta{gtl~var}.
 % \end{function}
 %
+% \begin{function}[EXP]{\gtl_left_item:NF}
+%   \begin{syntax}
+%     \cs{gtl_left_item:NF} \meta{gtl~var} \Arg{false code}
+%   \end{syntax}
+%   Leaves in the input stream the first \meta{item} of the
+%   \meta{gtl~var}: this is identical to \cs{tl_head:n} applied to the
+%   result of \cs{gtl_left_tl:N}.  If there is no such item, the
+%   \meta{false code} is left in the input stream.
+% \end{function}
+%
+% \begin{function}[TF]{\gtl_pop_left_item:NN, \gtl_gpop_left_item:NN}
+%   \begin{syntax}
+%     \cs{gtl_pop_left_item:NNTF} \meta{gtl~var} \meta{tl~var}
+%       \Arg{true~code} \Arg{false~code}
+%   \end{syntax}
+%   Stores the first item of \meta{gtl~var} in \meta{tl~var}, locally,
+%   and removes it from \meta{gtl~var}, together with any space before
+%   it.  If there is no such item, the \meta{gtl~var} is not affected,
+%   and the meta{tl~var} may or may not be affected.
+% \end{function}
+%
 % \begin{function}[EXP]{\gtl_left_text:NF}
 %   \begin{syntax}
 %     \cs{gtl_left_text:NF} \meta{gtl~var} \Arg{false code}
@@ -473,9 +494,9 @@
 %   braces, and places the result into \cs{exp_not:n}.
 %    \begin{macrocode}
 \cs_new_nopar:Npn \@@_strip_nil_mark:w
-  { \@@_strip_nil_mark_aux:w \exp_stop_f: }
+  { \@@_strip_nil_mark_aux:w \prg_do_nothing: }
 \cs_new:Npn \@@_strip_nil_mark_aux:w #1 \q_nil \q_mark
-  { \exp_not:f {#1} }
+  { \exp_not:o {#1} }
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -1212,6 +1233,83 @@
     \s__stop
   }
 %    \end{macrocode}
+% \end{macro}
+%
+% \subsection{First item of an extended token list}
+%
+% \begin{macro}[EXP]{\gtl_left_item:NF}
+% \begin{macro}[aux, EXP]{\@@_left_item:wF, \@@_left_item_auxi:nwF}
+%   The left-most item of an extended token list is the head of its left
+%   token list.  The code thus starts like \cs{gtl_left_tl:N}.  It ends
+%   with a check to test if we should use the head, or issue the false
+%   code.
+%    \begin{macrocode}
+\cs_new:Npn \gtl_left_item:NF #1
+  { \exp_after:wN \@@_left_item:wF #1 }
+\cs_new:Npn \@@_left_item:wF \s_@@ #1#2#3 \s__stop
+  { \@@_left_item_auxi:nwF #1 {#2} \q_stop }
+\cs_new:Npn \@@_left_item_auxi:nwF #1#2 \q_stop #3
+  { \tl_if_blank:nTF {#1} {#3} { \tl_head:n {#1} } }
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}[TF]{\gtl_pop_left_item:NN, \gtl_gpop_left_item:NN}
+% \begin{macro}[aux]
+%   {\@@_pop_left_item:wNNN, \@@_pop_left_item_aux:nwnnNNN}
+%   If there is no extra end-group characters, and if the balanced part
+%   is blank, we cannot extract an item: return \texttt{false}.  If the
+%   balanced part is not blank, store its first item into |#4|, and
+%   store the altered generalized token list into~|#6|, locally or
+%   globally.  Otherwise, pick out the part before the first extra
+%   end-group character as |#1| of the second auxiliary, and do
+%   essentially the same: if it is blank, there is no item, and if it is
+%   not blank, pop its first item.
+%    \begin{macrocode}
+\prg_new_protected_conditional:Npnn \gtl_pop_left_item:NN #1#2 { TF , T , F }
+  { \exp_after:wN \@@_pop_left_item:wNNN #1#2 \tl_set:Nx #1 }
+\prg_new_protected_conditional:Npnn \gtl_gpop_left_item:NN #1#2 { TF , T , F }
+  { \exp_after:wN \@@_pop_left_item:wNNN #1#2 \tl_gset:Nx #1 }
+\cs_new_protected:Npn \@@_pop_left_item:wNNN
+    \s_@@ #1#2#3 \s__stop #4#5#6
+  {
+    \tl_if_empty:nTF {#1}
+      {
+        \tl_if_blank:nTF {#2} { \prg_return_false: }
+          {
+            \tl_set:Nx #4 { \tl_head:n {#2} }
+            #5 #6
+              {
+                \s_@@ { } { \tl_tail:n {#2} }
+                { \exp_not:n {#3} } \s__stop
+              }
+            \prg_return_true:
+          }
+      }
+      {
+        \@@_pop_left_item_aux:nwnnNNN #1 \q_nil \q_stop
+          {#2} {#3} #4 #5 #6
+      }
+  }
+\cs_new_protected:Npn \@@_pop_left_item_aux:nwnnNNN
+    #1#2 \q_stop #3#4#5#6#7
+  {
+    \tl_if_blank:nTF {#1} { \prg_return_false: }
+      {
+        \tl_set:Nx #5 { \tl_head:n {#1} }
+        #6 #7
+          {
+            \s_@@
+            { { \tl_tail:n {#1} } \@@_strip_nil_mark:w #2 \q_mark }
+            { \exp_not:n {#2} }
+            { \exp_not:n {#3} }
+            \s__stop
+          }
+        \prg_return_true:
+      }
+  }
+%    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % \subsection{First group in an extended token list}

@@ -1,0 +1,107 @@
+%
+% Copyright (C) 2015 Bruno Le Floch
+%
+\documentclass{minimal}
+\input{regression-test}
+\RequirePackage[log-functions,check-declarations]{expl3}
+
+\RequirePackage{gtl}
+
+\START
+\ExplSyntaxOn
+
+\gtl_new:N \l_my_empty_gtl
+\gtl_const:Nx \c_space_gtl { ~ }
+\gtl_const:Nn \c_i_gtl { i }
+\gtl_new:N \l_o_gtl
+\gtl_set:Nn \l_o_gtl { { o } }
+\gtl_new:N \l_x_gtl
+\gtl_concat:NNN \l_x_gtl \c_group_end_gtl \c_group_begin_gtl % = } {
+\gtl_new:N \l_fish_gtl
+\gtl_concat:NNN \l_fish_gtl \c_group_end_gtl \l_o_gtl % = } { o }
+\gtl_new:N \l_xox_gtl
+\gtl_concat:NNN \l_xox_gtl \l_fish_gtl \c_group_begin_gtl % = } { o } {
+\gtl_new:N \g_XOX_gtl
+\gtl_gset_eq:NN \g_XOX_gtl \l_x_gtl
+\gtl_gput_right:Nn \g_XOX_gtl { o }
+\gtl_gconcat:NNN \g_XOX_gtl \g_XOX_gtl \l_x_gtl % = } { o } {
+
+\TEST { Initial~setup }
+  {
+    \gtl_log:N \l_my_empty_gtl
+    \gtl_log:N \c_space_gtl
+    \gtl_log:N \c_i_gtl
+    \gtl_log:N \l_o_gtl
+    \gtl_log:N \l_x_gtl
+    \gtl_log:N \l_fish_gtl
+    \gtl_log:N \l_xox_gtl
+    \gtl_log:N \g_XOX_gtl
+  }
+
+\TEST { \gtl_if_blank:NTF , \gtl_if_blank:NT ,\gtl_if_blank:NF , \gtl_if_blank_p:N }
+  {
+    \tl_map_inline:nn
+      { \c_empty_gtl \l_my_empty_gtl \c_space_gtl \c_i_gtl \c_group_begin_gtl \c_group_end_gtl \l_x_gtl }
+      {
+        \gtl_if_blank:NTF #1 { \TRUE } { \FALSE }
+        \gtl_if_blank:NT #1 { \TRUE }
+        \gtl_if_blank:NF #1 { \FALSE }
+        \if_predicate:w \gtl_if_blank_p:N #1 \TRUE \else: \FALSE \fi:
+      }
+  }
+
+\TEST { \gtl_if_empty:NTF , \gtl_if_empty:NT ,\gtl_if_empty:NF , \gtl_if_empty_p:N }
+  {
+    \tl_map_inline:nn
+      { \c_empty_gtl \l_my_empty_gtl \c_space_gtl \c_i_gtl \c_group_begin_gtl \c_group_end_gtl \l_x_gtl }
+      {
+        \gtl_if_empty:NTF #1 { \TRUE } { \FALSE }
+        \gtl_if_empty:NT #1 { \TRUE }
+        \gtl_if_empty:NF #1 { \FALSE }
+        \if_predicate:w \gtl_if_empty_p:N #1 \TRUE \else: \FALSE \fi:
+      }
+  }
+
+\TEST { \gtl_if_eq:NNTF , \gtl_if_eq:NNT ,\gtl_if_eq:NNF , \gtl_if_eq_p:NN }
+  {
+    \tl_map_inline:nn
+      {
+        { \c_empty_gtl \l_my_empty_gtl }
+        { \l_xox_gtl \g_XOX_gtl }
+        { \c_space_gtl \c_empty_gtl }
+        { \c_group_begin_gtl \c_empty_gtl }
+        { \l_fish_gtl \c_group_end_gtl }
+      }
+      {
+        \gtl_if_eq:NNTF #1 { \TRUE } { \FALSE }
+        \gtl_if_eq:NNT #1 { \TRUE }
+        \gtl_if_eq:NNF #1 { \FALSE }
+        \if_predicate:w \gtl_if_eq_p:NN #1 \TRUE \else: \FALSE \fi:
+      }
+  }
+
+\TEST { \gtl_if_single_token:NTF , \gtl_if_single_token:NT ,\gtl_if_single_token:NF , \gtl_if_single_token_p:N }
+  {
+    \tl_map_inline:nn
+      { \c_empty_gtl \l_my_empty_gtl \c_space_gtl \c_i_gtl \c_group_begin_gtl \c_group_end_gtl \l_x_gtl }
+      {
+        \gtl_if_single_token:NTF #1 { \TRUE } { \FALSE }
+        \gtl_if_single_token:NT #1 { \TRUE }
+        \gtl_if_single_token:NF #1 { \FALSE }
+        \if_predicate:w \gtl_if_single_token_p:N #1 \TRUE \else: \FALSE \fi:
+      }
+  }
+
+\TEST { \gtl_if_tl:NTF , \gtl_if_tl:NT ,\gtl_if_tl:NF , \gtl_if_tl_p:N }
+  {
+    \tl_map_inline:nn
+      { \c_empty_gtl \l_my_empty_gtl \c_space_gtl \c_i_gtl \c_group_begin_gtl \c_group_end_gtl \l_x_gtl }
+      {
+        \gtl_if_tl:NTF #1 { \TRUE } { \FALSE }
+        \gtl_if_tl:NT #1 { \TRUE }
+        \gtl_if_tl:NF #1 { \FALSE }
+        \if_predicate:w \gtl_if_tl_p:N #1 \TRUE \else: \FALSE \fi:
+      }
+  }
+
+\END

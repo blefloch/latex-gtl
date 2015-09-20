@@ -1,0 +1,212 @@
+%
+% Copyright (C) 2015 Bruno Le Floch
+%
+\documentclass{minimal}
+\input{regression-test}
+\RequirePackage[log-functions,check-declarations]{expl3}
+
+\RequirePackage{gtl}
+
+\START
+\ExplSyntaxOn
+
+\gtl_const:Nx \c_spaces_gtl { \prg_replicate:nn { 4 } { ~ } }
+\gtl_const:Nn \c_abc_gtl { \abc }
+\gtl_new:N \l_left_gtl
+\gtl_concat:NNN \l_left_gtl \c_group_end_gtl \c_abc_gtl
+\gtl_concat:NNN \l_left_gtl \l_left_gtl \l_left_gtl
+\gtl_concat:NNN \l_left_gtl \l_left_gtl \l_left_gtl
+\gtl_put_right:Nn \l_left_gtl { { x } }
+\gtl_new:N \l_spleft_gtl
+\gtl_set_eq:NN \l_spleft_gtl \l_left_gtl
+\gtl_put_left:Nn \l_spleft_gtl { ~ }
+\gtl_new:N \l_right_gtl
+\gtl_concat:NNN \l_right_gtl \c_abc_gtl \c_group_begin_gtl
+\gtl_concat:NNN \l_right_gtl \l_right_gtl \l_right_gtl
+\gtl_put_left:Nn \l_right_gtl { { x } }
+\gtl_new:N \l_spright_gtl
+\gtl_set_eq:NN \l_spright_gtl \l_right_gtl
+\gtl_put_left:Nn \l_spright_gtl { ~ }
+\gtl_new:N \l_left_right_gtl
+\gtl_concat:NNN \l_left_right_gtl \l_left_gtl \l_right_gtl
+\gtl_const:Nn \c_braces_gtl { { } }
+
+\TEST { Initial~setup }
+  {
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \gtl_log:N
+  }
+
+\OMIT
+\cs_new:Npn \test:N #1
+  { \TYPE { \gtl_left_tl:N #1 , } }
+\TIMO
+
+\TESTEXP { \gtl_left_tl:N }
+  {
+    |
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \test:N
+    |
+  }
+
+\OMIT
+\gtl_new:N \l_copy_gtl
+\gtl_new:N \g_copy_gtl
+\TIMO
+
+\TEST { \gtl_pop_left_tl:N , \gtl_gpop_left_tl:N }
+  {
+    \gtl_set:Nn \l_copy_gtl { copy }
+    {
+      \tl_map_inline:nn
+        {
+          \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+          \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+        }
+        {
+          \gtl_set_eq:NN \l_copy_gtl #1
+          \gtl_gset_eq:NN \g_copy_gtl #1
+          {
+            \gtl_pop_left_tl:N \l_copy_gtl
+            \gtl_gpop_left_tl:N \g_copy_gtl
+            \gtl_if_eq:NNF \l_copy_gtl \g_copy_gtl { \ERROR }
+          }
+          \gtl_log:N \g_copy_gtl
+        }
+    }
+    \gtl_log:N \l_copy_gtl % check all assignments were local
+  }
+
+\OMIT
+\cs_gset:Npn \test:N #1
+  { \TYPE { \gtl_left_item:NF #1 { * } , } }
+\TIMO
+
+\TESTEXP { \gtl_left_item:NF }
+  {
+    |
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \test:N
+    |
+  }
+
+\OMIT
+\cs_generate_variant:Nn \tl_if_eq:nnF { o }
+\TIMO
+
+\TEST
+  {
+    \gtl_pop_left_item:NNTF , \gtl_pop_left_item:NNT , \gtl_pop_left_item:NNF ,
+    \gtl_gpop_left_item:NNTF , \gtl_gpop_left_item:NNT , \gtl_gpop_left_item:NNF
+  }
+  {
+    \gtl_set:Nn \l_copy_gtl { ~{\som e}t~{\oken l}~ist }
+    \gtl_gset_eq:NN \g_copy_gtl \l_copy_gtl
+    {
+      \gtl_pop_left_item:NNTF \l_copy_gtl \l_tmpa_tl { \TRUE } { \ERROR }
+      \tl_if_eq:onF \l_tmpa_tl { \som e } { \ERROR }
+      \gtl_pop_left_item:NNT \l_copy_gtl \l_tmpa_tl { \TRUE }
+      \tl_if_eq:onF \l_tmpa_tl { t } { \ERROR }
+      \gtl_pop_left_item:NNF \l_copy_gtl \l_tmpa_tl { \ERROR }
+      \tl_if_eq:onF \l_tmpa_tl { \oken l } { \ERROR }
+      \gtl_log:N \l_copy_gtl
+      \gtl_gpop_left_item:NNTF \g_copy_gtl \l_tmpa_tl { \TRUE } { \ERROR }
+      \tl_if_eq:onF \l_tmpa_tl { \som e } { \ERROR }
+      \gtl_gpop_left_item:NNT \g_copy_gtl \l_tmpa_tl { \TRUE }
+      \tl_if_eq:onF \l_tmpa_tl { t } { \ERROR }
+      \gtl_gpop_left_item:NNF \g_copy_gtl \l_tmpa_tl { \ERROR }
+      \tl_if_eq:onF \l_tmpa_tl { \oken l } { \ERROR }
+    }
+    \gtl_log:N \g_copy_gtl
+    \gtl_log:N \l_copy_gtl
+    % Above are minimal sanity checks, below more stringent tests only with TF variant
+    \gtl_set:Nn \l_copy_gtl { copy }
+    \tl_set:Nn \l_tmpa_tl { tmp }
+    \tl_set:Nn \l_tmpb_tl { tmp }
+    {
+      \tl_map_inline:nn
+        {
+          \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+          \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+        }
+        {
+          \gtl_set_eq:NN \l_copy_gtl #1
+          \gtl_gset_eq:NN \g_copy_gtl #1
+          {
+            \gtl_pop_left_item:NNTF \l_copy_gtl \l_tmpa_tl { \TRUE } { \FALSE }
+            \gtl_gpop_left_item:NNTF \g_copy_gtl \l_tmpb_tl { \TRUE } { \FALSE }
+            \tl_if_eq:NNF \l_tmpa_tl \l_tmpb_tl { \ERROR }
+            \gtl_if_eq:NNF \l_copy_gtl \g_copy_gtl { \ERROR }
+            \tl_log:N \l_tmpa_tl
+          }
+          \gtl_log:N \g_copy_gtl
+        }
+    }
+    \gtl_log:N \l_copy_gtl % check all assignments were local
+    \tl_log:N \l_tmpa_tl
+    \tl_log:N \l_tmpb_tl
+  }
+
+\OMIT
+\cs_gset:Npn \test:N #1
+  { \TYPE { \gtl_left_text:NF #1 { * } , } }
+\TIMO
+
+\OMIT
+\gtl_new:N \l_text_test_gtl
+\gtl_set:Nn \l_text_test_gtl { { ~ \abc {~ \def} ~ \ghi } \jkl }
+\gtl_pop_left:N \l_text_test_gtl
+\TIMO
+
+\TESTEXP { \gtl_left_text:NF }
+  {
+    |
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+        \l_text_test_gtl
+      }
+      \test:N
+    |
+  }
+
+\TEST { \gtl_pop_left_text:N , \gtl_gpop_left_text:N }
+  {
+    \gtl_set:Nn \l_copy_gtl { copy }
+    {
+      \tl_map_inline:nn
+        {
+          \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+          \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+          \l_text_test_gtl
+        }
+        {
+          \gtl_set_eq:NN \l_copy_gtl #1
+          \gtl_gset_eq:NN \g_copy_gtl #1
+          {
+            \gtl_pop_left_text:N \l_copy_gtl
+            \gtl_gpop_left_text:N \g_copy_gtl
+            \gtl_if_eq:NNF \l_copy_gtl \g_copy_gtl { \ERROR }
+          }
+          \gtl_log:N \g_copy_gtl
+        }
+    }
+    \gtl_log:N \l_copy_gtl % check all assignments were local
+  }
+
+
+\END

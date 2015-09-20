@@ -1,0 +1,132 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+Defining \c_spaces_gtl on line ...
+Defining \c_abc_gtl on line ...
+Defining \l_left_gtl on line ...
+Defining \l_spleft_gtl on line ...
+Defining \l_right_gtl on line ...
+Defining \l_spright_gtl on line ...
+Defining \l_left_right_gtl on line ...
+Defining \c_braces_gtl on line ...
+============================================================
+TEST 1: Initial setup
+============================================================
+> \c_spaces_gtl=    .
+> \c_abc_gtl=\abc .
+> \l_left_gtl=}\abc }\abc }\abc }\abc {x}.
+> \l_spleft_gtl= }\abc }\abc }\abc }\abc {x}.
+> \l_right_gtl={x}\abc {\abc {.
+> \l_spright_gtl= {x}\abc {\abc {.
+> \l_left_right_gtl=}\abc }\abc }\abc }\abc {x}{x}\abc {\abc {.
+> \c_braces_gtl={}.
+============================================================
+============================================================
+TEST 2: \gtl_left_tl:N 
+============================================================
+|    ,,\abc ,, ,{x}\abc , {x}\abc ,,{},|
+============================================================
+============================================================
+TEST 3: \gtl_pop_left_tl:N ,\gtl_gpop_left_tl:N 
+============================================================
+> \g_copy_gtl=.
+> \g_copy_gtl=.
+> \g_copy_gtl=.
+> \g_copy_gtl=}\abc }\abc }\abc }\abc {x}.
+> \g_copy_gtl=}\abc }\abc }\abc }\abc {x}.
+> \g_copy_gtl={\abc {.
+> \g_copy_gtl={\abc {.
+> \g_copy_gtl=}\abc }\abc }\abc }\abc {x}{x}\abc {\abc {.
+> \g_copy_gtl=.
+> \l_copy_gtl=copy.
+============================================================
+============================================================
+TEST 4: \gtl_left_item:NF 
+============================================================
+|*,*,\abc ,*,*,x,x,*,,|
+============================================================
+============================================================
+TEST 5: \gtl_pop_left_item:NNTF ,\gtl_pop_left_item:NNT ,\gtl_pop_left_item:NNF ,\gtl_gpop_left_item:NNTF ,\gtl_gpop_left_item:NNT ,\gtl_gpop_left_item:NNF 
+============================================================
+TRUE
+TRUE
+> \l_copy_gtl= ist.
+TRUE
+TRUE
+> \g_copy_gtl= ist.
+> \l_copy_gtl= {\som e}t {\oken l} ist.
+FALSE
+FALSE
+> \l_tmpa_tl=tmp.
+> \g_copy_gtl=    .
+FALSE
+FALSE
+> \l_tmpa_tl=tmp.
+> \g_copy_gtl=.
+TRUE
+TRUE
+> \l_tmpa_tl=\abc .
+> \g_copy_gtl=.
+FALSE
+FALSE
+> \l_tmpa_tl=tmp.
+> \g_copy_gtl=}\abc }\abc }\abc }\abc {x}.
+FALSE
+FALSE
+> \l_tmpa_tl=tmp.
+> \g_copy_gtl= }\abc }\abc }\abc }\abc {x}.
+TRUE
+TRUE
+> \l_tmpa_tl=x.
+> \g_copy_gtl=\abc {\abc {.
+TRUE
+TRUE
+> \l_tmpa_tl=x.
+> \g_copy_gtl=\abc {\abc {.
+FALSE
+FALSE
+> \l_tmpa_tl=tmp.
+> \g_copy_gtl=}\abc }\abc }\abc }\abc {x}{x}\abc {\abc {.
+TRUE
+TRUE
+> \l_tmpa_tl=.
+> \g_copy_gtl=.
+> \l_copy_gtl=copy.
+> \l_tmpa_tl=tmp.
+> \l_tmpb_tl=tmp.
+============================================================
+============================================================
+TEST 6: \gtl_left_text:NF 
+============================================================
+|*,*,*,*,*,{x}, {x},*,{}, \abc { \def },|
+============================================================
+============================================================
+TEST 7: \gtl_pop_left_text:N ,\gtl_gpop_left_text:N 
+============================================================
+> \g_copy_gtl=    .
+> \g_copy_gtl=.
+> \g_copy_gtl=\abc .
+> \g_copy_gtl=}\abc }\abc }\abc }\abc {x}.
+> \g_copy_gtl= }\abc }\abc }\abc }\abc {x}.
+> \g_copy_gtl=\abc {\abc {.
+> \g_copy_gtl=\abc {\abc {.
+> \g_copy_gtl=}\abc }\abc }\abc }\abc {x}{x}\abc {\abc {.
+> \g_copy_gtl=.
+> \g_copy_gtl= \ghi }\jkl .
+> \l_copy_gtl=copy.
+============================================================

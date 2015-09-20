@@ -218,6 +218,7 @@
 %     \cs{gtl_pop_left:N} \meta{gtl~var}
 %   \end{syntax}
 %   Remove the first token from \meta{gtl~var_1}.
+%   If the \meta{gtl~var_1} is empty nothing happens.
 % \end{function}
 %
 % \begin{function}{\gtl_pop_left:NN, \gtl_gpop_left:NN}
@@ -226,7 +227,8 @@
 %   \end{syntax}
 %   Stores the first token from \meta{gtl~var_1} in \meta{gtl~var_2} as
 %   an single-token extended token list, and remove it from
-%   \meta{gtl~var_1}.
+%   \meta{gtl~var_1}.  If the \meta{gtl~var_1} is empty it remains so,
+%   and \meta{gtl~var_2} is set to contain \cs{q_no_value}.
 % \end{function}
 %
 % \begin{function}[EXP,pTF]{\gtl_if_head_eq_catcode:NN}
@@ -1161,9 +1163,15 @@
 %   }
 %    \begin{macrocode}
 \cs_new_protected:Npn \gtl_pop_left:N #1
-  { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left:w #1 } }
+  {
+    \gtl_if_empty:NF #1
+      { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left:w #1 } }
+  }
 \cs_new_protected:Npn \gtl_gpop_left:N #1
-  { \tl_gset:Nx #1 { \exp_after:wN \@@_pop_left:w #1 } }
+  {
+    \gtl_if_empty:NF #1
+      { \tl_gset:Nx #1 { \exp_after:wN \@@_pop_left:w #1 } }
+  }
 \cs_new:Npn \@@_pop_left:w \s_@@ #1#2#3
   {
     \tl_if_empty:nTF {#1}

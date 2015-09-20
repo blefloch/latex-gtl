@@ -1,4 +1,4 @@
-latex-gtl: Manipulate unbalanced lists of tokens in LaTeX
+Manipulate unbalanced lists of tokens
 ====================================================
 * E-mail: blflatex@gmail.com
 * Released under the LaTeX Project Public License v1.3c or later
@@ -9,6 +9,9 @@ tokens which may be unbalanced.
 
 This package requires up-to-date versions of the `l3kernel`,
 `l3packages` and `l3experimental` bundles.
+
+The package is extracted by running `pdflatex gtl.ins`.
+For documentation, run `pdflatex gtl.dtx` twice.
 
 This is work in progress, all suggestions/comments/bug reports are
 welcome!

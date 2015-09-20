@@ -532,7 +532,6 @@
 %   \{ \Arg{b_1} \ldots{} \Arg{b_n} \}
 %   \Arg{c}
 %   \{ \Arg{e_p} \ldots{} \Arg{e_1} \}
-%   \cs{s__stop}
 % \end{quote}
 % Note that the \meta{e_i} are in a reversed order, as this makes the
 % ends of extended token lists more accessible.  Balanced token lists
@@ -546,7 +545,7 @@
 % \begin{variable}{\s_@@}
 %   This marker appears at the start of extended token lists.
 %    \begin{macrocode}
-\__scan_new:N \s_@@
+\cs_new_eq:NN \s_@@ \scan_stop:
 %    \end{macrocode}
 % \end{variable}
 %
@@ -556,7 +555,7 @@
 %     \gtl_set:Nx, \gtl_gset:Nx, \gtl_const:Nx
 %   }
 %   Storing a balanced token list into an extended token list variable
-%   simply means adding \cs{s_@@}, \cs{s__stop}, and two empty brace
+%   simply means adding \cs{s_@@} and two empty brace
 %   groups: there are no leading nor trailing chunks.
 %    \begin{macrocode}
 \cs_new_protected_nopar:Npn \gtl_set:Nn   { \@@_set:NNn \tl_set:Nn   }
@@ -566,7 +565,7 @@
 \cs_new_protected_nopar:Npn \gtl_gset:Nx  { \@@_set:NNn \tl_gset:Nx  }
 \cs_new_protected_nopar:Npn \gtl_const:Nx { \@@_set:NNn \tl_const:Nx }
 \cs_new_protected:Npn \@@_set:NNn   #1#2#3
-  { #1 #2 { \s_@@ { } {#3} { } \s__stop } }
+  { #1 #2 { \s_@@ { } {#3} { } } }
 %    \end{macrocode}
 % \end{macro}
 %
@@ -583,8 +582,8 @@
 %   character are built by including a single (empty) leading or
 %   trailing chunk.
 %    \begin{macrocode}
-\tl_const:Nn \c_group_end_gtl   { \s_@@ { { } } { } {     } \s__stop }
-\tl_const:Nn \c_group_begin_gtl { \s_@@ {     } { } { { } } \s__stop }
+\tl_const:Nn \c_group_end_gtl   { \s_@@ { { } } { } {     } }
+\tl_const:Nn \c_group_begin_gtl { \s_@@ {     } { } { { } } }
 %    \end{macrocode}
 % \end{variable}
 %
@@ -648,16 +647,15 @@
   { \tl_set:Nx #1 { \exp_after:wN \@@_put_left:wn #1 {#2} } }
 \cs_new_protected:Npn \gtl_gput_left:Nn #1#2
   { \tl_gset:Nx #1 { \exp_after:wN \@@_put_left:wn #1 {#2} } }
-\cs_new:Npn \@@_put_left:wn \s_@@ #1#2#3 \s__stop #4
+\cs_new:Npn \@@_put_left:wn \s_@@ #1#2#3 #4
   {
     \tl_if_empty:nTF {#1}
-      { \exp_not:n { \s_@@ { } { #4 #2 } {#3} \s__stop } }
+      { \exp_not:n { \s_@@ { } { #4 #2 } {#3} } }
       {
         \s_@@
         { \exp_not:o { \@@_brace:nn {#4} #1 } }
         { \exp_not:n {#2} }
         { \exp_not:n {#3} }
-        \s__stop
       }
   }
 %    \end{macrocode}
@@ -672,16 +670,15 @@
   { \tl_set:Nx #1 { \exp_after:wN \@@_put_right:wn #1 {#2} } }
 \cs_new_protected:Npn \gtl_gput_right:Nn #1#2
   { \tl_gset:Nx #1 { \exp_after:wN \@@_put_right:wn #1 {#2} } }
-\cs_new:Npn \@@_put_right:wn \s_@@ #1#2#3 \s__stop #4
+\cs_new:Npn \@@_put_right:wn \s_@@ #1#2#3 #4
   {
     \tl_if_empty:nTF {#3}
-      { \exp_not:n { \s_@@ {#1} { #2 #4 } { } \s__stop } }
+      { \exp_not:n { \s_@@ {#1} { #2 #4 } { } } }
       {
         \s_@@
         { \exp_not:n {#1} }
         { \exp_not:n {#2} }
         { \exp_not:o { \@@_brace_swap:nn {#4} #3 } }
-        \s__stop
       }
   }
 %    \end{macrocode}
@@ -706,7 +703,6 @@
 %     \{ \Arg{b_1} \ldots{} \Arg{b_n} \}
 %     \Arg{c}
 %     \{ \Arg{e_p} \ldots{} \Arg{e_1} \}
-%     \cs{s__stop}
 %   \end{quote}
 %   is not an easy task.  The \meta{e} parts of the first join with the
 %   \meta{b} parts of the second to make balanced pairs, and the
@@ -717,7 +713,7 @@
   { \tl_set:Nx  #1 { \exp_last_two_unbraced:Noo \@@_concat:ww #2 #3 } }
 \cs_new_protected:Npn \gtl_gconcat:NNN #1#2#3
   { \tl_gset:Nx #1 { \exp_last_two_unbraced:Noo \@@_concat:ww #2 #3 } }
-\cs_new:Npn \@@_concat:ww \s_@@ #1#2#3 \s__stop \s_@@ #4#5#6 \s__stop
+\cs_new:Npn \@@_concat:ww \s_@@ #1#2#3 \s_@@ #4#5#6
   {
     \tl_if_blank:nTF {#3}
       {
@@ -731,7 +727,6 @@
           { \@@_concat_auxiv:nnnn }
       }
       {#1} {#2} {#3} {#4} {#5} {#6}
-    \s__stop
   }
 \cs_new:Npn \@@_concat_aux:nnnnnn #1#2#3#4#5#6
   { \exp_not:n { \s_@@ {#1} { #2 #5 } {#6} } }
@@ -769,14 +764,14 @@
     #1#2 \q_mark #3#4 \q_mark #5#6
   {
     \@@_concat:ww
-      \s_@@ {#5} { #6 { #1 #3 } } { } \s__stop
+      \s_@@ {#5} { #6 { #1 #3 } } { }
       \s_@@ {#4}
   }
 \cs_new:Npn \@@_concat_auxvi:nnwnwnn
     #1#2#3 \q_mark #4#5 \q_mark #6#7
   {
     \@@_concat:ww
-      \s_@@ {#6} {#7} { { #2 { #1 #4 } } #3 } \s__stop
+      \s_@@ {#6} {#7} { { #2 { #1 #4 } } #3 }
       \s_@@ {#5}
   }
 %    \end{macrocode}
@@ -797,7 +792,7 @@
 %   }
 %    \begin{macrocode}
 \cs_new:Npn \gtl_to_str:N #1 { \exp_after:wN \@@_to_str:w #1 }
-\cs_new:Npn \@@_to_str:w \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_to_str:w \s_@@ #1#2#3
   { \@@_to_str_loopi:nnw { } #1 \q_nil \q_mark {#2} {#3} }
 \cs_new:Npx \@@_to_str_loopi:nnw #1#2
   {
@@ -870,7 +865,7 @@
 %    \begin{macrocode}
 \prg_new_conditional:Npnn \gtl_if_tl:N #1 { p , T , F , TF }
   { \exp_after:wN \@@_if_tl_return:w #1 }
-\cs_new:Npn \@@_if_tl_return:w \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_if_tl_return:w \s_@@ #1#2#3
   {
     \tl_if_empty:nTF { #1 #3 }
       { \prg_return_true: } { \prg_return_false: }
@@ -884,7 +879,7 @@
 %    \begin{macrocode}
 \prg_new_conditional:Npnn \gtl_if_single_token:N #1 { p , T , F , TF }
   { \exp_after:wN \@@_if_single_token_return:w #1 }
-\cs_new:Npn \@@_if_single_token_return:w \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_if_single_token_return:w \s_@@ #1#2#3
   {
     \bool_if:nTF
       {
@@ -910,7 +905,7 @@
 %    \begin{macrocode}
 \prg_new_conditional:Npnn \gtl_if_blank:N #1 { p , T , F , TF }
   { \exp_after:wN \@@_if_blank_return:w #1 }
-\cs_new:Npn \@@_if_blank_return:w \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_if_blank_return:w \s_@@ #1#2#3
   {
     \tl_if_blank:nTF { #1 #2 #3 }
       { \prg_return_true: }
@@ -1047,7 +1042,7 @@
 %   cases (when the first token is |N|-type), it performs |#8|~followed
 %   by the first token.
 %    \begin{macrocode}
-\cs_new:Npn \@@_head:wnnnnn \s_@@ #1#2#3 \s__stop #4#5#6#7#8
+\cs_new:Npn \@@_head:wnnnnn \s_@@ #1#2#3 #4#5#6#7#8
   {
     \tl_if_empty:nTF {#1}
       {
@@ -1144,7 +1139,7 @@
   { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left:w #1 } }
 \cs_new_protected:Npn \gtl_gpop_left:N #1
   { \tl_gset:Nx #1 { \exp_after:wN \@@_pop_left:w #1 } }
-\cs_new:Npn \@@_pop_left:w \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_pop_left:w \s_@@ #1#2#3
   {
     \tl_if_empty:nTF {#1}
       {
@@ -1159,7 +1154,6 @@
     \s_@@
     { }
     \@@_pop_left_auxii:nnnw { } { } #1 \q_nil \q_stop
-    \s__stop
   }
 \cs_new:Npn \@@_pop_left_auxii:nnnw #1#2#3
   {
@@ -1179,7 +1173,6 @@
     { \tl_if_head_is_group:nT {#1} { { \tl_head:n {#1} } } }
     { \tl_if_head_is_space:nTF {#1} { \exp_not:f } { \tl_tail:n } {#1} }
     { \exp_not:n {#2} }
-    \s__stop
   }
 \cs_new:Npn \@@_pop_left_auxv:nnn #1#2#3
   {
@@ -1187,7 +1180,6 @@
     { \if_false: { \fi: \@@_pop_left_auxvi:n #1 } }
     { \exp_not:n {#2} }
     { \exp_not:n {#3} }
-    \s__stop
   }
 \cs_new:Npn \@@_pop_left_auxvi:n #1
   {
@@ -1231,7 +1223,7 @@
 %    \begin{macrocode}
 \cs_new:Npn \gtl_left_tl:N #1
   { \exp_after:wN \@@_left_tl:w #1 }
-\cs_new:Npn \@@_left_tl:w \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_left_tl:w \s_@@ #1#2#3
   { \tl_if_empty:nTF {#1} { \exp_not:n {#2} } { \tl_head:n {#1} } }
 %    \end{macrocode}
 % \end{macro}
@@ -1248,7 +1240,7 @@
   { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left_tl:w #1 } }
 \cs_new_protected:Npn \gtl_gpop_left_tl:N #1
   { \tl_gset:Nx #1 { \exp_after:wN \@@_pop_left_tl:w #1 } }
-\cs_new:Npn \@@_pop_left_tl:w \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_pop_left_tl:w \s_@@ #1#2#3
   {
     \s_@@
     \tl_if_empty:nTF {#1}
@@ -1258,7 +1250,6 @@
         { \exp_not:n {#2} }
       }
     { \exp_not:n {#3} }
-    \s__stop
   }
 %    \end{macrocode}
 % \end{macro}
@@ -1274,7 +1265,7 @@
 %    \begin{macrocode}
 \cs_new:Npn \gtl_left_item:NF #1
   { \exp_after:wN \@@_left_item:wF #1 }
-\cs_new:Npn \@@_left_item:wF \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_left_item:wF \s_@@ #1#2#3
   { \@@_left_item_auxi:nwF #1 {#2} \q_stop }
 \cs_new:Npn \@@_left_item_auxi:nwF #1#2 \q_stop #3
   { \tl_if_blank:nTF {#1} {#3} { \tl_head:n {#1} } }
@@ -1299,7 +1290,7 @@
 \prg_new_protected_conditional:Npnn \gtl_gpop_left_item:NN #1#2 { TF , T , F }
   { \exp_after:wN \@@_pop_left_item:wNNN #1#2 \tl_gset:Nx #1 }
 \cs_new_protected:Npn \@@_pop_left_item:wNNN
-    \s_@@ #1#2#3 \s__stop #4#5#6
+    \s_@@ #1#2#3 #4#5#6
   {
     \tl_if_empty:nTF {#1}
       {
@@ -1309,7 +1300,7 @@
             #5 #6
               {
                 \s_@@ { } { \tl_tail:n {#2} }
-                { \exp_not:n {#3} } \s__stop
+                { \exp_not:n {#3} }
               }
             \prg_return_true:
           }
@@ -1331,7 +1322,6 @@
             { { \tl_tail:n {#1} } \@@_strip_nil_mark:w #2 \q_mark }
             { \exp_not:n {#3} }
             { \exp_not:n {#4} }
-            \s__stop
           }
         \prg_return_true:
       }
@@ -1360,7 +1350,7 @@
 %    \begin{macrocode}
 \cs_new:Npn \gtl_left_text:NF #1
   { \exp_after:wN \@@_left_text:wF #1 }
-\cs_new:Npn \@@_left_text:wF \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_left_text:wF \s_@@ #1#2#3
   {
     \tl_if_empty:nTF {#1}
       { \@@_left_text_auxi:nwF {#2} \q_stop }
@@ -1390,7 +1380,7 @@
   { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left_text:w #1 } }
 \cs_new_protected:Npn \gtl_gpop_left_text:N #1
   { \tl_gset:Nx #1 { \exp_after:wN \@@_pop_left_text:w #1 } }
-\cs_new:Npn \@@_pop_left_text:w \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_pop_left_text:w \s_@@ #1#2#3
   {
     \s_@@
     \tl_if_empty:nTF {#1}
@@ -1403,7 +1393,6 @@
         { \exp_not:n {#2} }
       }
     { \exp_not:n {#3} }
-    \s__stop
   }
 \cs_new:Npn \@@_pop_left_text_auxi:n #1
   {
@@ -1460,11 +1449,11 @@
 %    \begin{macrocode}
 \cs_new:Npn \gtl_extra_end:N #1
   { \exp_after:wN \@@_extra_end:w #1 }
-\cs_new:Npn \@@_extra_end:w \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_extra_end:w \s_@@ #1#2#3
   { \@@_tl_count:n {#1} }
 \cs_new:Npn \gtl_extra_begin:N #1
   { \exp_after:wN \@@_extra_begin:w #1 }
-\cs_new:Npn \@@_extra_begin:w \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_extra_begin:w \s_@@ #1#2#3
   { \@@_tl_count:n {#3} }
 %    \end{macrocode}
 % \end{macro}
@@ -1481,7 +1470,7 @@
 %    \begin{macrocode}
 \cs_new:Npn \gtl_count_tokens:N #1
   { \exp_after:wN \@@_count_tokens:w #1 }
-\cs_new:Npn \@@_count_tokens:w \s_@@ #1#2#3 \s__stop
+\cs_new:Npn \@@_count_tokens:w \s_@@ #1#2#3
   {
     \int_eval:n
       { \c_minus_one \@@_count_auxi:nw #1 {#2} #3 \q_nil \q_stop }

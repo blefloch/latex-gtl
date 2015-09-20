@@ -16,6 +16,8 @@ Don't change this file in any respect.
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %%
+Defining \l_tmpa_gtl on line ...
+Defining \l_tmpb_gtl on line ...
 {\abc {\def }\gh 
 6
 ||

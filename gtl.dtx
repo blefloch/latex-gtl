@@ -45,6 +45,286 @@
 % character code of ``|{|'' and all end-group characters that
 % of~``|}|''.
 %
+% ^^A check the test coverage
+% \begingroup\ExplSyntaxOn
+% \msg_new:nnn { gtldoc } { discarded } { Discarded~some~material~after~closing~brace~of~{function}~or~TEST~or~TESTEXP~argument:~``#1'' }
+% \msg_new:nnn { gtldoc } { bad-test } { TEST~or~TESTEXP~followed~by~unexpected~character~``#1'' }
+% \msg_new:nnn { gtldoc } { multi-function } { Some~functions~are~defined~twice }
+% \msg_new:nnn { gtldoc } { doc-no-test } { ``#1''~is~documented~but~has~no~test }
+% \msg_new:nnn { gtldoc } { test-no-doc } { ``#1''~is~tested~but~not~documented }
+% \msg_new:nnn { gtldoc } { junk } { There~is~some~unexpected~junk.~Giving~up~on~this~line. }
+% \tl_new:N \l__gtldoc_arg_tl
+% \seq_new:N \l__gtldoc_internal_seq
+% \cs_generate_variant:Nn \use:nn { no }
+% \cs_generate_variant:Nn \tl_if_in:nnTF { no }
+% \cs_generate_variant:Nn \tl_if_in:nnT { no }
+% \cs_generate_variant:Nn \tl_remove_all:Nn { Nx }
+% \cs_generate_variant:Nn \seq_set_filter:NNn { NNx }
+% \group_begin:
+%   \seq_new:N \l__gtldoc_fn_seq
+%   \iow_new:N \g__gtldoc_ior
+%   \tl_new:N \l__gtldoc_internal_tl
+%   \str_new:N \l__gtldoc_TF_str
+%   \seq_new:N \l__gtldoc_arg_seq
+%   \seq_new:N \l__gtldoc_arg_TF_seq
+%   \cs_new:Npn \__gtldoc_remove_backslash:N #1
+%     { \exp_after:wN \token_if_eq_charcode:NNF \c_backslash_str #1 {#1} }
+%   \cs_new_protected:Npn \gtldoc_get_fn:n #1
+%     {
+%       \seq_clear:N \l__gtldoc_fn_seq
+%       \clist_map_inline:nn {#1}
+%         {
+%           \__gtldoc_get_fn:nn { function } {#1} ^^A todo: this is wasteful, going through the file twice!
+%           \__gtldoc_get_fn:nn { variable } {#1}
+%         }
+%     }
+%   \cs_new_protected:Npn \__gtldoc_get_fn:nn #1
+%     {
+%       \exp_args:Noo \__gtldoc_get_fn_aux:nnn
+%         { \tl_to_str:n { begin } } { \tl_to_str:n { {#1} } }
+%     }
+%   \cs_new_eq:NN \__gtldoc_test:w ?
+%   \cs_new_eq:NN \__gtldoc_skip:w ?
+%   \cs_new_protected:Npn \__gtldoc_get_fn_aux:nnn #1#2#3
+%     {
+%       \cs_gset_protected:Npn \__gtldoc_test:w ##1 #1 ##2 #2 { }
+%       \cs_gset_protected_nopar:Npn \__gtldoc_skip:w ##1 #1 ##2 #2
+%         {
+%           \tl_clear:N \l__gtldoc_arg_tl
+%           \str_clear:N \l__gtldoc_TF_str
+%           \tl_if_blank:nF {##2}
+%             {
+%               \msg_error:nn { gtldoc } { junk }
+%               \use_none_delimit_by_q_recursion_stop:w
+%             }
+%           \__gtldoc_aux:N
+%         }
+%       \ior_open:Nn \g__gtldoc_ior {#3}
+%       \ior_str_map_inline:Nn \g__gtldoc_ior
+%         {
+%           \tl_if_in:noT {##1} { \tl_to_str:n { end { documentation } } } ^^A careful if you remove spaces!
+%             { \ior_map_break: }
+%           \tl_if_empty:oF { \__gtldoc_test:w ##1 #1 #2 }
+%             { \__gtldoc_skip:w ##1 \q_recursion_tail \q_recursion_stop }
+%         }
+%       \ior_close:N \g__gtldoc_ior
+%     }
+%   \cs_new_protected:Npn \__gtldoc_aux:N #1
+%     {
+%       \token_if_eq_meaning:NNT #1 \q_recursion_tail
+%         { \__gtldoc_more:Nw \__gtldoc_aux:N }
+%       \str_case_x:nnF {#1}
+%         {
+%           \c_percent_str { \__gtldoc_aux:N } ^^A ignore percent
+%           \c_circumflex_str { \__gtldoc_hat:N } ^^A check for "^^A"
+%           [ { \__gtldoc_opt:w }
+%           \c_left_brace_str { \__gtldoc_arg:w }
+%         }
+%         { \__gtldoc_varg:N #1 }
+%     }
+%   \cs_new_protected:Npn \__gtldoc_more:Nw #1 #2 \q_recursion_stop
+%     { ^^A grab one more line and restart the loop
+%       \ior_get_str:NN \g__gtldoc_ior \l__gtldoc_internal_tl
+%       \exp_after:wN #1 \l__gtldoc_internal_tl
+%         \q_recursion_tail \q_recursion_stop
+%     }
+%   \cs_new_protected:Npn \__gtldoc_hat:N #1
+%     {
+%       \token_if_eq_charcode:NNTF #1 ^
+%         { \__gtldoc_hat_hat:N }
+%         { \__gtldoc_varg:N ^ #1 }
+%     }
+%   \cs_new_protected:Npn \__gtldoc_hat_hat:N #1 ^^A in principle we should worry about crazy people doing ^^01 or ^^5b etc
+%     {
+%       \token_if_eq_charcode:NNTF #1 A
+%         { \__gtldoc_more:Nw \__gtldoc_aux:N } ^^A we found a comment
+%         { \__gtldoc_varg:N ^ ^ #1 }
+%     }
+%   \cs_new_protected:Npn \__gtldoc_opt:w #1 \q_recursion_tail
+%     {
+%       \tl_if_in:nnTF {#1} { ] }
+%         { \__gtldoc_opt_aux:w #1 \q_recursion_tail }
+%         { \__gtldoc_more:Nw \__gtldoc_opt:w }
+%     }
+%   \cs_new_protected:Npn \__gtldoc_opt_aux:w #1 ]
+%     {
+%       \tl_if_in:noTF {#1} { \tl_to_str:n { pTF } }
+%         { \str_set:Nn \l__gtldoc_TF_str { pTF } }
+%         {
+%           \tl_if_in:noT {#1} { \tl_to_str:n { TF } }
+%             { \str_set:Nn \l__gtldoc_TF_str { TF } }
+%         }
+%       \__gtldoc_aux:N
+%     }
+%   \cs_new_protected_nopar:Npn \__gtldoc_arg:w
+%     { \exp_after:wN \__gtldoc_varg:N \c_right_brace_str }
+%   \cs_new_protected:Npn \__gtldoc_varg:N #1
+%     { \exp_args:No \__gtldoc_varg_aux:n { \token_to_str:N #1 } }
+%   \cs_new_protected:Npn \__gtldoc_varg_aux:n #1
+%     {
+%       \cs_gset_protected:Npn \__gtldoc_varg_aux:w ##1 #1 { {##1} }
+%       \cs_gset_protected:Npn \__gtldoc_varg_loop:w ##1 \q_recursion_tail
+%         {
+%           \tl_if_in:noTF {##1} {#1}
+%             {
+%               \exp_after:wN \__gtldoc_varg_last:nw
+%               \__gtldoc_varg_aux:w ##1 \q_recursion_tail
+%             }
+%             {
+%               \tl_put_right:Nx \l__gtldoc_arg_tl { ##1 \iow_char:N \^^M }
+%               \__gtldoc_more:Nw \__gtldoc_varg_loop:w
+%             }
+%         }
+%       \__gtldoc_varg_loop:w
+%     }
+%   \cs_new_eq:NN \__gtldoc_varg_aux:w ?
+%   \cs_new_eq:NN \__gtldoc_varg_loop:w ?
+%   \cs_new_protected:Npn \__gtldoc_varg_last:nw
+%       #1#2 \q_recursion_tail \q_recursion_stop
+%     {
+%       \tl_if_blank:nF {#2}
+%         { \msg_warning:nnn { gtldoc } { discarded } {#2} }
+%       \tl_put_right:Nn \l__gtldoc_arg_tl {#1}
+%       \tl_remove_all:Nx \l__gtldoc_arg_tl { \iow_char:N \^^M \iow_char:N \% } ^^A from l3doc
+%       \tl_remove_all:Nx \l__gtldoc_arg_tl { \tl_to_str:n { ^ ^ A } } ^^A from l3doc
+%       \tl_remove_all:Nx \l__gtldoc_arg_tl { \iow_char:N \^^I } ^^A from l3doc
+%       \tl_remove_all:Nx \l__gtldoc_arg_tl { \iow_char:N \^^M } ^^A from l3doc
+%       ^^A \@@_replace_at_at:N \l_@@_tmpa_tl ^^A from l3doc but not done here
+%       \exp_args:NNx \seq_set_from_clist:Nn \l__gtldoc_arg_seq
+%         { \tl_to_str:N \l__gtldoc_arg_tl }
+%       \str_if_empty:NF \l__gtldoc_TF_str
+%         {
+%           \seq_clear:N \l__gtldoc_arg_TF_seq
+%           \seq_map_inline:Nn \l__gtldoc_arg_seq
+%             {
+%               \seq_put_right:Nx \l__gtldoc_arg_TF_seq { ##1 TF }
+%               \seq_put_right:Nx \l__gtldoc_arg_TF_seq { ##1 T }
+%               \seq_put_right:Nx \l__gtldoc_arg_TF_seq { ##1 F }
+%               \str_if_eq_x:nnT { \l__gtldoc_TF_str } { pTF }
+%                 { \seq_put_right:Nx \l__gtldoc_arg_TF_seq { \__gtldoc_pred:w ##1 } }
+%             }
+%           \seq_set_map:NNn \l__gtldoc_arg_seq
+%             \l__gtldoc_arg_TF_seq { \tl_to_str:n {##1} }
+%         }
+%       \seq_concat:NNN \l__gtldoc_fn_seq \l__gtldoc_fn_seq \l__gtldoc_arg_seq
+%     }
+%   \use:no { \cs_new:Npn \__gtldoc_pred:w #1 } { \token_to_str:N : } { #1 _p: }
+% \group_end:
+% \group_begin:
+%   \seq_new:N \l__gtldoc_tested_fn_seq
+%   \cs_new_protected:Npn \gtldoc_get_tests:n #1
+%     {
+%       \seq_clear:N \l__gtldoc_tested_fn_seq
+%       \clist_map_function:nN {#1} \__gtldoc_get_test:n
+%     }
+%   \cs_new_protected:Npn \__gtldoc_get_test:n #1
+%     {
+%       \ior_open:Nn \g__gtldoc_ior {#1}
+%       \ior_str_map_inline:Nn \g__gtldoc_ior
+%         { \__gtldoc_test_aux:n {##1} }
+%       \ior_close:N \g__gtldoc_ior
+%     }
+%   \cs_gset_protected:Npn \__gtldoc_tmp:nn #1#2
+%     {
+%       \cs_new_protected:Npn \__gtldoc_test_skipi:w ##1 #1 { }
+%       \cs_new_protected:Npn \__gtldoc_test_skipii:w ##1 #2 { }
+%       \cs_new_protected:Npn \__gtldoc_test_aux:n ##1
+%         {
+%           \tl_if_empty:oF { \__gtldoc_test_skipi:w ##1 #1 }
+%             {
+%               \tl_if_empty:oTF { \__gtldoc_test_skipii:w ##1 #2 }
+%                 { \__gtldoc_test_auxi:w } { \__gtldoc_test_auxii:w }
+%                 ##1 \q_recursion_tail \q_recursion_stop 
+%             }
+%         }
+%       \cs_new_protected:Npn \__gtldoc_test_auxi:w ##1 #1
+%         { \__gtldoc_test_auxiii:N }
+%       \cs_new_protected:Npn \__gtldoc_test_auxii:w ##1 #2
+%         { \__gtldoc_test_auxiii:N }
+%     }
+%   \exp_args:Noo \__gtldoc_tmp:nn
+%     { \token_to_str:N \TEST }
+%     { \token_to_str:N \TESTEXP }
+%   \cs_new_protected:Npn \__gtldoc_test_auxiii:N #1
+%     {
+%       \token_if_eq_meaning:NNT \q_recursion_tail #1
+%         { \__gtldoc_more:Nw \__gtldoc_test_auxiii:N }
+%       \exp_after:wN \token_if_eq_charcode:NNTF \c_left_brace_str #1
+%         { \__gtldoc_test_arg:w }
+%         {
+%           \msg_error:nnn { gtldoc } { bad-test } {#1}
+%           \use_none_delimit_by_q_recursion_stop:w
+%         }
+%     }
+%   \cs_new_protected_nopar:Npn \__gtldoc_test_arg:w
+%     {
+%       \tl_clear:N \l__gtldoc_arg_tl
+%       \exp_args:No \__gtldoc_test_arg_aux:N \c_right_brace_str
+%     }
+%   \cs_new_protected:Npn \__gtldoc_test_arg_aux:N #1
+%     {
+%       \cs_gset_protected:Npn \__gtldoc_test_arg_aux:w ##1 #1 { {##1} }
+%       \cs_gset_protected:Npn \__gtldoc_test_arg_loop:w ##1 \q_recursion_tail
+%         {
+%           \tl_if_in:noTF {##1} {#1}
+%             {
+%               \exp_after:wN \__gtldoc_test_arg_last:nw
+%               \__gtldoc_test_arg_aux:w ##1 \q_recursion_tail
+%             }
+%             {
+%               \tl_put_right:Nn \l__gtldoc_arg_tl {##1}
+%               \__gtldoc_more:Nw \__gtldoc_test_arg_loop:w
+%             }
+%         }
+%       \__gtldoc_test_arg_loop:w
+%     }
+%   \cs_new_eq:NN \__gtldoc_test_arg_aux:w ?
+%   \cs_new_eq:NN \__gtldoc_test_arg_loop:w ?
+%   \cs_new_protected:Npn \__gtldoc_test_arg_last:nw
+%       #1#2 \q_recursion_tail \q_recursion_stop
+%     {
+%       \tl_if_blank:nF {#2}
+%         { \msg_warning:nnn { gtldoc } { discarded } {#2} }
+%       \tl_put_right:Nn \l__gtldoc_arg_tl {#1}
+%       \exp_args:NNx \seq_set_from_clist:Nn \l__gtldoc_arg_seq
+%         { \tl_to_str:N \l__gtldoc_arg_tl }
+%       \seq_set_filter:NNx \l__gtldoc_arg_seq \l__gtldoc_arg_seq
+%         { \exp_not:N \tl_if_head_eq_charcode_p:nN {####1} \c_backslash_str }
+%       \seq_concat:NNN \l__gtldoc_tested_fn_seq \l__gtldoc_tested_fn_seq \l__gtldoc_arg_seq
+%     }
+% \group_end:
+% \gtldoc_get_fn:n { gtl.dtx }
+% \gtldoc_get_tests:n
+%   {
+%     ../../testfiles/gtl000.lvt ,
+%     ../../testfiles/gtl001.lvt ,
+%     ../../testfiles/gtl002.lvt ,
+%     ../../testfiles/gtl003.lvt ,
+%     ../../testfiles/gtl004.lvt ,
+%     ../../testfiles/gtl005.lvt ,
+%     ../../testfiles/gtl006.lvt
+%   }
+% \group_begin:
+%   \seq_set_eq:NN \l__gtldoc_internal_seq \l__gtldoc_fn_seq
+%   \seq_remove_duplicates:N \l__gtldoc_internal_seq
+%   \int_compare:nF
+%     { \seq_count:N \l__gtldoc_internal_seq = \seq_count:N \l__gtldoc_fn_seq }
+%     {
+%       \msg_error:nn { gtldoc } { multi-function }
+%       \seq_set_eq:NN \l__gtldoc_fn_seq \l__gtldoc_internal_seq
+%     }
+%   \seq_remove_duplicates:N \l__gtldoc_tested_fn_seq
+%   \seq_map_inline:Nn \l__gtldoc_fn_seq
+%     {
+%       \seq_if_in:NnTF \l__gtldoc_tested_fn_seq {#1}
+%         { \seq_remove_all:Nn \l__gtldoc_tested_fn_seq {#1} }
+%         { \msg_error:nnn { gtldoc } { doc-no-test } {#1} }
+%     }
+%   \seq_map_inline:Nn \l__gtldoc_tested_fn_seq
+%     { \msg_error:nnn { gtldoc } { test-no-doc } {#1} }
+% \group_end:
+% \endgroup
+%
 % \subsection{Creating and initialising extended token lists}
 %
 % \begin{function}{\gtl_new:N}

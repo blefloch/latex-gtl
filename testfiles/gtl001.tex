@@ -1,7 +1,7 @@
 \RequirePackage{gtl}
 \ExplSyntaxOn
 \iow_new:N \g_output_iow
-\iow_open:Nn \g_output_iow { \c_job_name_tl .output }
+\iow_open:Nn \g_output_iow { \c_sys_jobname_str .output }
 \gtl_new:N \l_tmpa_gtl
 \gtl_new:N \l_tmpb_gtl
 \gtl_set:Nn \l_tmpa_gtl { \abc { \def } \gh }

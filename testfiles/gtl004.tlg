@@ -1,0 +1,293 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+Defining \c_spaces_gtl on line ...
+Defining \c_abc_gtl on line ...
+Defining \l_left_gtl on line ...
+Defining \l_spleft_gtl on line ...
+Defining \l_right_gtl on line ...
+Defining \l_spright_gtl on line ...
+Defining \l_left_right_gtl on line ...
+Defining \c_braces_gtl on line ...
+============================================================
+TEST 1: Initial setup
+============================================================
+> \c_spaces_gtl=    .
+> \c_abc_gtl=abc.
+> \l_left_gtl=}abc}abc}abc}abc{x}.
+> \l_spleft_gtl=\c_catcode_other_space_tl }abc}abc}abc}abc{x}.
+> \l_right_gtl={x}abc{abc{.
+> \l_spright_gtl=\c_catcode_other_space_tl {x}abc{abc{.
+> \l_left_right_gtl=}abc}abc}abc}abc{x}{x}abc{abc{.
+> \c_braces_gtl={}.
+============================================================
+============================================================
+TEST 2: \gtl_head:N 
+============================================================
+,,a,}, ,{, ,},{,\c_catcode_other_space_tl 
+============================================================
+============================================================
+TEST 3: \gtl_head_do:NN 
+============================================================
+| ,\q_no_value,a,},\c_catcode_other_space_tl,{,\c_catcode_other_space_tl,},{,|
+============================================================
+============================================================
+TEST 4: \gtl_get_left:NN 
+============================================================
+> \l_test_gtl= .
+> \l_test_gtl=\q_no_value .
+> \l_test_gtl=a.
+> \l_test_gtl=}.
+> \l_test_gtl=\c_catcode_other_space_tl .
+> \l_test_gtl={.
+> \l_test_gtl=\c_catcode_other_space_tl .
+> \l_test_gtl=}.
+> \l_test_gtl={.
+> \l_test_gtl=test.
+============================================================
+============================================================
+TEST 5: \gtl_pop_left:N ,\gtl_gpop_left:N ,\gtl_pop_left:NN ,\gtl_gpop_left:NN 
+============================================================
+> \g_tail_gtl=   .
+> \g_head_gtl= .
+> \g_tail_gtl=.
+> \g_head_gtl=\q_no_value .
+> \g_tail_gtl=bc.
+> \g_head_gtl=a.
+> \g_tail_gtl=abc}abc}abc}abc{x}.
+> \g_head_gtl=}.
+> \g_tail_gtl=}abc}abc}abc}abc{x}.
+> \g_head_gtl=\c_catcode_other_space_tl .
+> \g_tail_gtl=x}abc{abc{.
+> \g_head_gtl={.
+> \g_tail_gtl={x}abc{abc{.
+> \g_head_gtl=\c_catcode_other_space_tl .
+> \g_tail_gtl=abc}abc}abc}abc{x}{x}abc{abc{.
+> \g_head_gtl=}.
+> \g_tail_gtl=}.
+> \g_head_gtl={.
+> \l_copy_gtl=copy.
+> \l_test_gtl=test.
+============================================================
+============================================================
+TEST 6: \gtl_if_head_eq_catcode:NNTF ,\gtl_if_head_eq_catcode:NNT ,\gtl_if_head_eq_catcode:NNF ,\gtl_if_head_eq_catcode_p:NN 
+============================================================
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+TRUE
+FALSE
+============================================================
+============================================================
+TEST 7: \gtl_if_head_eq_charcode:NNTF ,\gtl_if_head_eq_charcode:NNT ,\gtl_if_head_eq_charcode:NNF ,\gtl_if_head_eq_charcode_p:NN 
+============================================================
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+TRUE
+FALSE
+============================================================
+============================================================
+TEST 8: \gtl_if_head_eq_meaning:NNTF ,\gtl_if_head_eq_meaning:NNT ,\gtl_if_head_eq_meaning:NNF ,\gtl_if_head_eq_meaning_p:NN 
+============================================================
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+TRUE
+FALSE
+============================================================
+============================================================
+TEST 9: \gtl_if_head_is_group_begin:NTF ,\gtl_if_head_is_group_begin:NT ,\gtl_if_head_is_group_begin:NF ,\gtl_if_head_is_group_begin_p:N ,\gtl_if_head_is_group_end:NTF ,\gtl_if_head_is_group_end:NT ,\gtl_if_head_is_group_end:NF ,\gtl_if_head_is_group_end_p:N ,\gtl_if_head_is_space:NTF ,\gtl_if_head_is_space:NT ,\gtl_if_head_is_space:NF ,\gtl_if_head_is_space_p:N ,\gtl_if_head_is_N_type:NTF ,\gtl_if_head_is_N_type:NT ,\gtl_if_head_is_N_type:NF ,\gtl_if_head_is_N_type_p:N 
+============================================================
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+TRUE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+FALSE
+TRUE
+FALSE
+TRUE
+FALSE
+FALSE
+TRUE
+FALSE
+FALSE
+FALSE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+============================================================

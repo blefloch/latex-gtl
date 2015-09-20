@@ -1,0 +1,272 @@
+%
+% Copyright (C) 2015 Bruno Le Floch
+%
+\documentclass{minimal}
+\input{regression-test}
+\RequirePackage[log-functions,check-declarations]{expl3}
+
+\RequirePackage{gtl}
+
+\START
+\ExplSyntaxOn
+
+\gtl_const:Nx \c_spaces_gtl { \prg_replicate:nn { 4 } { ~ } }
+\gtl_const:Nn \c_abc_gtl { abc }
+\gtl_new:N \l_left_gtl
+\gtl_concat:NNN \l_left_gtl \c_group_end_gtl \c_abc_gtl
+\gtl_concat:NNN \l_left_gtl \l_left_gtl \l_left_gtl
+\gtl_concat:NNN \l_left_gtl \l_left_gtl \l_left_gtl
+\gtl_put_right:Nn \l_left_gtl { { x } }
+\gtl_new:N \l_spleft_gtl
+\gtl_set_eq:NN \l_spleft_gtl \l_left_gtl
+\gtl_put_left:Nn \l_spleft_gtl { \c_catcode_other_space_tl }
+\gtl_new:N \l_right_gtl
+\gtl_concat:NNN \l_right_gtl \c_abc_gtl \c_group_begin_gtl
+\gtl_concat:NNN \l_right_gtl \l_right_gtl \l_right_gtl
+\gtl_put_left:Nn \l_right_gtl { { x } }
+\gtl_new:N \l_spright_gtl
+\gtl_set_eq:NN \l_spright_gtl \l_right_gtl
+\gtl_put_left:Nn \l_spright_gtl { \c_catcode_other_space_tl }
+\gtl_new:N \l_left_right_gtl
+\gtl_concat:NNN \l_left_right_gtl \l_left_gtl \l_right_gtl
+\gtl_const:Nn \c_braces_gtl { { } }
+
+\TEST { Initial~setup }
+  {
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \gtl_log:N
+  }
+
+\OMIT
+\cs_new:Npn \test:N #1
+  { \TYPE { \exp_last_unbraced:Nf \token_to_str:N { \gtl_head:N #1 } , } }
+\TIMO
+
+\TESTEXP { \gtl_head:N }
+  {
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \test:N
+    \gtl_head:N \l_spright_gtl
+  }
+
+\OMIT
+\cs_gset:Npn \test:N #1
+  { \TYPE { \gtl_head_do:NN #1 \token_to_str:N , } }
+\TIMO
+
+\TESTEXP { \gtl_head_do:NN }
+  {
+    |
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \test:N
+    |
+  }
+
+\OMIT
+\gtl_new:N \l_test_gtl
+\TIMO
+
+\TEST { \gtl_get_left:NN }
+  {
+    \gtl_set:Nn \l_test_gtl { test }
+    {
+      \tl_map_inline:nn
+        {
+          \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+          \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+        }
+        {
+          \gtl_get_left:NN #1 \l_test_gtl
+          \gtl_log:N \l_test_gtl
+        }
+    }
+    \gtl_log:N \l_test_gtl
+  }
+
+\OMIT
+\gtl_new:N \l_copy_gtl
+\gtl_new:N \g_copy_gtl
+\gtl_new:N \g_head_gtl % these two gtl are used to check that the various pop
+\gtl_new:N \g_tail_gtl % functions give the same result, to only log it once.
+\TIMO
+
+\TEST { \gtl_pop_left:N , \gtl_gpop_left:N , \gtl_pop_left:NN , \gtl_gpop_left:NN }
+  {
+    \gtl_set:Nn \l_test_gtl { test }
+    \gtl_set:Nn \l_copy_gtl { copy }
+    {
+      \tl_map_inline:nn
+        {
+          \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+          \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+        }
+        {
+          \gtl_set_eq:NN \l_copy_gtl #1
+          \gtl_gset_eq:NN \g_copy_gtl #1
+          {
+            \gtl_pop_left:NN \l_copy_gtl \l_test_gtl
+            \gtl_gset_eq:NN \g_head_gtl \l_test_gtl % save head given by pop_left:NN
+            \gtl_gset_eq:NN \g_tail_gtl \l_copy_gtl % save tail given by pop_left:NN
+            \gtl_log:N \g_tail_gtl % log tail for visual checking
+            \gtl_log:N \g_head_gtl % log head for visual checking
+            \gtl_gpop_left:NN \g_copy_gtl \l_test_gtl
+            \gtl_if_eq:NNF \l_test_gtl \g_head_gtl { \ERROR } % test gpop_left:NN head
+          }
+          \gtl_if_eq:NNF \g_copy_gtl \g_tail_gtl { \ERROR } % test gpop_left:NN tail is global
+          \gtl_set_eq:NN \l_copy_gtl #1
+          \gtl_gset_eq:NN \g_copy_gtl #1 % restore initial values
+          {
+            \gtl_pop_left:N \l_copy_gtl
+            \gtl_gpop_left:N \g_copy_gtl
+            \gtl_if_eq:NNF \l_copy_gtl \g_tail_gtl { \ERROR } % test pop_left:N tail
+          }
+          \gtl_if_eq:NNF \g_copy_gtl \g_tail_gtl { \ERROR } % test gpop_left:N tail is global
+          \gtl_if_empty:NF #1
+            {
+              \gtl_concat:NNN \l_test_gtl \g_head_gtl \g_tail_gtl
+              \gtl_if_eq:NNF \l_test_gtl #1 { \ERROR } % test head+tail = initial, unless empty
+            }
+        }
+    }
+    \gtl_log:N \l_copy_gtl % check all assignments were local
+    \gtl_log:N \l_test_gtl % check all assignments were local
+  }
+
+\OMIT
+\cs_gset:Npn \test:N #1
+  {
+    \gtl_if_head_eq_catcode:NNTF #1 \c_group_begin_token { \TRUE } { \FALSE }
+    \gtl_if_head_eq_catcode:NNTF #1 \c_group_end_token { \TRUE } { \FALSE }
+    \gtl_if_head_eq_catcode:NNTF #1 \c_space_token { \TRUE } { \FALSE }
+    \gtl_if_head_eq_catcode:NNTF #1 \c_catcode_letter_token { \TRUE } { \FALSE }
+    \gtl_if_head_eq_catcode:NNTF #1 \scan_stop: { \TRUE } { \FALSE }
+  }
+\TIMO
+
+\TEST { \gtl_if_head_eq_catcode:NNTF , \gtl_if_head_eq_catcode:NNT , \gtl_if_head_eq_catcode:NNF , \gtl_if_head_eq_catcode_p:NN }
+  {
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \test:N
+    \gtl_if_head_eq_catcode:NNT \c_abc_gtl X { \TRUE }
+    \gtl_if_head_eq_catcode:NNT \c_abc_gtl * { \ERROR }
+    \gtl_if_head_eq_catcode:NNF \c_abc_gtl X { \ERROR }
+    \gtl_if_head_eq_catcode:NNF \c_abc_gtl * { \FALSE }
+    \if_predicate:w \gtl_if_head_eq_catcode_p:NN \c_abc_gtl X \TRUE \else: \ERROR \fi:
+    \if_predicate:w \gtl_if_head_eq_catcode_p:NN \c_abc_gtl * \ERROR \else: \FALSE \fi:
+  }
+
+\OMIT
+\cs_gset:Npx \test:N #1
+  {
+    \exp_not:N \gtl_if_head_eq_charcode:NNTF #1 \cs_to_str:N \{ \exp_not:n { { \TRUE } { \FALSE } }
+    \exp_not:N \gtl_if_head_eq_charcode:NNTF #1 \cs_to_str:N \} \exp_not:n { { \TRUE } { \FALSE } }
+    \exp_not:N \gtl_if_head_eq_charcode:NNTF #1 \exp_not:n { \c_space_token { \TRUE } { \FALSE } }
+    \exp_not:N \gtl_if_head_eq_charcode:NNTF #1 \token_to_str:N a \exp_not:n { { \TRUE } { \FALSE } }
+    \exp_not:N \gtl_if_head_eq_charcode:NNTF #1 \exp_not:n { \scan_stop: { \TRUE } { \FALSE } }
+  }
+\TIMO
+
+\TEST { \gtl_if_head_eq_charcode:NNTF , \gtl_if_head_eq_charcode:NNT , \gtl_if_head_eq_charcode:NNF , \gtl_if_head_eq_charcode_p:NN }
+  {
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \test:N
+    \gtl_if_head_eq_charcode:NNT \c_abc_gtl a { \TRUE }
+    \gtl_if_head_eq_charcode:NNT \c_abc_gtl * { \ERROR }
+    \gtl_if_head_eq_charcode:NNF \c_abc_gtl a { \ERROR }
+    \gtl_if_head_eq_charcode:NNF \c_abc_gtl * { \FALSE }
+    \if_predicate:w \gtl_if_head_eq_charcode_p:NN \c_abc_gtl a \TRUE \else: \ERROR \fi:
+    \if_predicate:w \gtl_if_head_eq_charcode_p:NN \c_abc_gtl * \ERROR \else: \FALSE \fi:
+  }
+
+\OMIT
+\cs_gset:Npx \test:N #1
+  {
+    \exp_not:N \gtl_if_head_eq_meaning:NNTF #1 \exp_not:n { \c_group_begin_token { \TRUE } { \FALSE } }
+    \exp_not:N \gtl_if_head_eq_meaning:NNT #1 \cs_to_str:N \{ \exp_not:N \ERROR
+    \exp_not:N \gtl_if_head_eq_meaning:NNTF #1 \exp_not:n { \c_group_end_token { \TRUE } { \FALSE } }
+    \exp_not:N \gtl_if_head_eq_meaning:NNT #1 \cs_to_str:N \} \exp_not:N \ERROR
+    \exp_not:N \gtl_if_head_eq_meaning:NNTF #1 \exp_not:n { \c_space_token { \TRUE } { \FALSE } }
+    \exp_not:N \gtl_if_head_eq_meaning:NNT #1 \c_catcode_other_space_tl \exp_not:N \ERROR
+    \exp_not:N \gtl_if_head_eq_meaning:NNTF #1 \exp_not:n { a { \TRUE } { \FALSE } }
+    \exp_not:N \gtl_if_head_eq_meaning:NNT #1 \token_to_str:N a \exp_not:N \ERROR
+    \exp_not:N \gtl_if_head_eq_meaning:NNTF #1 \exp_not:n { \c_catcode_other_space_tl { \TRUE } { \FALSE } }
+  }
+\TIMO
+
+\TEST { \gtl_if_head_eq_meaning:NNTF , \gtl_if_head_eq_meaning:NNT , \gtl_if_head_eq_meaning:NNF , \gtl_if_head_eq_meaning_p:NN }
+  {
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \test:N
+    \gtl_if_head_eq_meaning:NNT \c_abc_gtl a { \TRUE }
+    \gtl_if_head_eq_meaning:NNT \c_abc_gtl * { \ERROR }
+    \gtl_if_head_eq_meaning:NNF \c_abc_gtl a { \ERROR }
+    \gtl_if_head_eq_meaning:NNF \c_abc_gtl * { \FALSE }
+    \if_predicate:w \gtl_if_head_eq_meaning_p:NN \c_abc_gtl a \TRUE \else: \ERROR \fi:
+    \if_predicate:w \gtl_if_head_eq_meaning_p:NN \c_abc_gtl * \ERROR \else: \FALSE \fi:
+  }
+
+
+\OMIT
+\cs_gset:Npn \test:N #1
+  {
+    \gtl_if_head_is_group_begin:NTF #1 { \TRUE } { \FALSE }
+    \gtl_if_head_is_group_end:NTF #1 { \TRUE } { \FALSE }
+    \gtl_if_head_is_space:NTF #1 { \TRUE } { \FALSE }
+    \gtl_if_head_is_N_type:NTF #1 { \TRUE } { \FALSE }
+  }
+\TIMO
+
+\TEST
+  {
+    \gtl_if_head_is_group_begin:NTF , \gtl_if_head_is_group_begin:NT , \gtl_if_head_is_group_begin:NF , \gtl_if_head_is_group_begin_p:N ,
+    \gtl_if_head_is_group_end:NTF , \gtl_if_head_is_group_end:NT , \gtl_if_head_is_group_end:NF , \gtl_if_head_is_group_end_p:N ,
+    \gtl_if_head_is_space:NTF , \gtl_if_head_is_space:NT , \gtl_if_head_is_space:NF , \gtl_if_head_is_space_p:N ,
+    \gtl_if_head_is_N_type:NTF , \gtl_if_head_is_N_type:NT , \gtl_if_head_is_N_type:NF , \gtl_if_head_is_N_type_p:N
+  }
+  {
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \test:N
+    \gtl_if_head_is_group_begin:NT \l_right_gtl { \TRUE }
+    \gtl_if_head_is_group_begin:NF \l_right_gtl { \ERROR }
+    \if_predicate:w \gtl_if_head_is_group_begin_p:N \l_right_gtl \TRUE \else: \ERROR \fi:
+    \gtl_if_head_is_group_end:NT \l_left_gtl { \TRUE }
+    \gtl_if_head_is_group_end:NF \l_left_gtl { \ERROR }
+    \if_predicate:w \gtl_if_head_is_group_end_p:N \l_left_gtl \TRUE \else: \ERROR \fi:
+    \gtl_if_head_is_space:NT \c_spaces_gtl { \TRUE }
+    \gtl_if_head_is_space:NF \c_spaces_gtl { \ERROR }
+    \if_predicate:w \gtl_if_head_is_space_p:N \c_spaces_gtl \TRUE \else: \ERROR \fi:
+    \gtl_if_head_is_N_type:NT \c_abc_gtl { \TRUE }
+    \gtl_if_head_is_N_type:NF \c_abc_gtl { \ERROR }
+    \if_predicate:w \gtl_if_head_is_N_type_p:N \c_abc_gtl \TRUE \else: \ERROR \fi:
+  }
+
+
+\END

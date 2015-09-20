@@ -368,11 +368,12 @@
 %   input stream.
 % \end{function}
 %
-% \begin{function}{\gtl_show:N}
+% \begin{function}{\gtl_show:N, \gtl_log:N}
 %   \begin{syntax}
 %     \cs{gtl_show:N} \meta{gtl~var}
 %   \end{syntax}
-%   Displays the content of the \meta{gtl~var} on the terminal.
+%   Displays the content of the \meta{gtl~var} on the terminal or in
+%   the log file.
 % \end{function}
 %
 % \begin{function}[EXP]{\gtl_to_str:N}
@@ -832,12 +833,25 @@
 % \end{macro}
 % \end{macro}
 %
-% \begin{macro}{\gtl_show:N}
-%   Display the variable name, then its string representation.
+% \begin{macro}{\gtl_show:N, \gtl_log:N}
+% \begin{macro}[aux]{\@@_show:NNN}
+%   Display the variable name, then its string representation.  Before
+%   that, test that the variable indeed exists, and if appropriate
+%   throw an error message by sending the undefined variable to
+%   \cs{tl_show:N} or \cs{tl_log:N}.
 %    \begin{macrocode}
-\cs_new_protected:Npn \gtl_show:N #1
-  { \exp_args:Nx \tl_show:n { \token_to_str:N #1 = \gtl_to_str:N #1 } }
+\cs_new_protected_nopar:Npn \gtl_show:N
+  { \@@_show:NNN \tl_show:n \tl_show:N }
+\cs_new_protected_nopar:Npn \gtl_log:N
+  { \@@_show:NNN \tl_log:n \tl_log:N }
+\cs_new_protected:Npn \@@_show:NNN #1#2#3
+  {
+    \gtl_if_exist:NTF #3
+      { \exp_args:Nx #1 { \token_to_str:N #3 = \gtl_to_str:N #3 } }
+      { #2 #3 }
+  }
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % \subsection{Extended token list conditionals}

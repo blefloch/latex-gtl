@@ -1,0 +1,298 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+============================================================
+TEST 1: \gtl_new:N 
+============================================================
+Defining \l_local_gtl on line ...
+Defining \g_global_gtl on line ...
+> \l_local_gtl=.
+> \g_global_gtl=.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! LaTeX error: "kernel/command-already-defined"
+! 
+! Control sequence \l_local_gtl already defined.
+! 
+! See the LaTeX3 documentation for further information.
+! 
+! For immediate help type H <return>.
+!...............................................  
+l. ...  }
+|'''''''''''''''''''''''''''''''''''''''''''''''
+| This is a coding error.
+| 
+| LaTeX has been asked to create a new control sequence '\l_local_gtl' but
+| this name has already been used elsewhere.
+| 
+| The current meaning is:
+|   macro:->\s__gtl {}{}{}
+|...............................................
+Defining \l_local_gtl on line ...
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! LaTeX error: "kernel/command-already-defined"
+! 
+! Control sequence \g_global_gtl already defined.
+! 
+! See the LaTeX3 documentation for further information.
+! 
+! For immediate help type H <return>.
+!...............................................  
+l. ...  }
+|'''''''''''''''''''''''''''''''''''''''''''''''
+| This is a coding error.
+| 
+| LaTeX has been asked to create a new control sequence '\g_global_gtl' but
+| this name has already been used elsewhere.
+| 
+| The current meaning is:
+|   macro:->\s__gtl {}{}{}
+|...............................................
+Defining \g_global_gtl on line ...
+> \l_local_gtl=.
+> \g_global_gtl=.
+============================================================
+============================================================
+TEST 2: \gtl_const:Nn ,\gtl_const:Nx 
+============================================================
+Defining \c_const_gtl on line ...
+> \c_const_gtl=test.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! LaTeX error: "kernel/command-already-defined"
+! 
+! Control sequence \c_const_gtl already defined.
+! 
+! See the LaTeX3 documentation for further information.
+! 
+! For immediate help type H <return>.
+!...............................................  
+l. ...  }
+|'''''''''''''''''''''''''''''''''''''''''''''''
+| This is a coding error.
+| 
+| LaTeX has been asked to create a new control sequence '\c_const_gtl' but
+| this name has already been used elsewhere.
+| 
+| The current meaning is:
+|   macro:->\s__gtl {}{test}{}
+|...............................................
+Defining \c_const_gtl on line ...
+Defining \c_braces_gtl on line ...
+> \c_const_gtl= c .
+> \c_braces_gtl={}.
+============================================================
+============================================================
+TEST 3: \gtl_clear:N ,\gtl_gclear:N 
+============================================================
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! LaTeX error: "check/non-declared-variable"
+! 
+! The variable \l_junk_gtl has not been declared on line ....
+! 
+! See the LaTeX3 documentation for further information.
+! 
+! For immediate help type H <return>.
+!...............................................  
+l. ...  }
+|'''''''''''''''''''''''''''''''''''''''''''''''
+| Checking is active, and you have tried do so something like:
+|   \tl_set:Nn \l_junk_gtl { ... }
+| without first having:
+|   \tl_new:N \l_junk_gtl
+| 
+| LaTeX will create the variable and continue.
+|...............................................
+> \l_junk_gtl=.
+> \l_local_gtl=.
+> \g_global_gtl=.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! LaTeX error: "kernel/variable-not-defined"
+! 
+! Variable \l_junk_gtl undefined.
+! 
+! See the LaTeX3 documentation for further information.
+! 
+! For immediate help type H <return>.
+!...............................................  
+l. ...  }
+|'''''''''''''''''''''''''''''''''''''''''''''''
+| This is a coding error.
+| 
+| LaTeX has been asked to show a variable \l_junk_gtl, but this has not been
+| defined yet.
+|...............................................
+> \l_local_gtl=local.
+> \g_global_gtl=.
+============================================================
+============================================================
+TEST 4: \gtl_clear_new:N ,\gtl_gclear_new:N 
+============================================================
+Defining \l_extra_gtl on line ...
+Defining \g_extra_gtl on line ...
+> \l_local_gtl=.
+> \g_global_gtl=.
+> \l_extra_gtl=.
+> \g_extra_gtl=.
+> \l_local_gtl=local.
+> \g_global_gtl=.
+> \l_extra_gtl=.
+> \g_extra_gtl=.
+============================================================
+============================================================
+TEST 5: \gtl_set_eq:NN ,\gtl_gset_eq:NN 
+============================================================
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! LaTeX error: "check/non-declared-variable"
+! 
+! The variable \l_junk_gtl has not been declared on line ....
+! 
+! See the LaTeX3 documentation for further information.
+! 
+! For immediate help type H <return>.
+!...............................................  
+l. ...  }
+|'''''''''''''''''''''''''''''''''''''''''''''''
+| Checking is active, and you have tried do so something like:
+|   \tl_set:Nn \l_junk_gtl { ... }
+| without first having:
+|   \tl_new:N \l_junk_gtl
+| 
+| LaTeX will create the variable and continue.
+|...............................................
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! LaTeX error: "check/non-declared-variable"
+! 
+! The variable \l_junk_gtl has not been declared on line ....
+! 
+! See the LaTeX3 documentation for further information.
+! 
+! For immediate help type H <return>.
+!...............................................  
+l. ...  }
+|'''''''''''''''''''''''''''''''''''''''''''''''
+| Checking is active, and you have tried do so something like:
+|   \tl_set:Nn \l_junk_gtl { ... }
+| without first having:
+|   \tl_new:N \l_junk_gtl
+| 
+| LaTeX will create the variable and continue.
+|...............................................
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! LaTeX error: "kernel/variable-not-defined"
+! 
+! Variable \l_local_gtl undefined.
+! 
+! See the LaTeX3 documentation for further information.
+! 
+! For immediate help type H <return>.
+!...............................................  
+l. ...  }
+|'''''''''''''''''''''''''''''''''''''''''''''''
+| This is a coding error.
+| 
+| LaTeX has been asked to show a variable \l_local_gtl, but this has not been
+| defined yet.
+|...............................................
+> \l_junk_gtl={.
+> \g_global_gtl=}.
+> \l_local_gtl=.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+! LaTeX error: "kernel/variable-not-defined"
+! 
+! Variable \l_junk_gtl undefined.
+! 
+! See the LaTeX3 documentation for further information.
+! 
+! For immediate help type H <return>.
+!...............................................  
+l. ...  }
+|'''''''''''''''''''''''''''''''''''''''''''''''
+| This is a coding error.
+| 
+| LaTeX has been asked to show a variable \l_junk_gtl, but this has not been
+| defined yet.
+|...............................................
+> \g_global_gtl=}.
+============================================================
+============================================================
+TEST 6: \gtl_concat:NNN ,\gtl_gconcat:NNN 
+============================================================
+> \l_local_gtl=.
+> \g_global_gtl=} c {.
+> \l_local_gtl=} c {} c {.
+> \l_local_gtl=} c {} c {} c }.
+> \l_local_gtl=} c }} c {} c {} c }.
+> \l_local_gtl={{{{{} c }} c {} c {} c }.
+============================================================
+============================================================
+TEST 7: \gtl_if_exist:NTF ,\gtl_if_exist:NT ,\gtl_if_exist:NF ,\gtl_if_exist_p:N 
+============================================================
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+TRUE
+FALSE
+============================================================
+============================================================
+TEST 8: \gtl_set:Nn ,\gtl_set:Nx ,\gtl_gset:Nn ,\gtl_gset:Nx 
+============================================================
+> \l_local_gtl={{ab}}c.
+> \l_local_gtl={ab}.
+> \g_global_gtl={{Ab}}c.
+> \l_local_gtl=.
+> \g_global_gtl={Ab}.
+============================================================
+============================================================
+TEST 9: \gtl_put_left:Nn ,\gtl_gput_left:Nn 
+============================================================
+> \l_local_gtl={{ab}}c c { c {.
+> \l_local_gtl= c { c {.
+> \g_global_gtl={{Ab}}c}{Ab}}{Ab}.
+============================================================
+============================================================
+TEST 10: \gtl_put_right:Nn ,\gtl_gput_right:Nn 
+============================================================
+> \l_local_gtl= c { c {{{ab}}c.
+> \l_local_gtl= c { c {.
+> \g_global_gtl=}{Ab}}{Ab}{{Ab}}c.
+============================================================

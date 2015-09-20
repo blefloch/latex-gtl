@@ -1,0 +1,179 @@
+%
+% Copyright (C) 2015 Bruno Le Floch
+%
+\documentclass{minimal}
+\input{regression-test}
+\RequirePackage[log-functions,check-declarations]{expl3}
+
+\RequirePackage{gtl}
+
+\START
+\ExplSyntaxOn
+
+\TEST { \gtl_new:N }
+  {
+    {
+      \gtl_new:N \l_local_gtl
+      \gtl_new:N \g_global_gtl
+    }
+    \gtl_log:N \l_local_gtl
+    \gtl_log:N \g_global_gtl
+    \gtl_new:N \l_local_gtl
+    \gtl_new:N \g_global_gtl
+    \gtl_log:N \l_local_gtl
+    \gtl_log:N \g_global_gtl
+  }
+
+\TEST { \gtl_const:Nn , \gtl_const:Nx }
+  {
+    {
+      \gtl_const:Nn \c_const_gtl { test }
+    }
+    \gtl_log:N \c_const_gtl
+    \gtl_const:Nx \c_const_gtl { ~ \tl_head:n { ~ const ~ } ~ }
+    \gtl_const:Nn \c_braces_gtl { { } }
+    \gtl_log:N \c_const_gtl
+    \gtl_log:N \c_braces_gtl
+  }
+
+\TEST { \gtl_clear:N , \gtl_gclear:N }
+  {
+    \gtl_set:Nn \l_local_gtl { local }
+    \gtl_gset:Nn \g_global_gtl { global }
+    {
+      \gtl_clear:N \l_junk_gtl
+      \gtl_clear:N \l_local_gtl
+      \gtl_gclear:N \g_global_gtl
+      \gtl_log:N \l_junk_gtl
+      \gtl_log:N \l_local_gtl
+      \gtl_log:N \g_global_gtl
+    }
+    \gtl_log:N \l_junk_gtl
+    \gtl_log:N \l_local_gtl
+    \gtl_log:N \g_global_gtl
+  }
+
+\TEST { \gtl_clear_new:N , \gtl_gclear_new:N }
+  {
+    \gtl_set:Nn \l_local_gtl { local }
+    \gtl_gset:Nn \g_global_gtl { global }
+    {
+      \gtl_clear_new:N \l_local_gtl
+      \gtl_gclear_new:N \g_global_gtl
+      \gtl_clear_new:N \l_extra_gtl
+      \gtl_gclear_new:N \g_extra_gtl
+      \gtl_log:N \l_local_gtl
+      \gtl_log:N \g_global_gtl
+      \gtl_log:N \l_extra_gtl
+      \gtl_log:N \g_extra_gtl
+    }
+    \gtl_log:N \l_local_gtl
+    \gtl_log:N \g_global_gtl
+    \gtl_log:N \l_extra_gtl
+    \gtl_log:N \g_extra_gtl
+  }
+
+\TEST { \gtl_set_eq:NN , \gtl_gset_eq:NN }
+  {
+    {
+      \gtl_set_eq:NN \l_local_gtl \l_junk_gtl
+      \gtl_set_eq:NN \l_junk_gtl \c_group_begin_gtl
+      \gtl_gset_eq:NN \g_global_gtl \c_group_end_gtl
+      \gtl_log:N \l_local_gtl
+      \gtl_log:N \l_junk_gtl
+      \gtl_log:N \g_global_gtl
+    }
+    \gtl_log:N \l_local_gtl
+    \gtl_log:N \l_junk_gtl
+    \gtl_log:N \g_global_gtl
+  }
+
+\TEST { \gtl_concat:NNN , \gtl_gconcat:NNN }
+  {
+    {
+      \gtl_concat:NNN \l_local_gtl \c_const_gtl \c_group_begin_gtl
+      \gtl_gconcat:NNN \g_global_gtl \c_group_end_gtl \l_local_gtl
+    }
+    \gtl_log:N \l_local_gtl
+    \gtl_log:N \g_global_gtl
+    \gtl_concat:NNN \l_local_gtl \g_global_gtl \g_global_gtl
+    \gtl_log:N \l_local_gtl
+    \gtl_gconcat:NNN \g_global_gtl \c_group_end_gtl \c_const_gtl
+    \gtl_gconcat:NNN \g_global_gtl \g_global_gtl \c_group_end_gtl
+    \gtl_concat:NNN \l_local_gtl \l_local_gtl \g_global_gtl
+    \gtl_log:N \l_local_gtl
+    \gtl_concat:NNN \l_local_gtl \g_global_gtl \l_local_gtl
+    \gtl_log:N \l_local_gtl
+    \gtl_concat:NNN \l_local_gtl \c_group_begin_gtl \l_local_gtl
+    \gtl_concat:NNN \l_local_gtl \c_group_begin_gtl \l_local_gtl
+    \gtl_concat:NNN \l_local_gtl \c_group_begin_gtl \l_local_gtl
+    \gtl_concat:NNN \l_local_gtl \c_group_begin_gtl \l_local_gtl
+    \gtl_concat:NNN \l_local_gtl \c_group_begin_gtl \l_local_gtl
+    \gtl_log:N \l_local_gtl
+  }
+
+\TEST { \gtl_if_exist:NTF , \gtl_if_exist:NT , \gtl_if_exist:NF , \gtl_if_exist_p:N }
+  {
+    \tl_map_inline:nn
+      {
+        \l_local_gtl \g_global_gtl \c_const_gtl \c_braces_gtl
+        \c_empty_gtl \c_group_begin_gtl \c_group_end_gtl
+      }
+      {
+        \gtl_if_exist:NTF #1 { \TRUE } { \ERROR }
+        \gtl_if_exist:NT #1 { \TRUE }
+        \gtl_if_exist:NF #1 { \ERROR }
+        \bool_if:nTF { \gtl_if_exist_p:N #1 } { \TRUE } { \ERROR }
+      }
+    \gtl_if_exist:NTF \l_junk_gtl { \ERROR } { \FALSE }
+  }
+
+\TEST { \gtl_set:Nn , \gtl_set:Nx , \gtl_gset:Nn , \gtl_gset:Nx }
+  {
+    {
+      \gtl_set:Nn \l_local_gtl { {{ab}} c }
+      \gtl_log:N \l_local_gtl
+      \gtl_set:Nx \l_local_gtl { \tl_head:n { {{ab}} c } }
+      \gtl_log:N \l_local_gtl
+      \gtl_gset:Nn \g_global_gtl { {{Ab}} c }
+      \gtl_log:N \g_global_gtl
+      \gtl_gset:Nx \g_global_gtl { \tl_head:n { {{Ab}} c } }
+    }
+    \gtl_log:N \l_local_gtl
+    \gtl_log:N \g_global_gtl
+  }
+
+\TEST { \gtl_put_left:Nn , \gtl_gput_left:Nn }
+  {
+    \gtl_gset:Nn \g_global_gtl { {Ab} }
+    \gtl_concat:NNN \l_local_gtl \c_const_gtl \c_group_begin_gtl
+    \gtl_concat:NNN \l_local_gtl \l_local_gtl \l_local_gtl
+    \gtl_gconcat:NNN \g_global_gtl \c_group_end_gtl \g_global_gtl
+    \gtl_gconcat:NNN \g_global_gtl \g_global_gtl \g_global_gtl
+    {
+      \gtl_put_left:Nn \l_local_gtl { {{ab}} c }
+      \gtl_log:N \l_local_gtl
+      \gtl_gput_left:Nn \g_global_gtl { {{Ab}} c }
+    }
+    \gtl_log:N \l_local_gtl
+    \gtl_log:N \g_global_gtl
+  }
+
+\TEST { \gtl_put_right:Nn , \gtl_gput_right:Nn }
+  {
+    \gtl_gset:Nn \g_global_gtl { {Ab} }
+    \gtl_concat:NNN \l_local_gtl \c_const_gtl \c_group_begin_gtl
+    \gtl_concat:NNN \l_local_gtl \l_local_gtl \l_local_gtl
+    \gtl_gconcat:NNN \g_global_gtl \c_group_end_gtl \g_global_gtl
+    \gtl_gconcat:NNN \g_global_gtl \g_global_gtl \g_global_gtl
+    {
+      \gtl_put_right:Nn \l_local_gtl { {{ab}} c }
+      \gtl_log:N \l_local_gtl
+      \gtl_gput_right:Nn \g_global_gtl { {{Ab}} c }
+    }
+    \gtl_log:N \l_local_gtl
+    \gtl_log:N \g_global_gtl
+  }
+
+
+\END

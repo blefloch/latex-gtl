@@ -1,0 +1,69 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+Defining \c_spaces_gtl on line ...
+Defining \c_abc_gtl on line ...
+Defining \l_left_gtl on line ...
+Defining \l_spleft_gtl on line ...
+Defining \l_right_gtl on line ...
+Defining \l_spright_gtl on line ...
+Defining \l_left_right_gtl on line ...
+Defining \c_braces_gtl on line ...
+============================================================
+TEST 1: Initial setup
+============================================================
+> \c_spaces_gtl=    .
+> \c_abc_gtl=\abc .
+> \l_left_gtl=}\abc }\abc }\abc }\abc {x}.
+> \l_spleft_gtl= }\abc }\abc }\abc }\abc {x}.
+> \l_right_gtl={x}\abc {\abc {.
+> \l_spright_gtl= {x}\abc {\abc {.
+> \l_left_right_gtl=}\abc }\abc }\abc }\abc {x}{x}\abc {\abc {.
+> \c_braces_gtl={}.
+============================================================
+============================================================
+TEST 2: \gtl_to_str:N ,\gtl_count_tokens:N ,\gtl_extra_begin:N ,\gtl_extra_end:N 
+============================================================
+""="":ct=0=0,eb=0=0,ee=0=0,
+"{"="{":ct=1=1,eb=1=1,ee=0=0,
+"}"="}":ct=1=1,eb=0=0,ee=1=1,
+"   "="    ":ct=4=4,eb=0=0,ee=0=0,
+"\abc "="\abc ":ct=1=1,eb=0=0,ee=0=0,
+"}\abc }\abc }\abc }\abc {x}"="}\abc }\abc }\abc }\abc {x}":ct=11=11,eb=0=0,ee=4=4,
+"}\abc }\abc }\abc }\abc {x}"=" }\abc }\abc }\abc }\abc {x}":ct=12=12,eb=0=0,ee=4=4,
+"{x}\abc {\abc {"="{x}\abc {\abc {":ct=7=7,eb=2=2,ee=0=0,
+"{x}\abc {\abc {"=" {x}\abc {\abc {":ct=8=8,eb=2=2,ee=0=0,
+"}\abc }\abc }\abc }\abc {x}{x}\abc {\abc {"="}\abc }\abc }\abc }\abc {x}{x}\abc {\abc {":ct=18=18,eb=2=2,ee=4=4,
+"{}"="{}":ct=2=2,eb=0=0,ee=0=0,
+============================================================
+============================================================
+TEST 3: \gtl_show:N ,\gtl_log:N ,\c_empty_gtl ,\c_group_begin_gtl ,\c_group_end_gtl 
+============================================================
+> \c_empty_gtl=.
+<recently read> }
+l. ...  }
+> \c_empty_gtl=.
+> \c_group_begin_gtl={.
+<recently read> }
+l. ...  }
+> \c_group_begin_gtl={.
+> \c_group_end_gtl=}.
+<recently read> }
+l. ...  }
+> \c_group_end_gtl=}.
+============================================================

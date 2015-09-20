@@ -1,0 +1,75 @@
+%
+% Copyright (C) 2015 Bruno Le Floch
+%
+\documentclass{minimal}
+\input{regression-test}
+\RequirePackage[log-functions,check-declarations]{expl3}
+
+\RequirePackage{gtl}
+
+\START
+\ExplSyntaxOn
+
+\gtl_const:Nx \c_spaces_gtl { \prg_replicate:nn { 4 } { ~ } }
+\gtl_const:Nn \c_abc_gtl { \abc }
+\gtl_new:N \l_left_gtl
+\gtl_concat:NNN \l_left_gtl \c_group_end_gtl \c_abc_gtl
+\gtl_concat:NNN \l_left_gtl \l_left_gtl \l_left_gtl
+\gtl_concat:NNN \l_left_gtl \l_left_gtl \l_left_gtl
+\gtl_put_right:Nn \l_left_gtl { { x } }
+\gtl_new:N \l_spleft_gtl
+\gtl_set_eq:NN \l_spleft_gtl \l_left_gtl
+\gtl_put_left:Nn \l_spleft_gtl { ~ }
+\gtl_new:N \l_right_gtl
+\gtl_concat:NNN \l_right_gtl \c_abc_gtl \c_group_begin_gtl
+\gtl_concat:NNN \l_right_gtl \l_right_gtl \l_right_gtl
+\gtl_put_left:Nn \l_right_gtl { { x } }
+\gtl_new:N \l_spright_gtl
+\gtl_set_eq:NN \l_spright_gtl \l_right_gtl
+\gtl_put_left:Nn \l_spright_gtl { ~ }
+\gtl_new:N \l_left_right_gtl
+\gtl_concat:NNN \l_left_right_gtl \l_left_gtl \l_right_gtl
+\gtl_const:Nn \c_braces_gtl { { } }
+
+\TEST { Initial~setup }
+  {
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \gtl_log:N
+  }
+
+\TEST { \gtl_to_str:N , \gtl_count_tokens:N , \gtl_extra_begin:N , \gtl_extra_end:N }
+  {
+    % check both f-expandability and absence of leading space
+    \tl_map_inline:nn
+      {
+        \c_empty_gtl \c_group_begin_gtl \c_group_end_gtl
+        \c_spaces_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      {
+        \TYPE
+          {
+            " \exp_not:f { \gtl_to_str:N #1 } " = " \gtl_to_str:N #1 " :
+            ct = \exp_not:f { \gtl_count_tokens:N #1 } = \gtl_count_tokens:N #1 ,
+            eb = \exp_not:f { \gtl_extra_begin:N #1 } = \gtl_extra_begin:N #1 ,
+            ee = \exp_not:f { \gtl_extra_end:N #1 } = \gtl_extra_end:N #1 ,
+          }
+      }
+  }
+
+\TEST { \gtl_show:N , \gtl_log:N , \c_empty_gtl , \c_group_begin_gtl , \c_group_end_gtl }
+  {
+    \tl_map_inline:nn
+      { \c_empty_gtl \c_group_begin_gtl \c_group_end_gtl }
+      {
+        \gtl_show:N #1
+        \gtl_log:N #1
+      }
+  }
+
+
+\END

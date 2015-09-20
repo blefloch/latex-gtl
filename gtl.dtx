@@ -1,5 +1,5 @@
 % \iffalse
-%% File: gtl.dtx Copyright (C) 2013 Bruno Le Floch
+%% File: gtl.dtx Copyright (C) 2013,2015 Bruno Le Floch
 %%
 %% It may be distributed and/or modified under the conditions of the
 %% LaTeX Project Public License (LPPL), either version 1.3c of this
@@ -23,9 +23,9 @@
 %
 % \title{The \textsf{gtl} package: \\
 %   manipulate unbalanced lists of tokens\thanks{This
-%     file has version number 0.0a, last revised 2013/07/28.}}
+%     file has version number 0.1, last revised 2015/09/20.}}
 % \author{Bruno Le Floch}
-% \date{2013/07/28}
+% \date{2015/09/20}
 %
 % \maketitle
 % \tableofcontents
@@ -40,6 +40,10 @@
 % begin-group and end-group characters.  The \pkg{gtl} package
 % manipulates instead lists of tokens which may be unbalanced, with more
 % begin-group or more end-group characters.
+%
+% A technical point: all begin-group characters are assumed to have the
+% character code of ``|{|'' and all end-group characters that
+% of~``|}|''.
 %
 % \subsection{Creating and initialising extended token lists}
 %
@@ -454,9 +458,9 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\RequirePackage{expl3}[2013/07/01]
+\RequirePackage{expl3}[2015/09/11]
 \ProvidesExplPackage
-  {gtl} {2013/07/28} {0.0a} {Manipulate unbalanced lists of tokens}
+  {gtl} {2015/09/20} {0.1} {Manipulate unbalanced lists of tokens}
 %    \end{macrocode}
 %
 %    \begin{macrocode}
@@ -535,6 +539,10 @@
 % have $n = p = 0$: the first and third parts are empty, while the
 % second contains the tokens.
 %
+% In the following code comments, the balanced token lists \meta{b_i}
+% are called ``leading chunks'', \meta{c} is called ``middle chunk'',
+% and \meta{e_i} are called ``trailing chunks''.
+%
 % \begin{variable}{\s_@@}
 %   This marker appears at the start of extended token lists.
 %    \begin{macrocode}
@@ -549,7 +557,7 @@
 %   }
 %   Storing a balanced token list into an extended token list variable
 %   simply means adding \cs{s_@@}, \cs{s__stop}, and two empty brace
-%   groups.
+%   groups: there are no leading nor trailing chunks.
 %    \begin{macrocode}
 \cs_new_protected_nopar:Npn \gtl_set:Nn   { \@@_set:NNn \tl_set:Nn   }
 \cs_new_protected_nopar:Npn \gtl_gset:Nn  { \@@_set:NNn \tl_gset:Nn  }
@@ -571,8 +579,9 @@
 % \end{variable}
 %
 % \begin{variable}{\c_group_begin_gtl, \c_group_end_gtl}
-%   An extended token list with exactly one begin-group/end-group
-%   character.
+%   Extended token lists with exactly one begin-group/end-group
+%   character are built by including a single (empty) leading or
+%   trailing chunk.
 %    \begin{macrocode}
 \tl_const:Nn \c_group_end_gtl   { \s_@@ { { } } { } {     } \s__stop }
 \tl_const:Nn \c_group_begin_gtl { \s_@@ {     } { } { { } } \s__stop }
@@ -630,6 +639,10 @@
 %
 % \begin{macro}{\gtl_put_left:Nn, \gtl_gput_left:Nn}
 % \begin{macro}[aux, rEXP]{\@@_put_left:wn}
+%   If there is no leading chunk in the gtl variable, then add the new
+%   material to the middle chunk.  Otherwise add it to the first
+%   leading chunk, namely the first brace group in the first argument
+%   of \cs{@@_put_left:wn}.
 %    \begin{macrocode}
 \cs_new_protected:Npn \gtl_put_left:Nn #1#2
   { \tl_set:Nx #1 { \exp_after:wN \@@_put_left:wn #1 {#2} } }
@@ -653,6 +666,7 @@
 %
 % \begin{macro}{\gtl_put_right:Nn, \gtl_gput_right:Nn}
 % \begin{macro}[aux, rEXP]{\@@_put_right:wn}
+%   Symmetric of \cs{gtl_put_left:Nn}.
 %    \begin{macrocode}
 \cs_new_protected:Npn \gtl_put_right:Nn #1#2
   { \tl_set:Nx #1 { \exp_after:wN \@@_put_right:wn #1 {#2} } }
@@ -771,8 +785,7 @@
 %
 % \subsection{Showing extended token lists}
 %
-% ^^A todo: document \gtl_to_str:n
-% \begin{macro}[EXP]{\gtl_to_str:N, \gtl_to_str:n}
+% \begin{macro}[EXP]{\gtl_to_str:N}
 % \begin{macro}[EXP, aux]
 %   {
 %     \@@_to_str:w,
@@ -784,7 +797,6 @@
 %   }
 %    \begin{macrocode}
 \cs_new:Npn \gtl_to_str:N #1 { \exp_after:wN \@@_to_str:w #1 }
-\cs_new:Npn \gtl_to_str:n #1 { \@@_to_str:w #1 }
 \cs_new:Npn \@@_to_str:w \s_@@ #1#2#3 \s__stop
   { \@@_to_str_loopi:nnw { } #1 \q_nil \q_mark {#2} {#3} }
 \cs_new:Npx \@@_to_str_loopi:nnw #1#2
@@ -854,6 +866,7 @@
 %
 % \begin{macro}[EXP, pTF]{\gtl_if_tl:N}
 % \begin{macro}[EXP,aux]{\@@_if_tl_return:w}
+%   A gtl is balanced if it has neither leading nor trailing chunk.
 %    \begin{macrocode}
 \prg_new_conditional:Npnn \gtl_if_tl:N #1 { p , T , F , TF }
   { \exp_after:wN \@@_if_tl_return:w #1 }
@@ -891,6 +904,9 @@
 %
 % \begin{macro}[EXP,pTF]{\gtl_if_blank:N}
 % \begin{macro}[EXP,aux]{\@@_if_blank_return:w}
+%   A gtl is blank if its middle chunk is blank and it has no leading
+%   nor trailing chunk (those would lead to |#1| or |#3| containing
+%   brace groups).
 %    \begin{macrocode}
 \prg_new_conditional:Npnn \gtl_if_blank:N #1 { p , T , F , TF }
   { \exp_after:wN \@@_if_blank_return:w #1 }
@@ -911,6 +927,11 @@
 %     \gtl_if_head_is_space:N,
 %     \gtl_if_head_is_N_type:N,
 %   }
+%   Based on a five-way test \cs{@@_head:wnnnnn} defined later.  The
+%   five cases are: the gtl is empty, it starts with a begin-group,
+%   with an end-group, with a space, or with an N-type token.  In the
+%   last case, the token is left in the input stream after the brace
+%   group, hence the need for \cs{use_none:n} here.
 %    \begin{macrocode}
 \prg_new_conditional:Npnn \gtl_if_head_is_group_begin:N #1
   { p , T , F , TF }
@@ -1205,6 +1226,8 @@
 %
 % \begin{macro}[EXP]{\gtl_left_tl:N}
 % \begin{macro}[EXP,aux]{\@@_left_tl:w}
+%   If there is no leading chunk, return the middle chunk, otherwise
+%   the first leading chunk.
 %    \begin{macrocode}
 \cs_new:Npn \gtl_left_tl:N #1
   { \exp_after:wN \@@_left_tl:w #1 }
@@ -1215,6 +1238,11 @@
 % \end{macro}
 %
 % \begin{macro}{\gtl_pop_left_tl:N, \gtl_gpop_left_tl:N}
+%   If there is no left chunk, remove the middle chunk, hence the
+%   resulting gtl will start with two empty brace groups (one for the
+%   absence of leading chunk, and one for the emptyness of the middle
+%   chunk).  If there are left chunks replace the first one by an empty
+%   chunk.
 %    \begin{macrocode}
 \cs_new_protected:Npn \gtl_pop_left_tl:N #1
   { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left_tl:w #1 } }

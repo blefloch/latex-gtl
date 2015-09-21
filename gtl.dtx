@@ -41,11 +41,11 @@
 % manipulates instead lists of tokens which may be unbalanced, with more
 % begin-group or more end-group characters.
 %
-% A technical point: all begin-group characters are assumed to have the
-% character code of ``|{|'' and all end-group characters that
-% of~``|}|''.
+% A technical comment: currently, all begin-group characters are
+% assumed to have the character code of ``|{|'' and all end-group
+% characters that of~``|}|''.
 %
-% ^^A check the test coverage
+% ^^A The following code checks the test coverage
 % \begingroup\ExplSyntaxOn
 % \msg_new:nnn { gtldoc } { discarded } { Discarded~some~material~after~closing~brace~of~{function}~or~TEST~or~TESTEXP~argument:~``#1'' }
 % \msg_new:nnn { gtldoc } { bad-test } { TEST~or~TESTEXP~followed~by~unexpected~character~``#1'' }

@@ -705,7 +705,7 @@
 % \end{itemize}
 %
 % We could add (with lots of work) the expandable function
-% \begin{syntax}
+% \begin{quote}\ttfamily\obeylines\obeyspaces
 % \cs{gtl_concat:nF}
 %   \{
 %     \Arg{tl_1} \Arg{start_1} \Arg{stop_1}
@@ -714,13 +714,13 @@
 %     \Arg{tl_n} \Arg{start_n} \Arg{stop_n}
 %   \}
 %   \Arg{false code}
-% \end{syntax}
-% For each triplet, this function builds the sub-token list of <tl_i>
-% corresponding to the tokens ranging from position <start_i> to
-% position <stop_i> of <tl_i>.  The results obtained for each triplet
+% \end{quote}
+% For each triplet, this function builds the sub-token list of \meta{tl_i}
+% corresponding to the tokens ranging from position \meta{start_i} to
+% position \meta{stop_i} of \meta{tl_i}.  The results obtained for each triplet
 % are then concatenated.  If nothing bad happens (see below), the
-% concatenation is left in the input stream, and the <false code> is
-% removed.  Two cases can lead to running the <false code> (and dropping
+% concatenation is left in the input stream, and the \meta{false code} is
+% removed.  Two cases can lead to running the \meta{false code} (and dropping
 % the first argument altogether).  The first case is when the number of
 % brace groups in \cs{gtl_concat:nF} is not a multiple of 3.  The second
 % case is when the concatenation gives rise to an unbalanced token list:
@@ -1826,8 +1826,6 @@
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-%
-% \subsection{Messages}
 %
 %    \begin{macrocode}
 %</package>

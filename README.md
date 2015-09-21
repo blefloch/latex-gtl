@@ -13,5 +13,5 @@ This package requires up-to-date versions of the `l3kernel`,
 The package is extracted by running `pdflatex gtl.ins`.
 For documentation, run `pdflatex gtl.dtx` twice.
 
-This is work in progress, all suggestions/comments/bug reports are
-welcome!
+This is work in progress, all suggestions/comments/bug reports
+are welcome!  See https://github.com/blefloch/latex-gtl

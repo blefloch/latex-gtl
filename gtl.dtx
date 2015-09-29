@@ -23,9 +23,9 @@
 %
 % \title{The \textsf{gtl} package: \\
 %   manipulate unbalanced lists of tokens\thanks{This
-%     file has version number 0.1, last revised 2015/09/21.}}
+%     file has version number 0.2, last revised 2015/09/29.}}
 % \author{Bruno Le Floch}
-% \date{2015/09/21}
+% \date{2015/09/29}
 %
 % \maketitle
 % \tableofcontents
@@ -305,7 +305,8 @@
 %     ../../testfiles/gtl003.lvt ,
 %     ../../testfiles/gtl004.lvt ,
 %     ../../testfiles/gtl005.lvt ,
-%     ../../testfiles/gtl006.lvt
+%     ../../testfiles/gtl006.lvt ,
+%     ../../testfiles/gtl007.lvt
 %   }
 % \group_begin:
 %   \seq_set_eq:NN \l__gtldoc_internal_seq \l__gtldoc_fn_seq
@@ -776,7 +777,7 @@
       }
     \@@_tmp:w
   }
-      {gtl} {2015/09/21} {0.1} {Manipulate unbalanced lists of tokens}
+      {gtl} {2015/09/29} {0.2} {Manipulate unbalanced lists of tokens}
 %    \end{macrocode}
 %
 % \subsection{Helpers}
@@ -856,7 +857,7 @@
 % note that a balanced sub-list of a gtl must be entirely contained in
 % one of the chunk.
 %
-% \begin{variable}{\s_@@}
+% \begin{variable}[aux]{\s_@@}
 %   This marker appears at the start of extended token lists.
 %    \begin{macrocode}
 \cs_new_eq:NN \s_@@ \scan_stop:

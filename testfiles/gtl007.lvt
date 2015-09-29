@@ -7,8 +7,8 @@
 \START
 \input gtl.sty
 
-\TEST {Catcodes} {\TYPE{\meaning _}}
-
+\TEST {Catcodes}
+  {\TYPE{\meaning _}}
 \ExplSyntaxOn
 
 \TEST { A~few~simple~tests }

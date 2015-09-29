@@ -1,0 +1,27 @@
+%&tex
+%
+% Copyright (C) 2015 Bruno Le Floch
+%
+\input regression-test
+
+\START
+\input gtl.sty
+
+\TEST {Catcodes} {\TYPE{\meaning _}}
+
+\ExplSyntaxOn
+
+\TEST { A~few~simple~tests }
+  {
+    \gtl_new:N \l_test_gtl
+    \gtl_new:N \l_test_gtl
+    \group_begin:
+      \gtl_set:Nn \l_test_gtl { { abc } ~ }
+      \gtl_if_head_is_group_begin:NTF \l_test_gtl { \TRUE } { \ERROR }
+      \gtl_pop_left:N \l_test_gtl
+      \gtl_log:N \l_test_gtl
+    \group_end:
+    \gtl_if_empty:NTF \l_test_gtl { \TRUE } { \ERROR }
+  }
+
+\END

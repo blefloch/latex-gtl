@@ -744,13 +744,39 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
-\RequirePackage{expl3}[2015/09/11]
-\ProvidesExplPackage
-  {gtl} {2015/09/21} {0.1} {Manipulate unbalanced lists of tokens}
+%<@@=gtl>
 %    \end{macrocode}
 %
+% Load \pkg{expl3}, either through \cs{RequirePackage} or through
+% inputting the generic loader, depending on the format in use.
 %    \begin{macrocode}
-%<@@=gtl>
+\begingroup\expandafter\expandafter\expandafter\endgroup
+\expandafter\ifx\csname RequirePackage\endcsname\relax
+  \input expl3-generic.tex
+\else
+  \RequirePackage{expl3}[2015/09/11]
+\fi
+\ExplSyntaxOn
+\cs_if_exist:NTF \ProvidesExplPackage
+  {
+    \cs_new_eq:NN \@@_end_package_hook: \prg_do_nothing:
+    \ExplSyntaxOff
+    \ProvidesExplPackage
+  }
+  {
+    \cs_new_eq:NN \@@_end_package_hook: \ExplSyntaxOff
+    \group_begin:
+    \ExplSyntaxOff
+    \cs_set_protected:Npn \@@_tmp:w #1#2#3#4
+      {
+        \group_end:
+        \tl_gset:cx { ver @ #1 . sty } { #2 ~ v#3 ~ #4 }
+        \cs_if_exist_use:NF \wlog { \iow_log:x }
+          { Package: ~ #1 ~ #2 ~ v#3 ~ #4 }
+      }
+    \@@_tmp:w
+  }
+      {gtl} {2015/09/21} {0.1} {Manipulate unbalanced lists of tokens}
 %    \end{macrocode}
 %
 % \subsection{Helpers}
@@ -1829,6 +1855,10 @@
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
+%
+%    \begin{macrocode}
+\@@_end_package_hook:
+%    \end{macrocode}
 %
 %    \begin{macrocode}
 %</package>

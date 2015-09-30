@@ -75,6 +75,27 @@
   }
 
 \OMIT
+\cs_gset:Npn \test:N #1
+  { \TYPE { \gtl_head_do:NNTF #1 \token_to_str:N , ? } }
+\TIMO
+
+\TESTEXP { \gtl_head_do:NNT , \gtl_head_do:NNF , \gtl_head_do:NNTF }
+  {
+    | \gtl_head_do:NNT \c_empty_gtl  A { BC } { DE }
+    | \gtl_head_do:NNT \c_spaces_gtl A { BC } { DE }
+    | \gtl_head_do:NNF \c_empty_gtl  A { BC } { DE }
+    | \gtl_head_do:NNF \c_spaces_gtl A { BC } { DE }
+    |
+    \tl_map_function:nN
+      {
+        \c_spaces_gtl \c_empty_gtl \c_abc_gtl \l_left_gtl \l_spleft_gtl
+        \l_right_gtl \l_spright_gtl \l_left_right_gtl \c_braces_gtl
+      }
+      \test:N
+    |
+  }
+
+\OMIT
 \gtl_new:N \l_test_gtl
 \TIMO
 

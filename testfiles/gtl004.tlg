@@ -47,7 +47,12 @@ TEST 3: \gtl_head_do:NN
 | ,\q_no_value,a,},\c_catcode_other_space_tl,{,\c_catcode_other_space_tl,},{,|
 ============================================================
 ============================================================
-TEST 4: \gtl_get_left:NN 
+TEST 4: \gtl_head_do:NNT ,\gtl_head_do:NNF ,\gtl_head_do:NNTF 
+============================================================
+|{DE}|A BC{DE}|BC{DE}|A {DE}| ,?a,},\c_catcode_other_space_tl,{,\c_catcode_other_space_tl,},{,|
+============================================================
+============================================================
+TEST 5: \gtl_get_left:NN 
 ============================================================
 > \l_test_gtl= .
 > \l_test_gtl=\q_no_value .
@@ -61,7 +66,7 @@ TEST 4: \gtl_get_left:NN
 > \l_test_gtl=test.
 ============================================================
 ============================================================
-TEST 5: \gtl_pop_left:N ,\gtl_gpop_left:N ,\gtl_pop_left:NN ,\gtl_gpop_left:NN 
+TEST 6: \gtl_pop_left:N ,\gtl_gpop_left:N ,\gtl_pop_left:NN ,\gtl_gpop_left:NN 
 ============================================================
 > \g_tail_gtl=   .
 > \g_head_gtl= .
@@ -85,7 +90,7 @@ TEST 5: \gtl_pop_left:N ,\gtl_gpop_left:N ,\gtl_pop_left:NN ,\gtl_gpop_left:NN
 > \l_test_gtl=test.
 ============================================================
 ============================================================
-TEST 6: \gtl_if_head_eq_catcode:NNTF ,\gtl_if_head_eq_catcode:NNT ,\gtl_if_head_eq_catcode:NNF ,\gtl_if_head_eq_catcode_p:NN 
+TEST 7: \gtl_if_head_eq_catcode:NNTF ,\gtl_if_head_eq_catcode:NNT ,\gtl_if_head_eq_catcode:NNF ,\gtl_if_head_eq_catcode_p:NN 
 ============================================================
 FALSE
 FALSE
@@ -138,7 +143,7 @@ TRUE
 FALSE
 ============================================================
 ============================================================
-TEST 7: \gtl_if_head_eq_charcode:NNTF ,\gtl_if_head_eq_charcode:NNT ,\gtl_if_head_eq_charcode:NNF ,\gtl_if_head_eq_charcode_p:NN 
+TEST 8: \gtl_if_head_eq_charcode:NNTF ,\gtl_if_head_eq_charcode:NNT ,\gtl_if_head_eq_charcode:NNF ,\gtl_if_head_eq_charcode_p:NN 
 ============================================================
 FALSE
 FALSE
@@ -191,7 +196,7 @@ TRUE
 FALSE
 ============================================================
 ============================================================
-TEST 8: \gtl_if_head_eq_meaning:NNTF ,\gtl_if_head_eq_meaning:NNT ,\gtl_if_head_eq_meaning:NNF ,\gtl_if_head_eq_meaning_p:NN 
+TEST 9: \gtl_if_head_eq_meaning:NNTF ,\gtl_if_head_eq_meaning:NNT ,\gtl_if_head_eq_meaning:NNF ,\gtl_if_head_eq_meaning_p:NN 
 ============================================================
 FALSE
 FALSE
@@ -244,7 +249,7 @@ TRUE
 FALSE
 ============================================================
 ============================================================
-TEST 9: \gtl_if_head_is_group_begin:NTF ,\gtl_if_head_is_group_begin:NT ,\gtl_if_head_is_group_begin:NF ,\gtl_if_head_is_group_begin_p:N ,\gtl_if_head_is_group_end:NTF ,\gtl_if_head_is_group_end:NT ,\gtl_if_head_is_group_end:NF ,\gtl_if_head_is_group_end_p:N ,\gtl_if_head_is_space:NTF ,\gtl_if_head_is_space:NT ,\gtl_if_head_is_space:NF ,\gtl_if_head_is_space_p:N ,\gtl_if_head_is_N_type:NTF ,\gtl_if_head_is_N_type:NT ,\gtl_if_head_is_N_type:NF ,\gtl_if_head_is_N_type_p:N 
+TEST 10: \gtl_if_head_is_group_begin:NTF ,\gtl_if_head_is_group_begin:NT ,\gtl_if_head_is_group_begin:NF ,\gtl_if_head_is_group_begin_p:N ,\gtl_if_head_is_group_end:NTF ,\gtl_if_head_is_group_end:NT ,\gtl_if_head_is_group_end:NF ,\gtl_if_head_is_group_end_p:N ,\gtl_if_head_is_space:NTF ,\gtl_if_head_is_space:NT ,\gtl_if_head_is_space:NF ,\gtl_if_head_is_space_p:N ,\gtl_if_head_is_N_type:NTF ,\gtl_if_head_is_N_type:NT ,\gtl_if_head_is_N_type:NF ,\gtl_if_head_is_N_type_p:N 
 ============================================================
 FALSE
 FALSE

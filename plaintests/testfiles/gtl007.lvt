@@ -1,6 +1,5 @@
-%&plain
 %
-% Copyright (C) 2015 Bruno Le Floch
+% Copyright (C) 2015-2016 Bruno Le Floch
 %
 \input regression-test
 

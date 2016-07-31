@@ -1,34 +1,18 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
-%% \CharacterTable
-%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
-%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
-%%   Digits        \0\1\2\3\4\5\6\7\8\9
-%%   Exclamation   \!     Double quote  \"     Hash (number) \#
-%%   Dollar        \$     Percent       \%     Ampersand     \&
-%%   Acute accent  \'     Left paren    \(     Right paren   \)
-%%   Asterisk      \*     Plus          \+     Comma         \,
-%%   Minus         \-     Point         \.     Solidus       \/
-%%   Colon         \:     Semicolon     \;     Less than     \<
-%%   Equals        \=     Greater than  \>     Question mark \?
-%%   Commercial at \@     Left bracket  \[     Backslash     \\
-%%   Right bracket \]     Circumflex    \^     Underscore    \_
-%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
-%%   Right brace   \}     Tilde         \~}
-%%
 (../expl3-generic.tex
 (../expl3-code.tex
-\c_max_int=\count29
-\l_tmpa_int=\count30
-\l_tmpb_int=\count31
-\g_tmpa_int=\count32
-\g_tmpb_int=\count33
-\g__prg_map_int=\count34
-\l_iow_line_count_int=\count35
-\l__iow_target_count_int=\count36
-\l__iow_current_line_int=\count37
-\l__iow_current_word_int=\count38
-\l__iow_current_indentation_int=\count39
+\c_max_int=\count28
+\l_tmpa_int=\count29
+\l_tmpb_int=\count30
+\g_tmpa_int=\count31
+\g_tmpb_int=\count32
+\g__prg_map_int=\count33
+\l_iow_line_count_int=\count34
+\l__iow_target_count_int=\count35
+\l__iow_current_line_int=\count36
+\l__iow_current_word_int=\count37
+\l__iow_current_indentation_int=\count38
 \c_zero_dim=\dimen16
 \c_max_dim=\dimen17
 \l_tmpa_dim=\dimen18
@@ -47,17 +31,16 @@ Don't change this file in any respect.
 \l_tmpb_muskip=\muskip13
 \g_tmpa_muskip=\muskip14
 \g_tmpb_muskip=\muskip15
-\g__keyval_level_int=\count40
-\l_keys_choice_int=\count41
-\c__fp_leading_shift_int=\count42
-\c__fp_middle_shift_int=\count43
-\c__fp_trailing_shift_int=\count44
-\c__fp_big_leading_shift_int=\count45
-\c__fp_big_middle_shift_int=\count46
-\c__fp_big_trailing_shift_int=\count47
-\c__fp_Bigg_leading_shift_int=\count48
-\c__fp_Bigg_middle_shift_int=\count49
-\c__fp_Bigg_trailing_shift_int=\count50
+\l_keys_choice_int=\count39
+\c__fp_leading_shift_int=\count40
+\c__fp_middle_shift_int=\count41
+\c__fp_trailing_shift_int=\count42
+\c__fp_big_leading_shift_int=\count43
+\c__fp_big_middle_shift_int=\count44
+\c__fp_big_trailing_shift_int=\count45
+\c__fp_Bigg_leading_shift_int=\count46
+\c__fp_Bigg_middle_shift_int=\count47
+\c__fp_Bigg_trailing_shift_int=\count48
 \c_empty_box=\box16
 \l_tmpa_box=\box17
 \l_tmpb_box=\box18
@@ -98,10 +81,7 @@ Don't change this file in any respect.
 \l__coffin_top_corner_dim=\dimen44
 \l__coffin_scaled_total_height_dim=\dimen45
 \l__coffin_scaled_width_dim=\dimen46
-)
-(../l3xdvipdfmx.def
-)
-(../l3unicode-data.def
+) (../l3dvips.def
 ))
 )
 ============================================================

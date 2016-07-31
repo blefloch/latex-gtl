@@ -1,0 +1,12 @@
+This is a generated file for the l3build validation system.
+Don't change this file in any respect.
+Defining \l_tmpa_gtl on line ...
+Defining \l_tmpb_gtl on line ...
+{\abc {\def }\gh 
+6
+||
+{
+\a \b }\c }{\abc {\def }\gh 
+11
+\a \b }\c }{\abc {\def }\gh \a \b }\c }{\abc {\def }\gh 
+22

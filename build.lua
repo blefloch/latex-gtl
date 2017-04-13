@@ -3,7 +3,7 @@
 bundle = "gtl"
 module = ""
 modules = {"package", "latextests", "plaintests"}
-packtdszip  = true
+tdsroot = "generic"
 
 kpse.set_program_name("kpsewhich")
 dofile(kpse.lookup("l3build.lua"))

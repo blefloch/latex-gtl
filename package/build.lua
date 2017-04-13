@@ -1,8 +1,8 @@
 #!/usr/bin/env texlua
 -- Build script for gtl
-bundle = "gtl"
+bundle = ""
 module = "gtl"
-packtdszip  = true
+tdsroot = "generic"
 maindir = ".."
 
 typeset = function(file)
@@ -30,3 +30,4 @@ end
 
 kpse.set_program_name("kpsewhich")
 dofile(kpse.lookup("l3build.lua"))
+

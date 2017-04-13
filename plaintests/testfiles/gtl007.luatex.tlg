@@ -1,6 +1,6 @@
 This is a generated file for the l3build validation system.
 Don't change this file in any respect.
-(../expl3-generic.tex
+(gtl.sty (../expl3-generic.tex
 (../expl3-code.tex
 (../ltluatex.tex
 \e@alloc@attribute@count=\count277
@@ -21,11 +21,11 @@ Don't change this file in any respect.
 \g_tmpa_int=\count286
 \g_tmpb_int=\count287
 \g__prg_map_int=\count288
-\l_iow_line_count_int=\count289
-\l__iow_target_count_int=\count290
-\l__iow_current_line_int=\count291
-\l__iow_current_word_int=\count292
-\l__iow_current_indentation_int=\count293
+\c_log_iow=\count289
+\l_iow_line_count_int=\count290
+\l__iow_line_target_int=\count291
+\l__iow_one_indent_int=\count292
+\l__iow_indent_int=\count293
 \c_zero_dim=\dimen256
 \c_max_dim=\dimen257
 \l_tmpa_dim=\dimen258
@@ -54,6 +54,20 @@ Don't change this file in any respect.
 \c__fp_Bigg_leading_shift_int=\count301
 \c__fp_Bigg_middle_shift_int=\count302
 \c__fp_Bigg_trailing_shift_int=\count303
+\c__fp_rand_size_int=\count304
+\c__fp_rand_four_int=\count305
+\c__fp_rand_eight_int=\count306
+\l__sort_length_int=\count307
+\l__sort_min_int=\count308
+\l__sort_top_int=\count309
+\l__sort_max_int=\count310
+\l__sort_true_max_int=\count311
+\l__sort_block_int=\count312
+\l__sort_begin_int=\count313
+\l__sort_end_int=\count314
+\l__sort_A_int=\count315
+\l__sort_B_int=\count316
+\l__sort_C_int=\count317
 \c_empty_box=\box256
 \l_tmpa_box=\box257
 \l_tmpb_box=\box258
@@ -94,8 +108,9 @@ Don't change this file in any respect.
 \l__coffin_top_corner_dim=\dimen284
 \l__coffin_scaled_total_height_dim=\dimen285
 \l__coffin_scaled_width_dim=\dimen286
-) (../l3pdfmode.def
-\l__driver_color_stack_int=\count304
+)
+(../l3pdfmode.def
+\l__driver_color_stack_int=\count318
 \l__driver_tmp_box=\box271
 ))
 )

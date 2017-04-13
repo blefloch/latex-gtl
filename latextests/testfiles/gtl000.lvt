@@ -1,9 +1,12 @@
 %
-% Copyright (C) 2015 Bruno Le Floch
+% Copyright (C) 2015,2017 Bruno Le Floch
 %
 \documentclass{minimal}
 \input{regression-test}
 \RequirePackage[log-functions,check-declarations]{expl3}
+\ExplSyntaxOn
+\deprecation_error:
+\ExplSyntaxOff
 
 \START
 \RequirePackage{gtl}

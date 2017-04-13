@@ -1,5 +1,5 @@
 % \iffalse
-%% File: gtl.dtx Copyright (C) 2013,2015 Bruno Le Floch
+%% File: gtl.dtx Copyright (C) 2013,2015,2017 Bruno Le Floch
 %%
 %% It may be distributed and/or modified under the conditions of the
 %% LaTeX Project Public License (LPPL), either version 1.3c of this
@@ -127,7 +127,7 @@
 %     }
 %   \cs_new_protected:Npn \__gtldoc_more:Nw #1 #2 \q_recursion_stop
 %     { ^^A grab one more line and restart the loop
-%       \ior_get_str:NN \g__gtldoc_ior \l__gtldoc_internal_tl
+%       \ior_str_get:NN \g__gtldoc_ior \l__gtldoc_internal_tl
 %       \exp_after:wN #1 \l__gtldoc_internal_tl
 %         \q_recursion_tail \q_recursion_stop
 %     }
@@ -1810,10 +1810,10 @@
   {
     \quark_if_nil:nTF {#1}
       { \@@_tl_count_test:w }
-      { + \c_one \@@_tl_count_loop:n }
+      { + 1 \@@_tl_count_loop:n }
   }
 \cs_new:Npn \@@_tl_count_test:w #1 \q_stop
-  { \tl_if_empty:nF {#1} { + \c_one \@@_tl_count_loop:n #1 \q_stop } }
+  { \tl_if_empty:nF {#1} { + 1 \@@_tl_count_loop:n #1 \q_stop } }
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -1851,14 +1851,14 @@
 \cs_new:Npn \@@_count_tokens:w \s_@@ #1#2#3
   {
     \int_eval:n
-      { \c_minus_one \@@_count_auxi:nw #1 {#2} #3 \q_nil \q_stop }
+      { -1 \@@_count_auxi:nw #1 {#2} #3 \q_nil \q_stop }
   }
 \cs_new:Npn \@@_count_auxi:nw #1
   {
     \quark_if_nil:nTF {#1}
       { \@@_count_auxii:w }
       {
-        + \c_one
+        + 1
         \@@_count_auxiii:n {#1}
         \@@_count_auxi:nw
       }
@@ -1867,7 +1867,7 @@
   {
     \tl_if_empty:nF {#1}
       {
-        + \c_two
+        + 2
         \@@_count_auxi:nw #1 \q_stop
       }
   }
@@ -1877,11 +1877,11 @@
       {
         \tl_if_head_is_group:nTF {#1}
           {
-            + \c_two
+            + 2
             \exp_args:No \@@_count_auxiii:n { \use:n #1 }
           }
           {
-            + \c_one
+            + 1
             \tl_if_head_is_N_type:nTF {#1}
               { \exp_args:No \@@_count_auxiii:n { \use_none:n #1 } }
               { \exp_args:Nf \@@_count_auxiii:n {#1} }

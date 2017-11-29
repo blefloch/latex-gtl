@@ -87,7 +87,7 @@ TEST 3: \gtl_clear:N ,\gtl_gclear:N
 ============================================================
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
-! LaTeX error: "check/non-declared-variable"
+! LaTeX error: "kernel/non-declared-variable"
 ! 
 ! The variable \l_junk_gtl has not been declared on line ....
 ! 
@@ -146,7 +146,7 @@ TEST 5: \gtl_set_eq:NN ,\gtl_gset_eq:NN
 ============================================================
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
-! LaTeX error: "check/non-declared-variable"
+! LaTeX error: "kernel/non-declared-variable"
 ! 
 ! The variable \l_junk_gtl has not been declared on line ....
 ! 
@@ -165,7 +165,7 @@ l. ...  }
 |...............................................
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !
-! LaTeX error: "check/non-declared-variable"
+! LaTeX error: "kernel/non-declared-variable"
 ! 
 ! The variable \l_junk_gtl has not been declared on line ....
 ! 

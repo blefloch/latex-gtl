@@ -5,27 +5,30 @@ module = "gtl"
 tdsroot = "generic"
 maindir = ".."
 
-typeset = function(file)
-  local errorlevel = tex(file)
-  if errorlevel == 0 then
-    local name = stripext(file)
-    errorlevel = biber(name) + bibtex(name)
+typeset = function(file, dir)
+  dir = dir or "."
+  local errorlevel = tex(file, dir)
+  if errorlevel ~= 0 then
+    return errorlevel
+  else
+    local name = jobname(file)
+    errorlevel = biber(name, dir) + bibtex(name, dir)
     if errorlevel == 0 then
-      local function cycle(name)
+      local function cycle(name, dir)
         return(
-          makeindex(name, ".glo", ".gls", ".glg", glossarystyle) +
-          makeindex(name, ".idx", ".ind", ".ilg", indexstyle)    +
-          tex(file)                                              +
-          tex(file)
+          makeindex(name, dir, ".glo", ".gls", ".glg", glossarystyle) +
+          makeindex(name, dir, ".idx", ".ind", ".ilg", indexstyle)    +
+          tex(file, dir)                                              +
+          tex(file, dir)
         )
       end
-      errorlevel = cycle(name)
-      if errorlevel ~= 0 then
-        errorlevel = cycle(name)
+      errorlevel = cycle(name, dir)
+      if errorlevel == 0 then
+        errorlevel = cycle(name, dir)
       end
     end
+    return errorlevel
   end
-  return errorlevel
 end
 
 kpse.set_program_name("kpsewhich")

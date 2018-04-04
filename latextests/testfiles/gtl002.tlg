@@ -97,6 +97,8 @@ TEST 3: \gtl_clear:N ,\gtl_gclear:N
 !...............................................  
 l. ...  }
 |'''''''''''''''''''''''''''''''''''''''''''''''
+| This is a coding error.
+| 
 | Checking is active, and you have tried do so something like:
 |   \tl_set:Nn \l_junk_gtl { ... }
 | without first having:
@@ -156,6 +158,8 @@ TEST 5: \gtl_set_eq:NN ,\gtl_gset_eq:NN
 !...............................................  
 l. ...  }
 |'''''''''''''''''''''''''''''''''''''''''''''''
+| This is a coding error.
+| 
 | Checking is active, and you have tried do so something like:
 |   \tl_set:Nn \l_junk_gtl { ... }
 | without first having:
@@ -175,6 +179,8 @@ l. ...  }
 !...............................................  
 l. ...  }
 |'''''''''''''''''''''''''''''''''''''''''''''''
+| This is a coding error.
+| 
 | Checking is active, and you have tried do so something like:
 |   \tl_set:Nn \l_junk_gtl { ... }
 | without first having:

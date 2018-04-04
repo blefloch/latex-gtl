@@ -819,8 +819,8 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[EXP,aux]{\@@_strip_nil_mark:w,}
-% \begin{macro}[EXP,aux]{\@@_strip_nil_mark_aux:w}
+% \begin{macro}[EXP]{\@@_strip_nil_mark:w,}
+% \begin{macro}[EXP]{\@@_strip_nil_mark_aux:w}
 %   Removes the following \cs{q_nil} \cs{q_mark} without losing any
 %   braces, and places the result into \cs{exp_not:n}.
 %    \begin{macrocode}
@@ -871,7 +871,7 @@
 % note that a balanced sub-list of a gtl must be entirely contained in
 % one of the chunk.
 %
-% \begin{variable}[aux]{\s_@@}
+% \begin{variable}{\s_@@}
 %   This marker appears at the start of extended token lists.
 %    \begin{macrocode}
 \cs_new_eq:NN \s_@@ \scan_stop:
@@ -966,7 +966,7 @@
 % \subsection{Adding data to extended token list variables}
 %
 % \begin{macro}{\gtl_put_left:Nn, \gtl_gput_left:Nn}
-% \begin{macro}[aux, rEXP]{\@@_put_left:wn}
+% \begin{macro}[rEXP]{\@@_put_left:wn}
 %   If there is no leading chunk in the gtl variable, then add the new
 %   material to the middle chunk.  Otherwise add it to the first
 %   leading chunk, namely the first brace group in the first argument
@@ -992,7 +992,7 @@
 % \end{macro}
 %
 % \begin{macro}{\gtl_put_right:Nn, \gtl_gput_right:Nn}
-% \begin{macro}[aux, rEXP]{\@@_put_right:wn}
+% \begin{macro}[rEXP]{\@@_put_right:wn}
 %   Symmetric of \cs{gtl_put_left:Nn}.
 %    \begin{macrocode}
 \cs_new_protected:Npn \gtl_put_right:Nn #1#2
@@ -1015,7 +1015,7 @@
 % \end{macro}
 %
 % \begin{macro}{\gtl_concat:NNN, \gtl_gconcat:NNN}
-% \begin{macro}[rEXP, aux]
+% \begin{macro}[rEXP]
 %   {
 %     \@@_concat:ww,
 %     \@@_concat_aux:nnnnnn,
@@ -1110,7 +1110,7 @@
 % \subsection{Showing extended token lists}
 %
 % \begin{macro}[EXP]{\gtl_to_str:N}
-% \begin{macro}[EXP, aux]
+% \begin{macro}[EXP]
 %   {
 %     \@@_to_str:w,
 %     \@@_to_str_loopi:nnw,
@@ -1160,7 +1160,7 @@
 % \end{macro}
 %
 % \begin{macro}{\gtl_show:N, \gtl_log:N}
-% \begin{macro}[aux]{\@@_show:NNN}
+% \begin{macro}{\@@_show:NNN}
 %   Display the variable name, then its string representation.  Before
 %   that, test that the variable indeed exists, and if appropriate
 %   throw an error message by sending the undefined variable to
@@ -1203,7 +1203,7 @@
 % \end{macro}
 %
 % \begin{macro}[EXP, pTF]{\gtl_if_tl:N}
-% \begin{macro}[EXP,aux]{\@@_if_tl_return:w}
+% \begin{macro}[EXP]{\@@_if_tl_return:w}
 %   A gtl is balanced if it has neither leading nor trailing chunk.
 %    \begin{macrocode}
 \prg_new_conditional:Npnn \gtl_if_tl:N #1 { p , T , F , TF }
@@ -1218,7 +1218,7 @@
 % \end{macro}
 %
 % \begin{macro}[EXP, pTF]{\gtl_if_single_token:N}
-% \begin{macro}[EXP,aux]{\@@_if_single_token_return:w}
+% \begin{macro}[EXP]{\@@_if_single_token_return:w}
 %   If there are neither leading nor trailing chunks then the gtl is a
 %   single token if and only if the middle chunk is a single token.
 %   Otherwise the gtl is a single token only if it is exactly a
@@ -1249,7 +1249,7 @@
 % \end{macro}
 %
 % \begin{macro}[EXP,pTF]{\gtl_if_blank:N}
-% \begin{macro}[EXP,aux]{\@@_if_blank_return:w}
+% \begin{macro}[EXP]{\@@_if_blank_return:w}
 %   A gtl is blank if its middle chunk is blank and it has no leading
 %   nor trailing chunk (those would lead to |#1| or |#3| containing
 %   brace groups).
@@ -1324,7 +1324,7 @@
 %
 % \begin{macro}[EXP, pTF]{\gtl_if_head_eq_catcode:NN}
 % \begin{macro}[EXP, pTF]{\gtl_if_head_eq_charcode:NN}
-% \begin{macro}[EXP, aux]{\@@_if_head_eq_code_return:NNN}
+% \begin{macro}[EXP]{\@@_if_head_eq_code_return:NNN}
 %   In the empty case, |?| can match with |#2|, but then
 %   \cs{use_none:nn} gets rid of \cs{prg_return_true:} and \cs{else:},
 %   to correctly leave \cs{prg_return_false:}.  We could not simplify
@@ -1360,7 +1360,7 @@
 % \end{macro}
 %
 % \begin{macro}[EXP, pTF]{\gtl_if_head_eq_meaning:NN}
-% \begin{macro}[EXP, aux]{\@@_if_head_eq_meaning_return:NN}
+% \begin{macro}[EXP]{\@@_if_head_eq_meaning_return:NN}
 %    \begin{macrocode}
 \prg_new_conditional:Npnn \gtl_if_head_eq_meaning:NN #1#2
   { p , T , F , TF }
@@ -1385,8 +1385,8 @@
 % \subsection{First token of an extended token list}
 %
 % \begin{macro}[EXP, int]{\@@_head:wnnnnn}
-% \begin{macro}[EXP, aux]{\@@_head_aux:nwnnnn}
-% \begin{macro}[EXP, aux]{\@@_head_auxii:N, \@@_head_auxiii:Nnn}
+% \begin{macro}[EXP]{\@@_head_aux:nwnnnn}
+% \begin{macro}[EXP]{\@@_head_auxii:N, \@@_head_auxiii:Nnn}
 %   This function performs |#4|~if the \texttt{gtl} is empty, |#5|~if it
 %   starts with a begin-group character, |#6|~if it starts with an
 %   end-group character, |#7|~if it starts with a space, and in other
@@ -1500,7 +1500,7 @@
 % \end{macro}
 %
 % \begin{macro}{\gtl_pop_left:N, \gtl_gpop_left:N}
-% \begin{macro}[aux, rEXP]
+% \begin{macro}[rEXP]
 %   {
 %     \@@_pop_left:w,
 %     \@@_pop_left_auxi:n,
@@ -1599,7 +1599,7 @@
 % \subsection{Longest token list starting an extended token list}
 %
 % \begin{macro}[EXP]{\gtl_left_tl:N}
-% \begin{macro}[EXP,aux]{\@@_left_tl:w}
+% \begin{macro}[EXP]{\@@_left_tl:w}
 %   If there is no leading chunk, return the middle chunk, otherwise
 %   the first leading chunk.
 %    \begin{macrocode}
@@ -1639,7 +1639,7 @@
 % \subsection{First item of an extended token list}
 %
 % \begin{macro}[EXP]{\gtl_left_item:NF}
-% \begin{macro}[aux, EXP]{\@@_left_item:wF, \@@_left_item_auxi:nwF}
+% \begin{macro}[EXP]{\@@_left_item:wF, \@@_left_item_auxi:nwF}
 %   The left-most item of an extended token list is the head of its left
 %   token list.  The code thus starts like \cs{gtl_left_tl:N}.  It ends
 %   with a check to test if we should use the head, or issue the false
@@ -1656,7 +1656,7 @@
 % \end{macro}
 %
 % \begin{macro}[TF]{\gtl_pop_left_item:NN, \gtl_gpop_left_item:NN}
-% \begin{macro}[aux]
+% \begin{macro}
 %   {\@@_pop_left_item:wNNN, \@@_pop_left_item_aux:nwnnNNN}
 %   If there is no extra end-group characters, and if the balanced part
 %   is blank, we cannot extract an item: return \texttt{false}.  If the
@@ -1722,7 +1722,7 @@
 % extended token list variable.
 %
 % \begin{macro}[EXP]{\gtl_left_text:NF}
-% \begin{macro}[aux, EXP]
+% \begin{macro}[EXP]
 %   {
 %     \@@_left_text:wF,
 %     \@@_left_text_auxi:nwF,
@@ -1749,7 +1749,7 @@
 % \end{macro}
 %
 % \begin{macro}{\gtl_pop_left_text:N, \gtl_gpop_left_text:N}
-% \begin{macro}[aux, rEXP]
+% \begin{macro}[rEXP]
 %   {
 %     \@@_pop_left_text:w,
 %     \@@_pop_left_text_auxi:n,
@@ -1801,7 +1801,7 @@
 % \subsection{Counting tokens}
 %
 % \begin{macro}[EXP, int]{\@@_tl_count:n}
-% \begin{macro}[EXP, aux]{\@@_tl_count_loop:n, \@@_tl_count_test:w}
+% \begin{macro}[EXP]{\@@_tl_count_loop:n, \@@_tl_count_test:w}
 %   A more robust version of \cs{tl_count:n}, which will however break
 %   if the token list contains \cs{q_stop} at the outer brace level.
 %   This cannot happen when \cs{@@_tl_count:n} is called with lists of
@@ -1823,7 +1823,7 @@
 % \end{macro}
 %
 % \begin{macro}[EXP]{\gtl_extra_begin:N, \gtl_extra_end:N}
-% \begin{macro}[EXP, aux]{\@@_extra_begin:w, \@@_extra_end:w}
+% \begin{macro}[EXP]{\@@_extra_begin:w, \@@_extra_end:w}
 %   Count the number of extra end-group or of extra begin-group
 %   characters in an extended token list.  This is the number of items
 %   in the first or third brace groups.  We cannot use \cs{tl_count:n},
@@ -1842,7 +1842,7 @@
 % \end{macro}
 %
 % \begin{macro}[EXP]{\gtl_count_tokens:N}
-% \begin{macro}[aux, rEXP]
+% \begin{macro}[rEXP]
 %   {
 %     \@@_count_tokens:w,
 %     \@@_count_auxi:nw,

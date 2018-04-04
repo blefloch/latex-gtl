@@ -21,7 +21,7 @@ TEST 1: Initial setup
 > \c_braces_gtl={}.
 ============================================================
 ============================================================
-TEST 2: \gtl_to_str:N ,\gtl_count_tokens:N ,\gtl_extra_begin:N ,\gtl_extra_end:N 
+TEST 2: \gtl_to_str:N ,\gtl_to_str:n ,\gtl_count_tokens:N ,\gtl_extra_begin:N ,\gtl_extra_end:N 
 ============================================================
 ""="":ct=0=0,eb=0=0,ee=0=0,
 "{"="{":ct=1=1,eb=1=1,ee=0=0,

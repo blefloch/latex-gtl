@@ -1,5 +1,5 @@
 %
-% Copyright (C) 2015,2017 Bruno Le Floch
+% Copyright (C) 2015,2017,2018 Bruno Le Floch
 %
 \documentclass{minimal}
 \input{regression-test}
@@ -44,7 +44,7 @@
       \gtl_log:N
   }
 
-\TEST { \gtl_to_str:N , \gtl_count_tokens:N , \gtl_extra_begin:N , \gtl_extra_end:N }
+\TEST { \gtl_to_str:N , \gtl_to_str:n , \gtl_count_tokens:N , \gtl_extra_begin:N , \gtl_extra_end:N }
   {
     % check both f-expandability and absence of leading space
     \tl_map_inline:nn
@@ -56,7 +56,7 @@
       {
         \TYPE
           {
-            " \exp_not:f { \gtl_to_str:N #1 } " = " \gtl_to_str:N #1 " :
+            " \exp_not:f { \gtl_to_str:N #1 } " = " \exp_args:No \gtl_to_str:n #1 " :
             ct = \exp_not:f { \gtl_count_tokens:N #1 } = \gtl_count_tokens:N #1 ,
             eb = \exp_not:f { \gtl_extra_begin:N #1 } = \gtl_extra_begin:N #1 ,
             ee = \exp_not:f { \gtl_extra_end:N #1 } = \gtl_extra_end:N #1 ,

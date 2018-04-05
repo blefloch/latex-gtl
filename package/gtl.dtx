@@ -2,7 +2,7 @@
 %% File: gtl.dtx Copyright (C) 2013,2015,2017,2018 Bruno Le Floch
 %%
 %% This work may be distributed and/or modified under the
-%% conditions of the LaTeX Project Public License, either version 1.3
+%% conditions of the LaTeX Project Public License, either version 1.3c
 %% of this license or (at your option) any later version.
 %% The latest version of this license is in
 %%   http://www.latex-project.org/lppl.txt
@@ -95,7 +95,7 @@
 %   \cs_new_protected:Npn \__gtldoc_get_fn_aux:nnn #1#2#3
 %     {
 %       \cs_gset_protected:Npn \__gtldoc_test:w ##1 #1 ##2 #2 { }
-%       \cs_gset_protected_nopar:Npn \__gtldoc_skip:w ##1 #1 ##2 #2
+%       \cs_gset_protected:Npn \__gtldoc_skip:w ##1 #1 ##2 #2
 %         {
 %           \tl_clear:N \l__gtldoc_arg_tl
 %           \str_clear:N \l__gtldoc_TF_str
@@ -163,7 +163,7 @@
 %         }
 %       \__gtldoc_aux:N
 %     }
-%   \cs_new_protected_nopar:Npn \__gtldoc_arg:w
+%   \cs_new_protected:Npn \__gtldoc_arg:w
 %     { \exp_after:wN \__gtldoc_varg:N \c_right_brace_str }
 %   \cs_new_protected:Npn \__gtldoc_varg:N #1
 %     { \exp_args:No \__gtldoc_varg_aux:n { \token_to_str:N #1 } }
@@ -263,7 +263,7 @@
 %           \use_none_delimit_by_q_recursion_stop:w
 %         }
 %     }
-%   \cs_new_protected_nopar:Npn \__gtldoc_test_arg:w
+%   \cs_new_protected:Npn \__gtldoc_test_arg:w
 %     {
 %       \tl_clear:N \l__gtldoc_arg_tl
 %       \exp_args:No \__gtldoc_test_arg_aux:N \c_right_brace_str
@@ -824,7 +824,7 @@
 %   Removes the following \cs{q_nil} \cs{q_mark} without losing any
 %   braces, and places the result into \cs{exp_not:n}.
 %    \begin{macrocode}
-\cs_new_nopar:Npn \@@_strip_nil_mark:w
+\cs_new:Npn \@@_strip_nil_mark:w
   { \@@_strip_nil_mark_aux:w \prg_do_nothing: }
 \cs_new:Npn \@@_strip_nil_mark_aux:w #1 \q_nil \q_mark
   { \exp_not:o {#1} }
@@ -887,12 +887,12 @@
 %   simply means adding \cs{s_@@} and two empty brace
 %   groups: there are no leading nor trailing chunks.
 %    \begin{macrocode}
-\cs_new_protected_nopar:Npn \gtl_set:Nn   { \@@_set:NNn \tl_set:Nn   }
-\cs_new_protected_nopar:Npn \gtl_gset:Nn  { \@@_set:NNn \tl_gset:Nn  }
-\cs_new_protected_nopar:Npn \gtl_const:Nn { \@@_set:NNn \tl_const:Nn }
-\cs_new_protected_nopar:Npn \gtl_set:Nx   { \@@_set:NNn \tl_set:Nx   }
-\cs_new_protected_nopar:Npn \gtl_gset:Nx  { \@@_set:NNn \tl_gset:Nx  }
-\cs_new_protected_nopar:Npn \gtl_const:Nx { \@@_set:NNn \tl_const:Nx }
+\cs_new_protected:Npn \gtl_set:Nn   { \@@_set:NNn \tl_set:Nn   }
+\cs_new_protected:Npn \gtl_gset:Nn  { \@@_set:NNn \tl_gset:Nn  }
+\cs_new_protected:Npn \gtl_const:Nn { \@@_set:NNn \tl_const:Nn }
+\cs_new_protected:Npn \gtl_set:Nx   { \@@_set:NNn \tl_set:Nx   }
+\cs_new_protected:Npn \gtl_gset:Nx  { \@@_set:NNn \tl_gset:Nx  }
+\cs_new_protected:Npn \gtl_const:Nx { \@@_set:NNn \tl_const:Nx }
 \cs_new_protected:Npn \@@_set:NNn   #1#2#3
   { #1 #2 { \s_@@ { } {#3} { } } }
 %    \end{macrocode}
@@ -1167,9 +1167,9 @@
 %   throw an error message by sending the undefined variable to
 %   \cs{tl_show:N} or \cs{tl_log:N}.
 %    \begin{macrocode}
-\cs_new_protected_nopar:Npn \gtl_show:N
+\cs_new_protected:Npn \gtl_show:N
   { \@@_show:NNN \tl_show:n \tl_show:N }
-\cs_new_protected_nopar:Npn \gtl_log:N
+\cs_new_protected:Npn \gtl_log:N
   { \@@_show:NNN \tl_log:n \tl_log:N }
 \cs_new_protected:Npn \@@_show:NNN #1#2#3
   {

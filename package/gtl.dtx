@@ -800,7 +800,7 @@
 \cs_generate_variant:Nn \use:nn { no }
 %    \end{macrocode}
 %
-% \begin{macro}[EXP, int]{\@@_exp_not_n:N}
+% \begin{macro}[EXP]{\@@_exp_not_n:N}
 %   Used in one case where we need to prevent expansion of a token
 %   within an |x|-expanding definition.  Using \cs{exp_not:N} there
 %   would fail when the argument is a macro parameter character.
@@ -809,7 +809,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}[EXP, int]{\@@_brace:nn, \@@_brace_swap:nn}
+% \begin{macro}[EXP]{\@@_brace:nn, \@@_brace_swap:nn}
 %   Those functions are used to add some tokens, |#1|, to an item |#2|
 %   in an extended token list: \cs{@@_brace:nn} adds tokens on the left,
 %   while \cs{@@_brace_swap:nn} adds them on the right.
@@ -1385,7 +1385,7 @@
 %
 % \subsection{First token of an extended token list}
 %
-% \begin{macro}[EXP, int]{\@@_head:wnnnnn}
+% \begin{macro}[EXP]{\@@_head:wnnnnn}
 % \begin{macro}[EXP]{\@@_head_aux:nwnnnn}
 % \begin{macro}[EXP]{\@@_head_auxii:N, \@@_head_auxiii:Nnn}
 %   This function performs |#4|~if the \texttt{gtl} is empty, |#5|~if it
@@ -1801,7 +1801,7 @@
 %
 % \subsection{Counting tokens}
 %
-% \begin{macro}[EXP, int]{\@@_tl_count:n}
+% \begin{macro}[EXP]{\@@_tl_count:n}
 % \begin{macro}[EXP]{\@@_tl_count_loop:n, \@@_tl_count_test:w}
 %   A more robust version of \cs{tl_count:n}, which will however break
 %   if the token list contains \cs{q_stop} at the outer brace level.

@@ -1,9 +1,6 @@
-#!/usr/bin/env texlua
+#!/usr/bin/env l3build
 -- Build script for gtl
 bundle = "gtl"
 module = ""
 modules = {"package", "latextests", "plaintests"}
 tdsroot = "generic"
-
-kpse.set_program_name("kpsewhich")
-dofile(kpse.lookup("l3build.lua"))

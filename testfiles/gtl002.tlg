@@ -31,7 +31,7 @@ Defining \g_global_gtl on line ...
 > \g_global_gtl=.
 ============================================================
 ============================================================
-TEST 2: \gtl_const:Nn ,\gtl_const:Nx 
+TEST 2: \gtl_const:Nn ,\gtl_const:Ne ,\gtl_const:Nx 
 ============================================================
 Defining \c_const_gtl on line ...
 > \c_const_gtl=test.
@@ -48,6 +48,8 @@ Defining \c_const_gtl on line ...
 Defining \c_braces_gtl on line ...
 > \c_const_gtl= c .
 > \c_braces_gtl={}.
+Defining \c_constb_gtl on line ...
+> \c_constb_gtl= ##c .
 ============================================================
 ============================================================
 TEST 3: \gtl_clear:N ,\gtl_gclear:N 
@@ -168,13 +170,15 @@ TRUE
 FALSE
 ============================================================
 ============================================================
-TEST 8: \gtl_set:Nn ,\gtl_set:Nx ,\gtl_gset:Nn ,\gtl_gset:Nx 
+TEST 8: \gtl_set:Nn ,\gtl_set:Nx ,\gtl_set:Ne ,\gtl_gset:Nn ,\gtl_gset:Nx ,\gtl_gset:Ne 
 ============================================================
 > \l_local_gtl={{ab}}c.
-> \l_local_gtl={ab}.
+> \l_local_gtl={ab}##.
+> \l_local_gtl={ab}##.
 > \g_global_gtl={{Ab}}c.
+> \g_global_gtl={Ab}##.
 > \l_local_gtl=.
-> \g_global_gtl={Ab}.
+> \g_global_gtl={Ab}##.
 ============================================================
 ============================================================
 TEST 9: \gtl_put_left:Nn ,\gtl_gput_left:Nn 

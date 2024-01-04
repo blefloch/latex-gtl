@@ -27,7 +27,7 @@
     \gtl_log:N \g_global_gtl
   }
 
-\TEST { \gtl_const:Nn , \gtl_const:Nx }
+\TEST { \gtl_const:Nn , \gtl_const:Ne , \gtl_const:Nx }
   {
     {
       \gtl_const:Nn \c_const_gtl { test }
@@ -37,6 +37,8 @@
     \gtl_const:Nn \c_braces_gtl { { } }
     \gtl_log:N \c_const_gtl
     \gtl_log:N \c_braces_gtl
+    \gtl_const:Ne \c_constb_gtl { ~ # \tl_head:n { ~ const ~ } ~ }
+    \gtl_log:N \c_constb_gtl
   }
 
 \TEST { \gtl_clear:N , \gtl_gclear:N }
@@ -131,16 +133,20 @@
     \gtl_if_exist:NTF \l_junk_gtl { \ERROR } { \FALSE }
   }
 
-\TEST { \gtl_set:Nn , \gtl_set:Nx , \gtl_gset:Nn , \gtl_gset:Nx }
+\TEST { \gtl_set:Nn , \gtl_set:Nx , \gtl_set:Ne , \gtl_gset:Nn , \gtl_gset:Nx , \gtl_gset:Ne }
   {
     {
       \gtl_set:Nn \l_local_gtl { {{ab}} c }
       \gtl_log:N \l_local_gtl
-      \gtl_set:Nx \l_local_gtl { \tl_head:n { {{ab}} c } }
+      \gtl_set:Nx \l_local_gtl { \tl_head:n { {{ab}} c } ## }
+      \gtl_log:N \l_local_gtl
+      \gtl_set:Ne \l_local_gtl { \tl_head:n { {{ab}} c } # }
       \gtl_log:N \l_local_gtl
       \gtl_gset:Nn \g_global_gtl { {{Ab}} c }
       \gtl_log:N \g_global_gtl
-      \gtl_gset:Nx \g_global_gtl { \tl_head:n { {{Ab}} c } }
+      \gtl_gset:Nx \g_global_gtl { \tl_head:n { {{Ab}} c } ## }
+      \gtl_log:N \g_global_gtl
+      \gtl_gset:Ne \g_global_gtl { \tl_head:n { {{Ab}} c } # }
     }
     \gtl_log:N \l_local_gtl
     \gtl_log:N \g_global_gtl

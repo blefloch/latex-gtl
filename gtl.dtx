@@ -120,7 +120,7 @@
 %     {
 %       \token_if_eq_meaning:NNT #1 \q_recursion_tail
 %         { \__gtldoc_more:Nw \__gtldoc_aux:N }
-%       \str_case_x:nnF {#1}
+%       \str_case_e:nnF {#1}
 %         {
 %           \c_percent_str { \__gtldoc_aux:N } ^^A ignore percent
 %           ^ { \__gtldoc_hat:N } ^^A check for "^^A"
@@ -178,7 +178,7 @@
 %               \__gtldoc_varg_aux:w ##1 \q_recursion_tail
 %             }
 %             {
-%               \tl_put_right:Nx \l__gtldoc_arg_tl { ##1 \iow_char:N \^^M }
+%               \tl_put_right:Ne \l__gtldoc_arg_tl { ##1 \iow_char:N \^^M }
 %               \__gtldoc_more:Nw \__gtldoc_varg_loop:w
 %             }
 %         }
@@ -192,25 +192,25 @@
 %       \tl_if_blank:nF {#2}
 %         { \msg_warning:nnn { gtldoc } { discarded } {#2} }
 %       \tl_put_right:Nn \l__gtldoc_arg_tl {#1}
-%       \tl_remove_all:Nx \l__gtldoc_arg_tl { \iow_char:N \^^M \iow_char:N \% } ^^A from l3doc
-%       \tl_remove_all:Nx \l__gtldoc_arg_tl { \tl_to_str:n { ^ ^ A } } ^^A from l3doc
-%       \tl_remove_all:Nx \l__gtldoc_arg_tl { \iow_char:N \^^I } ^^A from l3doc
-%       \tl_remove_all:Nx \l__gtldoc_arg_tl { \iow_char:N \^^M } ^^A from l3doc
+%       \tl_remove_all:Ne \l__gtldoc_arg_tl { \iow_char:N \^^M \iow_char:N \% } ^^A from l3doc
+%       \tl_remove_all:Ne \l__gtldoc_arg_tl { \tl_to_str:n { ^ ^ A } } ^^A from l3doc
+%       \tl_remove_all:Ne \l__gtldoc_arg_tl { \iow_char:N \^^I } ^^A from l3doc
+%       \tl_remove_all:Ne \l__gtldoc_arg_tl { \iow_char:N \^^M } ^^A from l3doc
 %       ^^A \@@_replace_at_at:N \l_@@_tmpa_tl ^^A from l3doc but not done here
-%       \exp_args:NNx \seq_set_from_clist:Nn \l__gtldoc_arg_seq
+%       \exp_args:NNe \seq_set_from_clist:Nn \l__gtldoc_arg_seq
 %         { \tl_to_str:N \l__gtldoc_arg_tl }
 %       \str_if_empty:NF \l__gtldoc_TF_str
 %         {
 %           \seq_clear:N \l__gtldoc_arg_TF_seq
 %           \seq_map_inline:Nn \l__gtldoc_arg_seq
 %             {
-%               \seq_put_right:Nx \l__gtldoc_arg_TF_seq { ##1 TF }
-%               \seq_put_right:Nx \l__gtldoc_arg_TF_seq { ##1 T }
-%               \seq_put_right:Nx \l__gtldoc_arg_TF_seq { ##1 F }
-%               \str_if_eq_x:nnT { \l__gtldoc_TF_str } { pTF }
-%                 { \seq_put_right:Nx \l__gtldoc_arg_TF_seq { \__gtldoc_pred:w ##1 } }
+%               \seq_put_right:Ne \l__gtldoc_arg_TF_seq { ##1 TF }
+%               \seq_put_right:Ne \l__gtldoc_arg_TF_seq { ##1 T }
+%               \seq_put_right:Ne \l__gtldoc_arg_TF_seq { ##1 F }
+%               \str_if_eq:eeT { \l__gtldoc_TF_str } { pTF }
+%                 { \seq_put_right:Ne \l__gtldoc_arg_TF_seq { \__gtldoc_pred:w ##1 } }
 %             }
-%           \seq_set_map:NNn \l__gtldoc_arg_seq
+%           \seq_set_map_e:NNn \l__gtldoc_arg_seq
 %             \l__gtldoc_arg_TF_seq { \tl_to_str:n {##1} }
 %         }
 %       \seq_concat:NNN \l__gtldoc_fn_seq \l__gtldoc_fn_seq \l__gtldoc_arg_seq
@@ -293,10 +293,10 @@
 %       \tl_if_blank:nF {#2}
 %         { \msg_warning:nnn { gtldoc } { discarded } {#2} }
 %       \tl_put_right:Nn \l__gtldoc_arg_tl {#1}
-%       \exp_args:NNx \seq_set_from_clist:Nn \l__gtldoc_arg_seq
+%       \exp_args:NNe \seq_set_from_clist:Nn \l__gtldoc_arg_seq
 %         { \tl_to_str:N \l__gtldoc_arg_tl }
-%       \seq_set_filter:NNx \l__gtldoc_arg_seq \l__gtldoc_arg_seq
-%         { \exp_not:N \tl_if_head_eq_charcode_p:nN {####1} \c_backslash_str }
+%       \exp_args:NNNe \seq_set_filter:NNn \l__gtldoc_arg_seq \l__gtldoc_arg_seq
+%         { \exp_not:N \tl_if_head_eq_charcode_p:nN {##1} \c_backslash_str }
 %       \seq_concat:NNN \l__gtldoc_tested_fn_seq \l__gtldoc_tested_fn_seq \l__gtldoc_arg_seq
 %     }
 % \group_end:
@@ -344,7 +344,7 @@
 %   initially be empty.
 % \end{function}
 %
-% \begin{function}{\gtl_const:Nn, \gtl_const:Nx}
+% \begin{function}{\gtl_const:Nn, \gtl_const:Ne, \gtl_const:Nx}
 %   \begin{syntax}
 %     \cs{gtl_const:Nn} \meta{gtl~var} \Arg{token list}
 %   \end{syntax}
@@ -399,7 +399,7 @@
 %
 % \subsection{Adding data to token list variables}
 %
-% \begin{function}{\gtl_set:Nn, \gtl_set:Nx, \gtl_gset:Nn, \gtl_gset:Nx}
+% \begin{function}{\gtl_set:Nn, \gtl_set:Ne, \gtl_set:Nx, \gtl_gset:Nn, \gtl_gset:Ne, \gtl_gset:Nx}
 %   \begin{syntax}
 %     \cs{gtl_set:Nn} \meta{gtl~var} \Arg{token list}
 %   \end{syntax}
@@ -785,8 +785,8 @@
     \cs_set_protected:Npn \@@_tmp:w #1#2#3#4
       {
         \group_end:
-        \tl_gset:cx { ver @ #1 . sty } { #2 ~ v#3 ~ #4 }
-        \cs_if_exist_use:NF \wlog { \iow_log:x }
+        \tl_gset:ce { ver @ #1 . sty } { #2 ~ v#3 ~ #4 }
+        \cs_if_exist_use:NF \wlog { \iow_log:e }
           { Package: ~ #1 ~ #2 ~ v#3 ~ #4 }
       }
     \@@_tmp:w
@@ -881,6 +881,7 @@
 % \begin{macro}
 %   {
 %     \gtl_set:Nn, \gtl_gset:Nn, \gtl_const:Nn,
+%     \gtl_set:Ne, \gtl_gset:Ne, \gtl_const:Ne,
 %     \gtl_set:Nx, \gtl_gset:Nx, \gtl_const:Nx
 %   }
 %   Storing a balanced token list into an extended token list variable
@@ -890,9 +891,9 @@
 \cs_new_protected:Npn \gtl_set:Nn   { \@@_set:NNn \tl_set:Nn   }
 \cs_new_protected:Npn \gtl_gset:Nn  { \@@_set:NNn \tl_gset:Nn  }
 \cs_new_protected:Npn \gtl_const:Nn { \@@_set:NNn \tl_const:Nn }
-\cs_new_protected:Npn \gtl_set:Nx   { \@@_set:NNn \tl_set:Nx   }
-\cs_new_protected:Npn \gtl_gset:Nx  { \@@_set:NNn \tl_gset:Nx  }
-\cs_new_protected:Npn \gtl_const:Nx { \@@_set:NNn \tl_const:Nx }
+\cs_generate_variant:Nn \gtl_set:Nn { Ne , Nx }
+\cs_generate_variant:Nn \gtl_gset:Nn { Ne , Nx }
+\cs_generate_variant:Nn \gtl_const:Nn { Ne , Nx }
 \cs_new_protected:Npn \@@_set:NNn   #1#2#3
   { #1 #2 { \s_@@ { } {#3} { } } }
 %    \end{macrocode}
@@ -973,9 +974,9 @@
 %   of \cs{@@_put_left:wn}.
 %    \begin{macrocode}
 \cs_new_protected:Npn \gtl_put_left:Nn #1#2
-  { \tl_set:Nx #1 { \exp_after:wN \@@_put_left:wn #1 {#2} } }
+  { \tl_set:Ne #1 { \exp_after:wN \@@_put_left:wn #1 {#2} } }
 \cs_new_protected:Npn \gtl_gput_left:Nn #1#2
-  { \tl_gset:Nx #1 { \exp_after:wN \@@_put_left:wn #1 {#2} } }
+  { \tl_gset:Ne #1 { \exp_after:wN \@@_put_left:wn #1 {#2} } }
 \cs_new:Npn \@@_put_left:wn \s_@@ #1#2#3 #4
   {
     \tl_if_empty:nTF {#1}
@@ -996,9 +997,9 @@
 %   Symmetric of \cs{gtl_put_left:Nn}.
 %    \begin{macrocode}
 \cs_new_protected:Npn \gtl_put_right:Nn #1#2
-  { \tl_set:Nx #1 { \exp_after:wN \@@_put_right:wn #1 {#2} } }
+  { \tl_set:Ne #1 { \exp_after:wN \@@_put_right:wn #1 {#2} } }
 \cs_new_protected:Npn \gtl_gput_right:Nn #1#2
-  { \tl_gset:Nx #1 { \exp_after:wN \@@_put_right:wn #1 {#2} } }
+  { \tl_gset:Ne #1 { \exp_after:wN \@@_put_right:wn #1 {#2} } }
 \cs_new:Npn \@@_put_right:wn \s_@@ #1#2#3 #4
   {
     \tl_if_empty:nTF {#3}
@@ -1039,9 +1040,9 @@
 %   \meta{b} parts.
 %    \begin{macrocode}
 \cs_new_protected:Npn \gtl_concat:NNN #1#2#3
-  { \tl_set:Nx  #1 { \exp_last_two_unbraced:Noo \@@_concat:ww #2 #3 } }
+  { \tl_set:Ne  #1 { \exp_last_two_unbraced:Noo \@@_concat:ww #2 #3 } }
 \cs_new_protected:Npn \gtl_gconcat:NNN #1#2#3
-  { \tl_gset:Nx #1 { \exp_last_two_unbraced:Noo \@@_concat:ww #2 #3 } }
+  { \tl_gset:Ne #1 { \exp_last_two_unbraced:Noo \@@_concat:ww #2 #3 } }
 \cs_new:Npn \@@_concat:ww \s_@@ #1#2#3 \s_@@ #4#5#6
   {
     \tl_if_blank:nTF {#3}
@@ -1124,13 +1125,13 @@
 \cs_new:Npn \gtl_to_str:n #1 { \@@_to_str:w #1 }
 \cs_new:Npn \@@_to_str:w \s_@@ #1#2#3
   { \@@_to_str_loopi:nnw { } #1 \q_nil \q_mark {#2} {#3} }
-\cs_new:Npx \@@_to_str_loopi:nnw #1#2
+\cs_new:Npe \@@_to_str_loopi:nnw #1#2
   {
     \exp_not:N \quark_if_nil:nTF {#2}
       { \exp_not:N \@@_to_str_testi:nnw {#1} {#2} }
       { \exp_not:N \@@_to_str_loopi:nnw { #1 #2 \iow_char:N \} } }
   }
-\cs_new:Npx \@@_to_str_testi:nnw #1#2#3 \q_mark
+\cs_new:Npe \@@_to_str_testi:nnw #1#2#3 \q_mark
   {
     \exp_not:N \tl_if_empty:nTF {#3}
       { \exp_not:N \@@_to_str_endi:nnn {#1} }
@@ -1141,13 +1142,13 @@
   }
 \cs_new:Npn \@@_to_str_endi:nnn #1#2#3
   { \@@_to_str_loopii:nnw #3 { #1 #2 } \q_nil \q_stop }
-\cs_new:Npx \@@_to_str_loopii:nnw #1#2
+\cs_new:Npe \@@_to_str_loopii:nnw #1#2
   {
     \exp_not:N \quark_if_nil:nTF {#2}
       { \exp_not:N \@@_to_str_testii:nnw {#1} {#2} }
       { \exp_not:N \@@_to_str_loopii:nnw { #2 \iow_char:N \{ #1 } }
   }
-\cs_new:Npx \@@_to_str_testii:nnw #1#2#3 \q_stop
+\cs_new:Npe \@@_to_str_testii:nnw #1#2#3 \q_stop
   {
     \exp_not:N \tl_if_empty:nTF {#3}
       { \exp_not:N \tl_to_str:n {#1} }
@@ -1174,7 +1175,7 @@
 \cs_new_protected:Npn \@@_show:NNN #1#2#3
   {
     \gtl_if_exist:NTF #3
-      { \exp_args:Nx #1 { \token_to_str:N #3 = \gtl_to_str:N #3 } }
+      { \exp_args:Ne #1 { \token_to_str:N #3 = \gtl_to_str:N #3 } }
       { #2 #3 }
   }
 %    \end{macrocode}
@@ -1515,12 +1516,12 @@
 \cs_new_protected:Npn \gtl_pop_left:N #1
   {
     \gtl_if_empty:NF #1
-      { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left:w #1 } }
+      { \tl_set:Ne #1 { \exp_after:wN \@@_pop_left:w #1 } }
   }
 \cs_new_protected:Npn \gtl_gpop_left:N #1
   {
     \gtl_if_empty:NF #1
-      { \tl_gset:Nx #1 { \exp_after:wN \@@_pop_left:w #1 } }
+      { \tl_gset:Ne #1 { \exp_after:wN \@@_pop_left:w #1 } }
   }
 \cs_new:Npn \@@_pop_left:w \s_@@ #1#2#3
   {
@@ -1620,9 +1621,9 @@
 %   chunk.
 %    \begin{macrocode}
 \cs_new_protected:Npn \gtl_pop_left_tl:N #1
-  { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left_tl:w #1 } }
+  { \tl_set:Ne #1 { \exp_after:wN \@@_pop_left_tl:w #1 } }
 \cs_new_protected:Npn \gtl_gpop_left_tl:N #1
-  { \tl_gset:Nx #1 { \exp_after:wN \@@_pop_left_tl:w #1 } }
+  { \tl_gset:Ne #1 { \exp_after:wN \@@_pop_left_tl:w #1 } }
 \cs_new:Npn \@@_pop_left_tl:w \s_@@ #1#2#3
   {
     \s_@@
@@ -1669,9 +1670,9 @@
 %   not blank, pop its first item.
 %    \begin{macrocode}
 \prg_new_protected_conditional:Npnn \gtl_pop_left_item:NN #1#2 { TF , T , F }
-  { \exp_after:wN \@@_pop_left_item:wNNN #1#2 \tl_set:Nx #1 }
+  { \exp_after:wN \@@_pop_left_item:wNNN #1#2 \tl_set:Ne #1 }
 \prg_new_protected_conditional:Npnn \gtl_gpop_left_item:NN #1#2 { TF , T , F }
-  { \exp_after:wN \@@_pop_left_item:wNNN #1#2 \tl_gset:Nx #1 }
+  { \exp_after:wN \@@_pop_left_item:wNNN #1#2 \tl_gset:Ne #1 }
 \cs_new_protected:Npn \@@_pop_left_item:wNNN
     \s_@@ #1#2#3 #4#5#6
   {
@@ -1679,7 +1680,7 @@
       {
         \tl_if_blank:nTF {#2} { \prg_return_false: }
           {
-            \tl_set:Nx #4 { \tl_head:n {#2} }
+            \tl_set:Ne #4 { \tl_head:n {#2} }
             #5 #6
               {
                 \s_@@ { } { \tl_tail:n {#2} }
@@ -1698,7 +1699,7 @@
   {
     \tl_if_blank:nTF {#1} { \prg_return_false: }
       {
-        \tl_set:Nx #5 { \tl_head:n {#1} }
+        \tl_set:Ne #5 { \tl_head:n {#1} }
         #6 #7
           {
             \s_@@
@@ -1760,9 +1761,9 @@
 %   }
 %    \begin{macrocode}
 \cs_new_protected:Npn \gtl_pop_left_text:N #1
-  { \tl_set:Nx #1 { \exp_after:wN \@@_pop_left_text:w #1 } }
+  { \tl_set:Ne #1 { \exp_after:wN \@@_pop_left_text:w #1 } }
 \cs_new_protected:Npn \gtl_gpop_left_text:N #1
-  { \tl_gset:Nx #1 { \exp_after:wN \@@_pop_left_text:w #1 } }
+  { \tl_gset:Ne #1 { \exp_after:wN \@@_pop_left_text:w #1 } }
 \cs_new:Npn \@@_pop_left_text:w \s_@@ #1#2#3
   {
     \s_@@

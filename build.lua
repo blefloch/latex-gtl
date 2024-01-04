@@ -3,7 +3,7 @@
 bundle = ""
 module = "gtl"
 tdsroot = "generic"
-typesetruns = 2
+typesetruns = 3
 checkengines = {"pdftex", "luatex", "xetex", "ptex", "uptex"}
 checkconfigs = {"build", "config-plain"}
 uploadconfig = {

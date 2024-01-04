@@ -7,7 +7,7 @@ Defining \l_local_gtl on line ...
 Defining \g_global_gtl on line ...
 > \l_local_gtl=.
 > \g_global_gtl=.
-! LaTeX3 Error: Control sequence \l_local_gtl already defined.
+! LaTeX Error: Control sequence \l_local_gtl already defined.
 For immediate help type H <return>.
  ...                                              
 l. ...  }
@@ -17,7 +17,7 @@ name has already been used elsewhere.
 The current meaning is:
   macro:->\s__gtl {}{}{}
 Defining \l_local_gtl on line ...
-! LaTeX3 Error: Control sequence \g_global_gtl already defined.
+! LaTeX Error: Control sequence \g_global_gtl already defined.
 For immediate help type H <return>.
  ...                                              
 l. ...  }
@@ -35,7 +35,7 @@ TEST 2: \gtl_const:Nn ,\gtl_const:Nx
 ============================================================
 Defining \c_const_gtl on line ...
 > \c_const_gtl=test.
-! LaTeX3 Error: Control sequence \c_const_gtl already defined.
+! LaTeX Error: Control sequence \c_const_gtl already defined.
 For immediate help type H <return>.
  ...                                              
 l. ...  }
@@ -52,7 +52,7 @@ Defining \c_braces_gtl on line ...
 ============================================================
 TEST 3: \gtl_clear:N ,\gtl_gclear:N 
 ============================================================
-! LaTeX3 Error: The variable \l_junk_gtl has not been declared on line ....
+! LaTeX Error: The variable \l_junk_gtl has not been declared on line ....
 For immediate help type H <return>.
  ...                                              
 l. ...  }
@@ -65,7 +65,7 @@ LaTeX will create the variable and continue.
 > \l_junk_gtl=.
 > \l_local_gtl=.
 > \g_global_gtl=.
-! LaTeX3 Error: Variable \l_junk_gtl undefined.
+! LaTeX Error: Variable \l_junk_gtl undefined.
 For immediate help type H <return>.
  ...                                              
 l. ...  }
@@ -92,7 +92,7 @@ Defining \g_extra_gtl on line ...
 ============================================================
 TEST 5: \gtl_set_eq:NN ,\gtl_gset_eq:NN 
 ============================================================
-! LaTeX3 Error: The variable \l_junk_gtl has not been declared on line ....
+! LaTeX Error: The variable \l_junk_gtl has not been declared on line ....
 For immediate help type H <return>.
  ...                                              
 l. ...  }
@@ -102,7 +102,7 @@ Checking is active, and you have tried do so something like:
 without first having:
   \tl_new:N \l_junk_gtl
 LaTeX will create the variable and continue.
-! LaTeX3 Error: The variable \l_junk_gtl has not been declared on line ....
+! LaTeX Error: The variable \l_junk_gtl has not been declared on line ....
 For immediate help type H <return>.
  ...                                              
 l. ...  }
@@ -112,7 +112,7 @@ Checking is active, and you have tried do so something like:
 without first having:
   \tl_new:N \l_junk_gtl
 LaTeX will create the variable and continue.
-! LaTeX3 Error: Variable \l_local_gtl undefined.
+! LaTeX Error: Variable \l_local_gtl undefined.
 For immediate help type H <return>.
  ...                                              
 l. ...  }
@@ -122,7 +122,7 @@ defined yet.
 > \l_junk_gtl={.
 > \g_global_gtl=}.
 > \l_local_gtl=.
-! LaTeX3 Error: Variable \l_junk_gtl undefined.
+! LaTeX Error: Variable \l_junk_gtl undefined.
 For immediate help type H <return>.
  ...                                              
 l. ...  }

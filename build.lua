@@ -14,11 +14,9 @@ uploadconfig = {
   pkg          = "gtl",
   summary      = "Manipulating generalized token lists",
   uploader     = "Bruno Le Floch",
-  version      = "0.5 2018-12-28",
+  version      = "0.6 2024-01-04",
   bugtracker   = "https://github.com/blefloch/latex-gtl/issues",
-  description  = [[The package provides tools for simple operations on lists of tokens which are not necessarily balanced. It is in particular used a lot in the unravel package, to go through tokens one at a time rather than having to work with entire braced groups at a time.
-
-The package requires an up-to-date versions of the l3kernel, l3kpackages, and l3experimental bundles.]],
+  description  = [[The package provides tools for simple operations on lists of tokens which are not necessarily balanced. It is in particular used a lot in the unravel package, to go through tokens one at a time rather than having to work with entire braced groups at a time.]],
   repository   = "https://github.com/blefloch/latex-gtl",
   topic        = "macro-supp",
   update       = true,

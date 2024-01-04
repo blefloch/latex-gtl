@@ -7,11 +7,8 @@ Manipulate unbalanced lists of tokens
 The `gtl` TeX/LaTeX package provides tools to manipulate lists of
 tokens which may be unbalanced.
 
-This package requires up-to-date versions of the `l3kernel`,
-`l3packages` and `l3experimental` bundles.
-
 The package is extracted by running `pdflatex gtl.ins`.
-For documentation, run `pdflatex gtl.dtx` twice.
+For documentation, run `pdflatex gtl.dtx` thrice.
 
 This is work in progress, all suggestions/comments/bug reports
 are welcome!  See https://github.com/blefloch/latex-gtl

@@ -12,8 +12,7 @@ For immediate help type H <return>.
  ...                                              
 l. ...  }
 This is a coding error.
-LaTeX has been asked to create a new control sequence '\l_local_gtl' but this
-name has already been used elsewhere.
+LaTeX has been asked to create a new control sequence '\l_local_gtl' but this name has already been used elsewhere.
 The current meaning is:
   macro:->\s__gtl {}{}{}
 Defining \l_local_gtl on line ...
@@ -22,8 +21,7 @@ For immediate help type H <return>.
  ...                                              
 l. ...  }
 This is a coding error.
-LaTeX has been asked to create a new control sequence '\g_global_gtl' but this
-name has already been used elsewhere.
+LaTeX has been asked to create a new control sequence '\g_global_gtl' but this name has already been used elsewhere.
 The current meaning is:
   macro:->\s__gtl {}{}{}
 Defining \g_global_gtl on line ...
@@ -40,8 +38,7 @@ For immediate help type H <return>.
  ...                                              
 l. ...  }
 This is a coding error.
-LaTeX has been asked to create a new control sequence '\c_const_gtl' but this
-name has already been used elsewhere.
+LaTeX has been asked to create a new control sequence '\c_const_gtl' but this name has already been used elsewhere.
 The current meaning is:
   macro:->\s__gtl {}{test}{}
 Defining \c_const_gtl on line ...
@@ -72,8 +69,7 @@ For immediate help type H <return>.
  ...                                              
 l. ...  }
 This is a coding error.
-LaTeX has been asked to show a variable \l_junk_gtl, but this has not been
-defined yet.
+LaTeX has been asked to show a variable \l_junk_gtl, but this has not been defined yet.
 > \l_local_gtl=local.
 > \g_global_gtl=.
 ============================================================
@@ -119,8 +115,7 @@ For immediate help type H <return>.
  ...                                              
 l. ...  }
 This is a coding error.
-LaTeX has been asked to show a variable \l_local_gtl, but this has not been
-defined yet.
+LaTeX has been asked to show a variable \l_local_gtl, but this has not been defined yet.
 > \l_junk_gtl={.
 > \g_global_gtl=}.
 > \l_local_gtl=.
@@ -129,8 +124,7 @@ For immediate help type H <return>.
  ...                                              
 l. ...  }
 This is a coding error.
-LaTeX has been asked to show a variable \l_junk_gtl, but this has not been
-defined yet.
+LaTeX has been asked to show a variable \l_junk_gtl, but this has not been defined yet.
 > \g_global_gtl=}.
 ============================================================
 ============================================================
